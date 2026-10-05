@@ -27,3 +27,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+/* 3D HERO MOUSE PARALLAX */
+
+const hero3D = document.querySelector(".hero-3d");
+const earthScene = document.querySelector(".earth-scene");
+
+if (hero3D && earthScene) {
+
+    hero3D.addEventListener("mousemove", (event) => {
+
+        const x =
+            (window.innerWidth / 2 - event.clientX) / 30;
+
+        const y =
+            (window.innerHeight / 2 - event.clientY) / 30;
+
+        earthScene.style.transform =
+            `translate(${x}px, ${y}px)`;
+    });
+
+    hero3D.addEventListener("mouseleave", () => {
+
+        earthScene.style.transform =
+            "translate(0,0)";
+    });
+}
