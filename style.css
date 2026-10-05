@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #061426;
+    color: white;
+    overflow-x: hidden;
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 20px;
+    background:
+        radial-gradient(circle at 50% 20%, #164b73 0%, #061426 45%, #020812 100%);
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.logo-text {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #ff9d00;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 10vw, 90px);
+    line-height: 1;
+    margin-bottom: 25px;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hero h1 span {
+    color: #ff8c00;
+}
+
+.hero p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #d7e5f2;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: #ff8c00;
+    color: white;
+}
+
+.btn-secondary {
+    border: 1px solid #ffffff55;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+}
+
+.services {
+    padding: 70px 20px;
+    background: #081a2d;
+}
+
+.services h2 {
+    text-align: center;
+    font-size: 38px;
+    margin-bottom: 40px;
+}
+
+.service-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    padding: 30px 20px;
+    min-height: 180px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #123452, #071522);
+    border: 1px solid #ffffff18;
+    box-shadow: 0 15px 40px #00000055;
+    transition: 0.4s;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) rotateX(3deg);
+}
+
+.service-card .icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.service-card h3 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #b9cbd9;
+    line-height: 1.5;
+}
+
+.contact {
+    text-align: center;
+    padding: 70px 20px;
+    background: #020812;
+}
+
+.contact h2 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.whatsapp {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 28px;
+    border-radius: 50px;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #01050a;
+    color: #8ea2b5;
+}
