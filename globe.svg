@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+<defs>
+  <radialGradient id="ocean" cx="34%" cy="28%" r="72%">
+    <stop offset="0" stop-color="#62d9ff"/>
+    <stop offset=".28" stop-color="#1689c8"/>
+    <stop offset=".68" stop-color="#07508c"/>
+    <stop offset="1" stop-color="#021a3b"/>
+  </radialGradient>
+  <radialGradient id="shine" cx="30%" cy="22%" r="55%">
+    <stop offset="0" stop-color="#fff" stop-opacity=".48"/>
+    <stop offset=".45" stop-color="#fff" stop-opacity=".08"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="8" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <clipPath id="clip"><circle cx="250" cy="250" r="190"/></clipPath>
+</defs>
+<circle cx="250" cy="250" r="202" fill="#20aaff" opacity=".16" filter="url(#glow)"/>
+<circle cx="250" cy="250" r="190" fill="url(#ocean)" stroke="#4fd5ff" stroke-width="3"/>
+<g clip-path="url(#clip)" fill="none" stroke="#9be8ff" stroke-opacity=".18" stroke-width="2">
+  <ellipse cx="250" cy="250" rx="165" ry="190"/>
+  <ellipse cx="250" cy="250" rx="105" ry="190"/>
+  <ellipse cx="250" cy="250" rx="48" ry="190"/>
+  <ellipse cx="250" cy="250" rx="190" ry="70"/>
+  <ellipse cx="250" cy="250" rx="190" ry="125"/>
+</g>
+<g clip-path="url(#clip)" fill="#42b65c" stroke="#2e8d49" stroke-width="2">
+  <path d="M95 150 C118 118 147 108 169 126 L184 151 L171 174 L150 181 L143 208 L121 214 L109 195 L92 184 Z"/>
+  <path d="M164 215 C185 202 207 213 211 238 L204 268 L191 291 L185 324 L169 353 L154 337 L157 302 L145 277 L153 249 Z"/>
+  <path d="M229 124 L255 112 L281 124 L286 146 L269 159 L247 151 L226 158 L213 143 Z"/>
+  <path d="M286 165 L322 150 L350 163 L366 184 L350 201 L326 201 L313 219 L289 212 L278 190 Z"/>
+  <path d="M331 222 L365 225 L385 246 L374 267 L350 270 L336 257 L317 250 Z"/>
+  <path d="M281 235 L307 242 L315 265 L304 284 L282 279 L269 258 Z"/>
+  <path d="M92 251 L113 243 L128 254 L123 270 L101 274 L88 265 Z"/>
+  <path d="M202 319 L224 312 L243 326 L238 348 L216 361 L197 347 Z"/>
+</g>
+<circle cx="250" cy="250" r="190" fill="url(#shine)"/>
+<path d="M108 156 C150 88 229 61 298 76" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="10" stroke-linecap="round"/>
+</svg>
