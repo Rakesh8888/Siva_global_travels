@@ -618,3 +618,31 @@ footer {
         width: 245px;
     }
 }
+
+
+/* REAL GLOBE HERO */
+.globe-3d {
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    left: 65px;
+    top: 65px;
+    display: block;
+    z-index: 4;
+    filter: drop-shadow(0 25px 35px rgba(0,0,0,0.55));
+    animation: globeFloat 5s ease-in-out infinite;
+}
+
+@keyframes globeFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.02); }
+}
+
+@media (max-width: 768px) {
+    .globe-3d {
+        width: 285px;
+        height: 285px;
+        left: 37px;
+        top: 37px;
+    }
+}
