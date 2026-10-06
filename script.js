@@ -329,3 +329,98 @@ document.addEventListener("DOMContentLoaded",()=>{
   const voiceObserver=new MutationObserver(()=>{if(voiceMode && !voiceMode.hidden) openLuckyVoice3D();});
   if(voiceMode) voiceObserver.observe(voiceMode,{attributes:true,attributeFilter:["hidden"]});
 });
+
+
+/* PREMIUM HERO 3D EARTH */
+let heroGlobe3DReady=false;
+function initHeroGlobe3D(){
+  const host=document.querySelector("#heroGlobe3D");
+  if(!host || !window.THREE || heroGlobe3DReady) return;
+  heroGlobe3DReady=true;
+  const THREE=window.THREE;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+  camera.position.set(0,0,5.9);
+
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setClearColor(0x000000,0);
+  host.innerHTML="";
+  host.appendChild(renderer.domElement);
+
+  const group=new THREE.Group();
+  scene.add(group);
+
+  const texture=new THREE.TextureLoader().load(
+    "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg"
+  );
+  texture.colorSpace=THREE.SRGBColorSpace;
+
+  const earth=new THREE.Mesh(
+    new THREE.SphereGeometry(1.62,64,64),
+    new THREE.MeshPhongMaterial({
+      map:texture,
+      shininess:22,
+      specular:new THREE.Color(0x244d72)
+    })
+  );
+  group.add(earth);
+
+  const atmosphere=new THREE.Mesh(
+    new THREE.SphereGeometry(1.70,64,64),
+    new THREE.MeshPhongMaterial({
+      color:0x55bfff,
+      transparent:true,
+      opacity:.14,
+      side:THREE.BackSide
+    })
+  );
+  group.add(atmosphere);
+
+  const glow=new THREE.Mesh(
+    new THREE.SphereGeometry(1.77,48,48),
+    new THREE.MeshBasicMaterial({
+      color:0x3aa8ff,
+      transparent:true,
+      opacity:.055,
+      side:THREE.BackSide
+    })
+  );
+  group.add(glow);
+
+  scene.add(new THREE.AmbientLight(0x9fc9e8,1.2));
+  const sun=new THREE.DirectionalLight(0xffffff,2.8);
+  sun.position.set(4,3,5);
+  scene.add(sun);
+  const warm=new THREE.PointLight(0xff9d2e,3.2,10);
+  warm.position.set(-3,-1,3);
+  scene.add(warm);
+
+  const ring=new THREE.Mesh(
+    new THREE.TorusGeometry(1.83,.012,8,128),
+    new THREE.MeshBasicMaterial({color:0xff9d2e,transparent:true,opacity:.55})
+  );
+  ring.rotation.x=.42;
+  ring.rotation.z=-.18;
+  scene.add(ring);
+
+  function resize(){
+    const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize",resize,{passive:true});
+
+  function animate(){
+    requestAnimationFrame(animate);
+    earth.rotation.y+=.0024;
+    atmosphere.rotation.y+=.0015;
+    ring.rotation.y+=.001;
+    group.rotation.x=Math.sin(performance.now()*.00025)*.025;
+    renderer.render(scene,camera);
+  }
+  animate();
+}
+document.addEventListener("DOMContentLoaded",initHeroGlobe3D);
