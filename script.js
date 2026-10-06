@@ -149,7 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* SIVA AI ASSISTANT */
 const aiToggle=document.querySelector("#aiChatToggle"),aiPanel=document.querySelector("#aiChatPanel"),aiClose=document.querySelector("#aiChatClose"),aiForm=document.querySelector("#aiChatForm"),aiInput=document.querySelector("#aiChatInput"),aiMessages=document.querySelector("#aiChatMessages");
-const aiHistory=[];\nconst aiLanguage=document.querySelector("#aiLanguage");
+const aiHistory=[];
+const aiLanguage=document.querySelector("#aiLanguage");
 function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
 async function askAi(message){
   addAiMessage(message,"user"); aiHistory.push({role:"user",content:message});
@@ -162,7 +163,8 @@ async function askAi(message){
     addAiMessage(reply); aiHistory.push({role:"assistant",content:reply});
   }catch(e){loading.remove();addAiMessage("I’m temporarily unavailable. Please use WhatsApp for direct help.");}
 }
-if(aiToggle)aiToggle.addEventListener("click",()=>{aiPanel.hidden=false;aiToggle.hidden=true;aiInput?.focus()});\nif(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
+if(aiToggle)aiToggle.addEventListener("click",()=>{aiPanel.hidden=false;aiToggle.hidden=true;aiInput?.focus()});
+if(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
 if(aiClose)aiClose.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false});
 if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
 document.querySelectorAll("[data-ai]").forEach(b=>b.addEventListener("click",()=>askAi(b.dataset.ai)));
