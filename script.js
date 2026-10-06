@@ -153,19 +153,45 @@ const aiHistory=[];
 const aiLanguage=document.querySelector("#aiLanguage");
 function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
 async function askAi(message){
-  addAiMessage(message,"user"); aiHistory.push({role:"user",content:message});
-  const loading=document.createElement("div"); loading.className="ai-msg ai-msg-bot"; loading.textContent="Thinking…"; aiMessages.appendChild(loading);
+  if(!message || !aiMessages) return;
+  addAiMessage(message,"user");
+  aiHistory.push({role:"user",content:message});
+  const loading=document.createElement("div");
+  loading.className="ai-msg ai-msg-bot";
+  loading.textContent="Thinking…";
+  aiMessages.appendChild(loading);
+  const sendButton=aiForm?.querySelector('button[type="submit"],button:not([type])');
+  if(sendButton){sendButton.disabled=true;sendButton.setAttribute("aria-busy","true");}
   try{
-    const res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,language:aiLanguage?.value||"English",history:aiHistory.slice(-8)})});
-    const data=await res.json();
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),30000);
+    const res=await fetch("/api/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({message,language:aiLanguage?.value||"en-IN",history:aiHistory.slice(0,-1).slice(-8)}),
+      signal:controller.signal
+    });
+    clearTimeout(timeout);
+    let data={};
+    try{data=await res.json()}catch(_){}
     loading.remove();
-    const reply=data.reply||"Please continue with WhatsApp and our team will assist you.";
-    addAiMessage(reply); aiHistory.push({role:"assistant",content:reply});
-  }catch(e){loading.remove();addAiMessage("I’m temporarily unavailable. Please use WhatsApp for direct help.");}
+    if(!res.ok) throw new Error(data.error||"AI request failed");
+    const reply=(data.reply||"Please continue with WhatsApp and our team will assist you.").trim();
+    addAiMessage(reply);
+    aiHistory.push({role:"assistant",content:reply});
+  }catch(e){
+    loading.remove();
+    const msg=e?.name==="AbortError"
+      ?"LUCKY is taking too long to respond. Please try again or use WhatsApp."
+      :"LUCKY is temporarily unavailable. Please try again or use WhatsApp.";
+    addAiMessage(msg);
+  }finally{
+    if(sendButton){sendButton.disabled=false;sendButton.removeAttribute("aria-busy");}
+  }
 }
-if(aiToggle)aiToggle.addEventListener("click",()=>{aiPanel.hidden=false;aiToggle.hidden=true;aiInput?.focus()});
+if(aiToggle)aiToggle.addEventListener("click",()=>{if(aiPanel){aiPanel.hidden=false;aiPanel.setAttribute("aria-hidden","false");}aiToggle.hidden=true;setTimeout(()=>aiInput?.focus(),0)});
 if(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
-if(aiClose)aiClose.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false;});
+if(aiClose)aiClose.addEventListener("click",()=>{if(aiPanel){aiPanel.hidden=true;aiPanel.setAttribute("aria-hidden","true");}if(aiToggle){aiToggle.hidden=false;aiToggle.focus();}if(aiRecognition&&aiRecognition._running){try{aiRecognition.stop()}catch(_){}}});
 if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
 const aiMic=document.querySelector("#aiMic"), aiSpeak=document.querySelector("#aiSpeak");
 let aiRecognition=null, aiSpeaking=false;
