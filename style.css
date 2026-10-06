@@ -246,3 +246,8 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .vacancy-disclaimer{max-width:900px;margin:25px auto 0;text-align:center;color:#60788b;font-size:10px;line-height:1.6}
 @media(max-width:1000px){.vacancy-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.vacancies-section{padding:75px 18px}.vacancy-grid{grid-template-columns:1fr}.vacancy-card{min-height:255px}}
+
+/* CV UPLOAD */
+.enquiry-form input[type="file"]{padding:10px;background:rgba(255,255,255,.035);cursor:pointer}
+.enquiry-form input[type="file"]::file-selector-button{border:1px solid rgba(255,157,46,.35);border-radius:6px;background:rgba(255,157,46,.08);color:var(--orange);padding:8px 10px;margin-right:10px;font-size:10px;font-weight:800;cursor:pointer}
+.upload-note{color:#60788b;font-size:9px!important;line-height:1.5!important;margin:-5px 0 0!important}
