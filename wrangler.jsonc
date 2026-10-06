@@ -1,4 +1,5 @@
 {
+  // Cloudflare Worker + static website deployment configuration
   "$schema": "https://json.schemastore.org/wrangler.json",
   "name": "siva-global-travels",
   "main": "./worker.js",
