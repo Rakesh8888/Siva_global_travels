@@ -155,75 +155,32 @@
 <section class="destination-showcase" id="destinations">
   <div class="section-heading">
     <div><span class="section-kicker">DESTINATIONS</span><h2>Choose your<br><em>destination.</em></h2></div>
-    <p>Select a destination category to explore available countries for travel, visa and overseas career enquiries.</p>
+    <p>Three simple choices. Open any category to explore its countries.</p>
   </div>
 
-  <div class="destination-groups">
-    <article class="destination-group destination-group-gulf">
-      <div class="destination-group-head">
-        <span class="destination-group-number">01</span>
-        <div><span class="section-kicker">GULF</span><h3>Gulf Countries</h3></div>
-        <span class="destination-group-icon">✈</span>
-      </div>
-      <div class="destination-country-list">
-        <a href="#enquiry" data-destination="Kuwait"><span>🇰🇼</span>Kuwait</a>
-        <a href="#enquiry" data-destination="United Arab Emirates"><span>🇦🇪</span>UAE</a>
-        <a href="#enquiry" data-destination="Qatar"><span>🇶🇦</span>Qatar</a>
-        <a href="#enquiry" data-destination="Bahrain"><span>🇧🇭</span>Bahrain</a>
-      </div>
-    </article>
+  <div class="destination-choice-grid">
+    <button class="destination-choice destination-choice-gulf" type="button" data-destination-panel="gulf">
+      <span class="choice-number">01</span><span class="choice-icon">✈</span>
+      <strong>Gulf Countries</strong><small>Kuwait &amp; other Gulf destinations</small><b>View Countries ↗</b>
+    </button>
+    <button class="destination-choice destination-choice-europe" type="button" data-destination-panel="europe">
+      <span class="choice-number">02</span><span class="choice-icon">◎</span>
+      <strong>Europe (Schengen) Countries</strong><small>Schengen travel &amp; visa destinations</small><b>View Countries ↗</b>
+    </button>
+    <button class="destination-choice destination-choice-other" type="button" data-destination-panel="other">
+      <span class="choice-number">03</span><span class="choice-icon">🌍</span>
+      <strong>Other Countries</strong><small>Russia, Israel, Japan &amp; more</small><b>View Countries ↗</b>
+    </button>
+  </div>
 
-    <article class="destination-group destination-group-europe">
-      <div class="destination-group-head">
-        <span class="destination-group-number">02</span>
-        <div><span class="section-kicker">EUROPE</span><h3>Europe (Schengen) Countries</h3></div>
-        <span class="destination-group-icon">◎</span>
-      </div>
-      <div class="destination-country-list destination-country-list-wide">
-        <a href="#enquiry" data-destination="Austria">🇦🇹 Austria</a>
-        <a href="#enquiry" data-destination="Belgium">🇧🇪 Belgium</a>
-        <a href="#enquiry" data-destination="Bulgaria">🇧🇬 Bulgaria</a>
-        <a href="#enquiry" data-destination="Croatia">🇭🇷 Croatia</a>
-        <a href="#enquiry" data-destination="Czechia">🇨🇿 Czechia</a>
-        <a href="#enquiry" data-destination="Denmark">🇩🇰 Denmark</a>
-        <a href="#enquiry" data-destination="Estonia">🇪🇪 Estonia</a>
-        <a href="#enquiry" data-destination="Finland">🇫🇮 Finland</a>
-        <a href="#enquiry" data-destination="France">🇫🇷 France</a>
-        <a href="#enquiry" data-destination="Germany">🇩🇪 Germany</a>
-        <a href="#enquiry" data-destination="Greece">🇬🇷 Greece</a>
-        <a href="#enquiry" data-destination="Hungary">🇭🇺 Hungary</a>
-        <a href="#enquiry" data-destination="Iceland">🇮🇸 Iceland</a>
-        <a href="#enquiry" data-destination="Italy">🇮🇹 Italy</a>
-        <a href="#enquiry" data-destination="Latvia">🇱🇻 Latvia</a>
-        <a href="#enquiry" data-destination="Liechtenstein">🇱🇮 Liechtenstein</a>
-        <a href="#enquiry" data-destination="Lithuania">🇱🇹 Lithuania</a>
-        <a href="#enquiry" data-destination="Luxembourg">🇱🇺 Luxembourg</a>
-        <a href="#enquiry" data-destination="Malta">🇲🇹 Malta</a>
-        <a href="#enquiry" data-destination="Netherlands">🇳🇱 Netherlands</a>
-        <a href="#enquiry" data-destination="Norway">🇳🇴 Norway</a>
-        <a href="#enquiry" data-destination="Poland">🇵🇱 Poland</a>
-        <a href="#enquiry" data-destination="Portugal">🇵🇹 Portugal</a>
-        <a href="#enquiry" data-destination="Romania">🇷🇴 Romania</a>
-        <a href="#enquiry" data-destination="Slovakia">🇸🇰 Slovakia</a>
-        <a href="#enquiry" data-destination="Slovenia">🇸🇮 Slovenia</a>
-        <a href="#enquiry" data-destination="Spain">🇪🇸 Spain</a>
-        <a href="#enquiry" data-destination="Sweden">🇸🇪 Sweden</a>
-        <a href="#enquiry" data-destination="Switzerland">🇨🇭 Switzerland</a>
-      </div>
-    </article>
-
-    <article class="destination-group destination-group-other">
-      <div class="destination-group-head">
-        <span class="destination-group-number">03</span>
-        <div><span class="section-kicker">OTHER</span><h3>Other Countries</h3></div>
-        <span class="destination-group-icon">🌍</span>
-      </div>
-      <div class="destination-country-list">
-        <a href="#enquiry" data-destination="Russia"><span>🇷🇺</span>Russia</a>
-        <a href="#enquiry" data-destination="Israel"><span>🇮🇱</span>Israel</a>
-        <a href="#enquiry" data-destination="Japan"><span>🇯🇵</span>Japan</a>
-      </div>
-    </article>
+  <div class="destination-country-panel" id="destinationCountryPanel" hidden>
+    <div class="destination-panel-inner">
+      <button class="destination-panel-close" id="destinationPanelClose" type="button" aria-label="Close country list">✕</button>
+      <span class="section-kicker" id="destinationPanelKicker">DESTINATIONS</span>
+      <h3 id="destinationPanelTitle">Countries</h3>
+      <p id="destinationPanelText"></p>
+      <div class="destination-panel-countries" id="destinationPanelCountries"></div>
+    </div>
   </div>
 </section>
 
