@@ -25,7 +25,7 @@
    <rect x="43" y="-4" width="44" height="12" rx="6" fill="#159447"/>
    <circle cx="48" cy="184" r="20" fill="#fff" stroke="#111" stroke-width="9"/><circle cx="84" cy="184" r="20" fill="#fff" stroke="#111" stroke-width="9"/>
  </g>
- <g transform="translate(1168 280) scale(.2)"><path d="M1390 350c0-40 32-72 70-72s70 32 70 72c0 57-70 93-70 93s-70-36-70-93z" fill="#e31818"/>
+ <g transform="translate(1150 265) scale(.24)"><path d="M1390 350c0-40 32-72 70-72s70 32 70 72c0 57-70 93-70 93s-70-36-70-93z" fill="#e31818"/>
  <circle cx="1460" cy="350" r="24" fill="#fff"/><circle cx="1460" cy="350" r="11" fill="#e31818"/></g>
 </g>
 </svg>
