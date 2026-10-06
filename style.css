@@ -1585,3 +1585,37 @@ body.light-mode .ai-voice-overlay{color:#102033}
   .jobs-category-choice-card-merged{transform:scale(.7)!important}
   .service-card{transform:scale(.7);margin:-7% 0}
 }
+
+
+/* SKY BLUE THEME — remove black/dark presentation */
+:root{--navy:#eaf8ff;--blue:#cfefff;--blue2:#1387c5;--orange:#ff8a00;--orange2:#ef3d16;--white:#102d45;--muted:#55738a;--line:rgba(19,100,145,.16)}
+body{background:#eaf8ff!important;color:#102d45!important}
+.site-nav{background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(224,246,255,.88))!important;box-shadow:0 4px 22px rgba(25,105,145,.10)}
+.nav-links{color:#183e58!important}.nav-cta{color:#12324a!important;background:rgba(255,255,255,.75)!important;border-color:rgba(19,135,197,.35)!important}
+.hero-3d{background:radial-gradient(circle at 72% 45%,#8edcff 0%,#c9efff 35%,#eaf8ff 72%)!important}
+.hero-grid{opacity:.10!important}.stars{opacity:.10!important}.hero-orb{opacity:.22!important}
+.hero-copy h1{color:#12324a!important;text-shadow:0 12px 30px rgba(18,100,140,.12)!important}.hero-lead{color:#42657b!important}
+.hero-trust{color:#55738a!important}.hero-trust strong{color:#12324a!important}
+.btn-secondary{color:#12324a!important;background:rgba(255,255,255,.70)!important;border-color:rgba(19,100,145,.20)!important}
+.route-label{background:rgba(255,255,255,.78)!important;color:#12324a!important}
+.floating-card{background:rgba(255,255,255,.78)!important;color:#12324a!important;border-color:rgba(19,100,145,.16)!important;box-shadow:0 15px 40px rgba(20,90,125,.16)!important}
+.services{background:linear-gradient(180deg,#eaf8ff,#d9f3ff)!important}
+.service-card{background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(220,244,255,.95))!important;color:#12324a!important;border-color:rgba(19,120,170,.16)!important;box-shadow:0 16px 35px rgba(20,100,140,.10)!important}
+.service-card p{color:#55738a!important}.service-card .card-top{color:#64869c!important}
+.destination-showcase,.jobs-showcase,.job-categories,.faq-section{background:linear-gradient(180deg,#eaf8ff,#d9f3ff)!important}
+.destination-choice,.jobs-category-choice-card{background:linear-gradient(145deg,#fff,#dff5ff)!important;color:#12324a!important;border-color:rgba(19,120,170,.16)!important;box-shadow:0 16px 35px rgba(20,100,140,.10)!important}
+.destination-choice small,.jobs-category-choice-card small{color:#55738a!important}
+.trust-enquiry,.about-section,.detail-content{background:#dff4ff!important}
+.enquiry-panel,.trust-panel,.payment-card,.app-download-btn{background:rgba(255,255,255,.92)!important;color:#12324a!important;border-color:rgba(19,120,170,.14)!important;box-shadow:0 12px 30px rgba(20,100,140,.08)!important}
+.contact{background:linear-gradient(180deg,#cfefff,#eaf8ff)!important} footer{background:#c4e9fa!important;color:#365d73!important}
+.faq-item,.faq-list details{background:rgba(255,255,255,.88)!important;color:#12324a!important;border-color:rgba(19,120,170,.14)!important}
+.faq-item p,.faq-list p{color:#55738a!important}.payment-section{background:linear-gradient(180deg,#dff4ff,#cfefff)!important}.app-download{background:linear-gradient(180deg,#d9f3ff,#eaf8ff)!important}
+.app-download-btn{color:#12324a!important;background:rgba(255,255,255,.85)!important;border-color:rgba(19,120,170,.16)!important}
+input,select,textarea,.flight-fields input,.flight-fields button{background:rgba(255,255,255,.92)!important;color:#12324a!important;border-color:rgba(19,120,170,.18)!important}
+.enquiry-form select option{background:#fff!important;color:#12324a!important}
+.ai-chat-panel{background:#eaf8ff!important;color:#12324a!important;border-color:rgba(19,120,170,.18)!important}.ai-chat-head{background:linear-gradient(135deg,#0f87c5,#56c7ef)!important}
+.ai-chat-form input{background:#fff!important;color:#12324a!important;border-color:rgba(19,120,170,.18)!important}.ai-chat-head-actions select{background:#fff!important;color:#12324a!important;border-color:rgba(19,120,170,.20)!important}.ai-chat-head-actions option{background:#fff!important;color:#12324a!important}
+.ai-chat-toggle::before{background:#fff!important;color:#12324a!important;border-color:rgba(19,120,170,.16)!important}
+.ai-voice-mode{background:radial-gradient(circle at 50% 42%,#8edcff 0%,#c9efff 34%,#eaf8ff 78%)!important;color:#12324a!important}
+.detail-hero{background:radial-gradient(circle at 70% 40%,#8edcff 0%,#c9efff 38%,#eaf8ff 78%)!important}
+.detail-orb{background:radial-gradient(circle at 35% 30%,#38b9ed,#1287c4 45%,#075b91 72%)!important}
