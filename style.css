@@ -1247,3 +1247,14 @@ main .buttons .btn{
   .app-download-btn .app-icon{font-size:13px}
   .app-download-btn strong{font-size:9px}
 }
+
+
+/* SIVA GLOBAL TRAVELS LOGO — match supplied branding artwork */
+.brand.brand-logo{display:flex!important;align-items:center!important;width:180px!important;height:46px!important;padding:0!important;flex:0 0 180px!important}
+.brand.brand-logo svg{display:block!important;width:100%!important;height:100%!important;filter:drop-shadow(0 2px 7px rgba(0,0,0,.25))}
+.brand.brand-logo .brand-mark{display:none!important}
+.hero-logo-lockup{width:min(470px,72vw);margin:0 0 14px;line-height:0;filter:drop-shadow(0 5px 14px rgba(0,0,0,.35))}
+.hero-logo-lockup svg{display:block;width:100%;height:auto}
+.logo-text{display:none!important}
+@media(max-width:900px){.brand.brand-logo{width:150px!important;height:39px!important;flex-basis:150px!important}.hero-logo-lockup{width:min(390px,82vw)}}
+@media(max-width:700px){.brand.brand-logo{width:126px!important;height:33px!important;flex-basis:126px!important}.hero-logo-lockup{width:min(330px,88vw);margin-bottom:10px}}
