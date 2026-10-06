@@ -1,3 +1,18 @@
+const CONTACT_CONFIG = {
+    // Add the real business details here when ready. Empty values stay hidden.
+    whatsappNumber: "",
+    email: "",
+    instagram: "",
+    facebook: ""
+};
+
+function buildWhatsAppUrl(message = "Hello Siva Global Travels, I would like to make an enquiry.") {
+    const number = CONTACT_CONFIG.whatsappNumber.replace(/\D/g, "");
+    return number
+        ? "https://wa.me/" + number + "?text=" + encodeURIComponent(message)
+        : "https://wa.me/?text=" + encodeURIComponent(message);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const hero = document.querySelector(".hero-3d");
     const scene = document.querySelector(".earth-scene");
@@ -24,7 +39,27 @@ document.addEventListener("DOMContentLoaded", () => {
             scene.style.transform = "translateY(-50%)";
         });
     }
-    
+
+    const whatsappContact = document.querySelector("#whatsappContact");
+    if (whatsappContact) {
+        whatsappContact.href = buildWhatsAppUrl();
+    }
+
+    const channels = [
+        ["#emailContact", CONTACT_CONFIG.email, value => "mailto:" + value],
+        ["#instagramContact", CONTACT_CONFIG.instagram, value => value],
+        ["#facebookContact", CONTACT_CONFIG.facebook, value => value]
+    ];
+    channels.forEach(([selector, value, makeUrl]) => {
+        const link = document.querySelector(selector);
+        if (link && value) {
+            link.href = makeUrl(value);
+            link.hidden = false;
+            link.target = value.startsWith("http") ? "_blank" : "";
+            link.rel = "noopener";
+        }
+    });
+
     const enquiryForm = document.querySelector("#enquiryForm");
     if (enquiryForm) {
         enquiryForm.addEventListener("submit", (event) => {
@@ -42,11 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 `Service: ${service}`,
                 `Destination / Goal: ${goal || "Not specified"}`,
                 `Message: ${message || "Please contact me regarding this enquiry."}`
-            ].join("\n");
+            ].join("\\n");
 
-            window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
-            note.textContent = "WhatsApp opened with your enquiry message. Choose the business contact to send it.";
+            window.open(buildWhatsAppUrl(text), "_blank", "noopener");
+            note.textContent = CONTACT_CONFIG.whatsappNumber
+                ? "WhatsApp opened for Siva Global Travels."
+                : "WhatsApp opened. The business number will be connected when the official number is added.";
         });
     }
-
 });
