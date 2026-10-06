@@ -676,3 +676,9 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .ai-chat-title strong{font-size:23px!important}
   .ai-chat-head-actions select{width:92px!important}
 }
+
+
+/* FINAL CLOSE FIX — hidden LUCKY chat must actually disappear */
+.ai-chat-panel[hidden]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.ai-chat-toggle[hidden]{display:none!important}
+.ai-voice-mode[hidden]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
