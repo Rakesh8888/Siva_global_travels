@@ -212,3 +212,19 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .jobs-note{max-width:1100px;margin:22px auto 0;color:#60788b;font-size:10px;line-height:1.6;text-align:center}
 @media(max-width:900px){.jobs-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.jobs-showcase{padding:75px 18px}.jobs-grid{grid-template-columns:1fr}.job-card{min-height:185px}}
+
+/* JOB CATEGORIES */
+.job-categories{padding:105px 5vw;background:#020812}
+.job-category-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.category-card{min-height:310px;padding:30px;border:1px solid var(--line);border-radius:22px;text-decoration:none;display:flex;flex-direction:column;background:linear-gradient(145deg,rgba(18,57,86,.82),rgba(3,13,25,.96));position:relative;overflow:hidden;transition:.4s}
+.category-card:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-80px;top:-90px;background:rgba(255,157,46,.08)}
+.category-skilled{background:radial-gradient(circle at 90% 10%,rgba(53,170,240,.2),transparent 35%),linear-gradient(145deg,#123d5e,#061523)}
+.category-blue{background:radial-gradient(circle at 90% 10%,rgba(255,157,46,.18),transparent 35%),linear-gradient(145deg,#3a291b,#071522)}
+.category-card:hover{transform:translateY(-8px);border-color:rgba(255,157,46,.55);box-shadow:0 24px 60px rgba(0,0,0,.32)}
+.category-label{font-size:9px;letter-spacing:2px;color:var(--orange);font-weight:800}
+.category-card strong{font-size:clamp(28px,3vw,40px);line-height:1;margin-top:auto;max-width:520px}
+.category-card small{color:var(--muted);font-size:12px;margin-top:9px}
+.category-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.category-tags i{font-style:normal;font-size:9px;padding:7px 9px;border:1px solid rgba(255,255,255,.12);border-radius:20px;color:#d1e0e9;background:rgba(255,255,255,.04)}
+.category-card b{font-size:10px;letter-spacing:1px;color:var(--orange);margin-top:22px}
+@media(max-width:700px){.job-categories{padding:75px 18px}.job-category-grid{grid-template-columns:1fr}.category-card{min-height:275px;padding:24px}.category-card strong{font-size:31px}}
