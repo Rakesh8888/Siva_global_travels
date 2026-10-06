@@ -513,3 +513,109 @@ function initHeroAircraft3D(){
   animate();
 }
 document.addEventListener("DOMContentLoaded",initHeroAircraft3D);
+
+
+/* PREMIUM HERO 3D CRUISE SHIP */
+let heroCruiseReady=false;
+function initHeroCruise3D(){
+  const host=document.querySelector("#heroCruise3D");
+  if(!host || !window.THREE || heroCruiseReady) return;
+  heroCruiseReady=true;
+  const THREE=window.THREE;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(34,1,.1,60);
+  camera.position.set(0,0,5.6);
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setClearColor(0x000000,0);
+  host.innerHTML="";
+  host.appendChild(renderer.domElement);
+
+  const ship=new THREE.Group();
+  ship.rotation.set(.05,-.25,-.05);
+  ship.scale.setScalar(1.12);
+  scene.add(ship);
+
+  const hullMat=new THREE.MeshStandardMaterial({color:0xf4f7fa,metalness:.35,roughness:.25});
+  const darkMat=new THREE.MeshStandardMaterial({color:0x1b334a,metalness:.3,roughness:.28});
+  const glassMat=new THREE.MeshPhysicalMaterial({color:0x77bfe8,metalness:.1,roughness:.08,transparent:true,opacity:.82});
+  const orangeMat=new THREE.MeshStandardMaterial({color:0xff8f1f,metalness:.3,roughness:.24});
+
+  const hull=new THREE.Mesh(new THREE.BoxGeometry(2.55,.48,.72),hullMat);
+  hull.position.y=-.35;
+  hull.scale.x=1.08;
+  ship.add(hull);
+
+  const bow=new THREE.Mesh(new THREE.ConeGeometry(.52,.95,32),hullMat);
+  bow.rotation.z=-Math.PI/2;
+  bow.position.x=1.55;
+  bow.position.y=-.28;
+  bow.scale.z=1.05;
+  ship.add(bow);
+
+  const lowerHull=new THREE.Mesh(new THREE.BoxGeometry(2.35,.12,.70),orangeMat);
+  lowerHull.position.set(0,-.59,0);
+  ship.add(lowerHull);
+
+  for(let i=0;i<4;i++){
+    const deck=new THREE.Mesh(new THREE.BoxGeometry(1.85-i*.16,.18,.60),hullMat);
+    deck.position.set(-.10,.02+i*.20,0);
+    ship.add(deck);
+  }
+
+  const bridge=new THREE.Mesh(new THREE.BoxGeometry(.72,.35,.54),glassMat);
+  bridge.position.set(.62,.52,0);
+  ship.add(bridge);
+
+  for(let i=0;i<6;i++){
+    const window=new THREE.Mesh(new THREE.BoxGeometry(.13,.08,.025),darkMat);
+    window.position.set(-.70+i*.28,.22,.315);
+    ship.add(window);
+    const other=window.clone();
+    other.position.z=-.315;
+    ship.add(other);
+  }
+
+  for(let i=0;i<3;i++){
+    const funnel=new THREE.Mesh(new THREE.CylinderGeometry(.075,.095,.38,18),orangeMat);
+    funnel.position.set(-.62+i*.25,.66,0);
+    ship.add(funnel);
+  }
+
+  const topDeck=new THREE.Mesh(new THREE.BoxGeometry(.72,.06,.58),glassMat);
+  topDeck.position.set(-.18,.80,0);
+  ship.add(topDeck);
+
+  const mast=new THREE.Mesh(new THREE.CylinderGeometry(.018,.018,.45,10),darkMat);
+  mast.position.set(.05,1.02,0);
+  ship.add(mast);
+
+  scene.add(new THREE.HemisphereLight(0xbde4ff,0x18283a,2.0));
+  const key=new THREE.DirectionalLight(0xffffff,3.1);
+  key.position.set(4,4,5);
+  scene.add(key);
+  const warm=new THREE.PointLight(0xff9d2e,3.5,12);
+  warm.position.set(-3,1,3);
+  scene.add(warm);
+
+  function resize(){
+    const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize",resize,{passive:true});
+
+  const clock=new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    ship.rotation.y=-.25+Math.sin(t*.45)*.07;
+    ship.rotation.z=-.05+Math.sin(t*.8)*.025;
+    ship.position.y=Math.sin(t*1.15)*.055;
+    renderer.render(scene,camera);
+  }
+  animate();
+}
+document.addEventListener("DOMContentLoaded",initHeroCruise3D);
