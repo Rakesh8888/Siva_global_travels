@@ -243,7 +243,15 @@
                     <option>Cruise Jobs Assistance</option>
                 </select>
             </label>
-            <label>Destination / Goal<input id="enquiryGoal" type="text" placeholder="e.g. Kuwait job / Europe trip"></label>
+            <label>Job Type
+                <select id="enquiryJobType">
+                    <option value="">Select if job enquiry</option>
+                    <option>Skilled Jobs</option>
+                    <option>Unskilled / Blue-Collar Jobs</option>
+                </select>
+            </label>
+            <label>Job Role<input id="enquiryJobRole" type="text" placeholder="e.g. Painter / Warehouse / Welder"></label>
+            <label>Destination / Goal<input id="enquiryGoal" type="text" placeholder="e.g. Kuwait job / Germany career"></label>
             <label>Message<textarea id="enquiryMessage" rows="3" placeholder="Tell us briefly what you are looking for"></textarea></label>
             <button type="submit" class="enquiry-submit">Prepare WhatsApp Enquiry <span>↗</span></button>
             <p class="form-note" id="formNote">Your message will open in WhatsApp so you can choose the contact.</p>
