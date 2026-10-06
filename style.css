@@ -1258,3 +1258,16 @@ main .buttons .btn{
 .logo-text{display:none!important}
 @media(max-width:900px){.brand.brand-logo{width:150px!important;height:39px!important;flex-basis:150px!important}.hero-logo-lockup{width:min(390px,82vw)}}
 @media(max-width:700px){.brand.brand-logo{width:126px!important;height:33px!important;flex-basis:126px!important}.hero-logo-lockup{width:min(330px,88vw);margin-bottom:10px}}
+
+
+/* SIVA GLOBAL TRAVELS official logo interface */
+.site-nav .brand{display:flex;align-items:center;width:210px;height:48px;gap:0}
+.site-nav .brand-logo{display:block;width:210px;height:auto;max-height:48px;object-fit:contain;object-position:left center}
+.logo-text{display:block;width:min(420px,82vw);height:auto;margin-bottom:17px;letter-spacing:0!important}
+.logo-text img{display:block;width:100%;height:auto;max-height:116px;object-fit:contain;object-position:left center}
+@media(max-width:700px){
+  .site-nav .brand{width:150px;height:38px}
+  .site-nav .brand-logo{width:150px;max-height:38px}
+  .logo-text{width:min(300px,84vw)}
+  .logo-text img{max-height:82px}
+}
