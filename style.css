@@ -343,3 +343,91 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .ai-voice-cancel{padding:8px 11px;font-size:10px}
   .ai-globe{width:88vw;height:88vw;max-width:390px;max-height:390px}
 }
+
+
+/* LUCKY AI MOBILE HEADER FIX */
+.ai-chat-head{
+  padding:14px 16px;
+  align-items:flex-start;
+  gap:12px;
+}
+.ai-chat-title{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
+.ai-chat-title strong{
+  display:block;
+  font-size:30px!important;
+  line-height:.9;
+  letter-spacing:2px;
+  font-weight:950;
+}
+.ai-chat-title small{
+  display:block;
+  font-size:10px!important;
+  line-height:1.25;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  margin-top:2px!important;
+  color:#9eb5c4!important;
+}
+.ai-chat-head-actions{
+  display:grid!important;
+  grid-template-columns:auto 24px;
+  grid-template-rows:auto auto;
+  gap:7px;
+  align-items:center;
+  flex:0 0 auto;
+}
+.ai-chat-head-actions .ai-cancel-btn{
+  grid-column:1;
+  grid-row:1;
+  border:1px solid rgba(255,157,46,.55)!important;
+  background:rgba(255,157,46,.10)!important;
+  color:#fff!important;
+  border-radius:999px!important;
+  padding:7px 11px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  width:auto!important;
+  height:auto!important;
+  white-space:nowrap;
+}
+.ai-chat-head-actions select{
+  grid-column:1;
+  grid-row:2;
+  width:128px;
+  min-width:0;
+  font-size:10px!important;
+}
+.ai-chat-head-actions > #aiChatClose{
+  grid-column:2;
+  grid-row:2;
+  width:24px!important;
+  height:24px!important;
+  padding:0!important;
+  font-size:20px!important;
+  line-height:20px!important;
+  border:0!important;
+  background:transparent!important;
+  color:#dce8f0!important;
+}
+.ai-chat-head > .ai-chat-head-actions > button:not(.ai-cancel-btn):not(#aiChatClose){font-size:14px}
+
+@media(max-width:700px){
+  .ai-chat-panel{
+    width:calc(100vw - 24px);
+    height:min(465px,calc(100dvh - 118px));
+    max-height:465px;
+    border-radius:18px;
+  }
+  .ai-chat{right:12px;bottom:12px}
+  .ai-chat-head{padding:14px 14px 12px}
+  .ai-chat-title strong{font-size:27px!important}
+  .ai-chat-title small{font-size:8px!important;max-width:165px}
+  .ai-chat-head-actions select{width:120px}
+  .ai-msg{font-size:11px;padding:9px 11px}
+  .ai-quick{padding:7px 9px}
+  .ai-chat-form{padding:8px}
+  .ai-chat-form input{padding:10px;font-size:12px}
+  .ai-chat-form button{width:40px}
+  .ai-chat-foot{padding:5px;font-size:7px}
+}
