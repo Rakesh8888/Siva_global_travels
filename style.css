@@ -431,3 +431,41 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .ai-chat-form button{width:40px}
   .ai-chat-foot{padding:5px;font-size:7px}
 }
+
+
+/* FINAL MOBILE LUCKY HEADER CLEANUP */
+.ai-chat-head-actions > #aiChatClose{
+  display:none!important;
+}
+.ai-chat-head-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+}
+.ai-chat-head-actions .ai-cancel-btn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:0!important;
+  height:34px!important;
+  padding:0 14px!important;
+  border:1px solid rgba(255,157,46,.55)!important;
+  border-radius:999px!important;
+  background:rgba(255,157,46,.10)!important;
+  color:#fff!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+}
+.ai-chat-head-actions select{
+  width:120px!important;
+  height:34px!important;
+}
+@media(max-width:700px){
+  .ai-chat-head-actions{gap:6px!important}
+  .ai-chat-head-actions .ai-cancel-btn{height:32px!important;padding:0 11px!important;font-size:10px!important}
+  .ai-chat-head-actions select{width:118px!important;height:32px!important}
+}
