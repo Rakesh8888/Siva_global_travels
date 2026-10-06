@@ -469,3 +469,25 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .ai-chat-head-actions .ai-cancel-btn{height:32px!important;padding:0 11px!important;font-size:10px!important}
   .ai-chat-head-actions select{width:118px!important;height:32px!important}
 }
+
+
+/* Restore dedicated LUCKY AI popup close button */
+.ai-chat-head-actions > #aiChatClose{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  grid-column:auto!important;
+  grid-row:auto!important;
+  width:28px!important;
+  height:34px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#fff!important;
+  font-size:25px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+}
+.ai-chat-head-actions > #aiChatClose:hover{
+  color:var(--orange)!important;
+}
