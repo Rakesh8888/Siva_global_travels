@@ -98,3 +98,47 @@ footer{display:flex;justify-content:space-between;padding:22px 5vw;background:#0
 .form-note{color:#60788b;font-size:10px;line-height:1.5;margin:0}
 @media(max-width:900px){.trust-enquiry{grid-template-columns:1fr;padding-left:5vw;padding-right:5vw}}
 @media(max-width:700px){.trust-enquiry{padding:0 18px 80px;gap:14px}.trust-panel,.enquiry-panel{padding:25px 21px;border-radius:17px}.trust-panel h2{font-size:43px}.enquiry-panel h3{font-size:25px}}
+
+
+/* FINAL MOBILE OPTIMIZATION */
+@media(max-width:700px){
+  body{min-width:0}
+  .site-nav{padding:12px 14px}
+  .nav-links{gap:7px}
+  .nav-links .nav-cta{padding:8px 11px;font-size:10px}
+  .brand{gap:7px;max-width:58vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hero-3d{min-height:820px;padding:92px 14px 24px}
+  .hero-copy h1{font-size:clamp(44px,13vw,58px);line-height:.92}
+  .hero-lead{max-width:370px}
+  .hero-trust{gap:11px}
+  .hero-trust i{height:22px}
+  .earth-scene{width:min(94vw,430px);height:min(94vw,430px);bottom:-18px}
+  .floating-card{max-width:155px}
+  .card-destination{right:1%;top:7%}
+  .card-journey{left:1%;bottom:1%}
+  .route-label{font-size:8px;padding:6px 8px}
+  .services{padding:70px 14px}
+  .section-heading h2{font-size:clamp(36px,11vw,46px)}
+  .service-card{padding:22px;min-height:255px}
+  .destinations-strip{margin-top:42px}
+  .trust-enquiry{padding:0 14px 70px}
+  .trust-panel,.enquiry-panel{padding:22px 18px}
+  .trust-panel h2{font-size:clamp(38px,11vw,46px)}
+  .enquiry-form input,.enquiry-form select,.enquiry-form textarea{font-size:16px}
+  .enquiry-submit{min-height:48px}
+  .contact{padding:80px 16px}
+  .contact h2{font-size:clamp(40px,12vw,52px)}
+  footer{padding:18px 14px}
+}
+@media(max-width:390px){
+  .brand{font-size:9px}
+  .brand-mark{width:27px;height:27px}
+  .nav-links .nav-cta{padding:7px 9px}
+  .hero-3d{min-height:780px}
+  .hero-trust{gap:8px}
+  .hero-trust strong{font-size:15px}
+  .hero-trust span{font-size:8px}
+  .floating-card{transform:scale(.88)}
+  .card-destination{right:-8px}
+  .card-journey{left:-8px}
+}
