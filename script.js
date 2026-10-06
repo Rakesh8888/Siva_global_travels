@@ -755,12 +755,64 @@ document.addEventListener("DOMContentLoaded",()=>{
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closePanel();});
 });
 
-/* Overseas worker category selection */
+/* FINAL OVERSEAS JOB CATEGORY UI */
 document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelectorAll(".jobs-category-choice-card[data-job-category]").forEach(card=>{
-    card.addEventListener("click",()=>{
-      const field=document.querySelector("#jobCategory");
-      if(field){field.value=card.dataset.jobCategory; field.dispatchEvent(new Event("change",{bubbles:true}));}
+  const panel=document.querySelector("#jobRolePanel");
+  const close=document.querySelector("#jobRolePanelClose");
+  const title=document.querySelector("#jobRolePanelTitle");
+  const kicker=document.querySelector("#jobRolePanelKicker");
+  const textEl=document.querySelector("#jobRolePanelText");
+  const list=document.querySelector("#jobRoleList");
+
+  const roleData={
+    "Skilled Jobs":{
+      kicker:"SKILLED JOBS",
+      title:"Skilled Job Roles",
+      text:"Choose a skilled role to continue to the job enquiry form.",
+      roles:["Painter","Electrician","Welder / Fabricator","Technician","Forklift Operator"]
+    },
+    "Unskilled Jobs":{
+      kicker:"UNSKILLED JOBS",
+      title:"Unskilled Job Roles",
+      text:"Choose an unskilled role to continue to the job enquiry form.",
+      roles:["Helper","Cleaner","Loader","Warehouse Worker","Construction Helper"]
+    }
+  };
+
+  function openJobPanel(category){
+    const d=roleData[category];
+    if(!d||!panel) return;
+    kicker.textContent=d.kicker;
+    title.textContent=d.title;
+    textEl.textContent=d.text;
+    list.innerHTML=d.roles.map(role=>`<button type="button" class="job-role-option" data-role="${role}"><span>${role}</span><span>↗</span></button>`).join("");
+    panel.hidden=false;
+    document.body.classList.add("job-role-panel-open");
+    list.querySelectorAll(".job-role-option").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const service=document.querySelector("#enquiryService");
+        const jobType=document.querySelector("#enquiryJobType");
+        const jobRole=document.querySelector("#enquiryJobRole");
+        const goal=document.querySelector("#enquiryGoal");
+        if(service) service.value="Overseas Job Assistance";
+        if(jobType) jobType.value=category==="Skilled Jobs" ? "Skilled Jobs" : "Unskilled / Blue-Collar Jobs";
+        if(jobRole) jobRole.value=btn.dataset.role||"";
+        if(goal) goal.value=(btn.dataset.role||"")+" job enquiry";
+        closeJobPanel();
+        document.querySelector("#enquiry")?.scrollIntoView({behavior:"smooth",block:"start"});
+      });
     });
+  }
+
+  function closeJobPanel(){
+    if(panel) panel.hidden=true;
+    document.body.classList.remove("job-role-panel-open");
+  }
+
+  document.querySelectorAll(".jobs-category-choice-card[data-job-category]").forEach(card=>{
+    card.addEventListener("click",()=>openJobPanel(card.dataset.jobCategory));
   });
+  close?.addEventListener("click",closeJobPanel);
+  panel?.addEventListener("click",e=>{if(e.target===panel) closeJobPanel();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape") closeJobPanel();});
 });
