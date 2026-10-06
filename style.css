@@ -896,3 +896,46 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .destination-pills{justify-content:flex-start!important}
   .destination-pill-main,.destination-pill-more{font-size:8px!important;padding:7px 9px!important}
 }
+
+
+/* DESTINATION COUNTRY CARDS — 50% COMPACT */
+.destination-choice-grid{
+  gap:8px!important;
+}
+.destination-choice{
+  min-height:125px!important;
+  height:125px!important;
+  padding:14px!important;
+  border-radius:10px!important;
+}
+.destination-choice .choice-number{
+  font-size:8px!important;
+}
+.destination-choice .choice-icon{
+  font-size:20px!important;
+}
+.destination-choice strong{
+  font-size:18px!important;
+  line-height:1.05!important;
+}
+.destination-choice small{
+  font-size:9px!important;
+  margin-top:4px!important;
+}
+.destination-choice b{
+  font-size:8px!important;
+  margin-top:9px!important;
+}
+@media(max-width:700px){
+  .destination-choice-grid{gap:6px!important}
+  .destination-choice{
+    min-height:82px!important;
+    height:82px!important;
+    padding:9px!important;
+    border-radius:7px!important;
+  }
+  .destination-choice .choice-icon{font-size:15px!important}
+  .destination-choice strong{font-size:12px!important}
+  .destination-choice small{font-size:7px!important}
+  .destination-choice b{font-size:7px!important;margin-top:5px!important}
+}
