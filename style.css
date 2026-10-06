@@ -682,3 +682,33 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
 .ai-chat-panel[hidden]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 .ai-chat-toggle[hidden]{display:none!important}
 .ai-voice-mode[hidden]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+
+
+/* Destination group options */
+.destination-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:38px}
+.destination-group{position:relative;overflow:hidden;padding:30px;border:1px solid rgba(255,255,255,.12);border-radius:26px;background:linear-gradient(145deg,rgba(13,39,52,.95),rgba(4,18,30,.98));box-shadow:0 24px 70px rgba(0,0,0,.22)}
+.destination-group:before{content:"";position:absolute;inset:-35% auto auto -15%;width:220px;height:220px;border-radius:50%;background:rgba(255,145,35,.09);filter:blur(10px);pointer-events:none}
+.destination-group-europe{grid-column:span 2}
+.destination-group-head{position:relative;display:flex;align-items:center;gap:18px;margin-bottom:24px}
+.destination-group-number{font-size:13px;font-weight:800;letter-spacing:.18em;color:#ff922d}
+.destination-group-head .section-kicker{margin:0 0 5px}
+.destination-group h3{margin:0;font-size:clamp(25px,3vw,38px);color:#fff}
+.destination-group-icon{margin-left:auto;font-size:30px;color:#ff922d}
+.destination-country-list{position:relative;display:flex;flex-wrap:wrap;gap:10px}
+.destination-country-list a{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(255,255,255,.045);color:#e9f0f4;text-decoration:none;font-size:14px;transition:.25s ease}
+.destination-country-list a:hover{transform:translateY(-2px);border-color:rgba(255,146,45,.55);background:rgba(255,146,45,.1);color:#fff}
+.destination-country-list-wide{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.destination-country-list-wide a{justify-content:flex-start;border-radius:14px}
+.destination-group p{position:relative;margin:22px 0 0;color:#8fa7b5;line-height:1.7;font-size:14px}
+@media(max-width:850px){
+  .destination-groups{grid-template-columns:1fr}
+  .destination-group-europe{grid-column:span 1}
+  .destination-country-list-wide{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .destination-group{padding:22px}
+  .destination-group-head{gap:12px}
+  .destination-group h3{font-size:24px}
+  .destination-country-list-wide{grid-template-columns:1fr}
+  .destination-country-list a{width:100%;box-sizing:border-box}
+}
