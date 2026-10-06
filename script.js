@@ -765,17 +765,11 @@ document.addEventListener("DOMContentLoaded",()=>{
   const list=document.querySelector("#jobRoleList");
 
   const roleData={
-    "Skilled Jobs":{
-      kicker:"SKILLED JOBS",
-      title:"Skilled Job Roles",
-      text:"Choose a skilled role to continue to the job enquiry form.",
-      roles:["Painter","Electrician","Welder / Fabricator","Technician","Forklift Operator"]
-    },
-    "Unskilled Jobs":{
-      kicker:"UNSKILLED JOBS",
-      title:"Unskilled Job Roles",
-      text:"Choose an unskilled role to continue to the job enquiry form.",
-      roles:["Helper","Cleaner","Loader","Warehouse Worker","Construction Helper"]
+    "Skilled & Unskilled Jobs":{
+      kicker:"JOB OPPORTUNITIES",
+      title:"Skilled & Unskilled Job Roles",
+      text:"Choose a job role to continue to the job enquiry form.",
+      roles:["Painter","Electrician","Welder / Fabricator","Technician","Forklift Operator","Helper","Cleaner","Loader","Warehouse Worker","Construction Helper"]
     }
   };
 
