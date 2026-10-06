@@ -816,3 +816,29 @@ document.addEventListener("DOMContentLoaded",()=>{
   panel?.addEventListener("click",e=>{if(e.target===panel) closeJobPanel();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape") closeJobPanel();});
 });
+
+
+/* WHITE / DARK MODE TOGGLE */
+document.addEventListener("DOMContentLoaded",()=>{
+  const btn=document.querySelector("#themeToggle");
+  if(!btn) return;
+  const saved=localStorage.getItem("sivaTheme");
+  if(saved==="light") document.body.classList.add("light-mode");
+
+  function syncTheme(){
+    const light=document.body.classList.contains("light-mode");
+    const icon=btn.querySelector(".theme-icon");
+    const label=btn.querySelector(".theme-label");
+    if(icon) icon.textContent=light ? "☾" : "☀";
+    if(label) label.textContent=light ? "DARK" : "WHITE";
+    btn.setAttribute("aria-label",light ? "Switch to dark mode" : "Switch to white mode");
+    btn.title=light ? "Dark mode" : "White mode";
+  }
+  syncTheme();
+
+  btn.addEventListener("click",()=>{
+    const light=document.body.classList.toggle("light-mode");
+    localStorage.setItem("sivaTheme",light ? "light" : "dark");
+    syncTheme();
+  });
+});
