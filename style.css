@@ -1564,3 +1564,24 @@ body.light-mode .ai-voice-overlay{color:#102033}
   .jobs-category-choice-card-merged strong{font-size:8px!important}
   .jobs-category-choice-card-merged b{font-size:6px!important}
 }
+
+
+/* 70% smaller template cards */
+.destination-choice{
+  transform:scale(.7);
+  transform-origin:center;
+  margin:-8% 0;
+}
+.jobs-category-choice-card-merged{
+  transform:scale(.7)!important;
+}
+.service-card{
+  transform:scale(.7);
+  transform-origin:center;
+  margin:-7.5% 0;
+}
+@media(max-width:700px){
+  .destination-choice{transform:scale(.7);margin:-7% 0}
+  .jobs-category-choice-card-merged{transform:scale(.7)!important}
+  .service-card{transform:scale(.7);margin:-7% 0}
+}
