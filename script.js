@@ -153,13 +153,70 @@ const aiHistory=[];
 const aiLanguage=document.querySelector("#aiLanguage");
 function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
 function getVoiceLocale(){
-  const map={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","de-LI":"de-LI","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"}; return map[aiLanguage?.value]||"en-IN";
+  const map={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","de-LI":"de-LI","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"}; 
+  return map[aiLanguage?.value]||"en-IN";
 }
 function setSpeakingUi(speaking){
-  if("speechSynthesis" in window && aiSpeak){
+  if(aiSpeak){aiSpeak.classList.toggle("active",speaking);aiSpeak.textContent=speaking?"⏹️":"🔊";}
+  if(aiVoiceStatus && speaking) aiVoiceStatus.textContent="LUCKY is speaking…";
+}
+function speakLucky(text){
+  if(!text || !("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const lang=getVoiceLocale();
+  const run=()=>{
+    const voices=speechSynthesis.getVoices();
+    const base=lang.split("-")[0].toLowerCase();
+    const voice=voices.find(v=>v.lang?.toLowerCase()===lang.toLowerCase())||voices.find(v=>v.lang?.toLowerCase().startsWith(base));
+    const chunks=String(text).replace(/\s+/g," ").trim().match(/.{1,180}(?:\s|$)/g)||[String(text)];
+    let i=0;
+    const next=()=>{
+      if(i>=chunks.length){aiSpeaking=false;setSpeakingUi(false);if(aiVoiceStatus)aiVoiceStatus.textContent="Tap the microphone to speak";return;}
+      const u=new SpeechSynthesisUtterance(chunks[i++].trim());
+      u.lang=lang;u.rate=.96;u.pitch=1;u.volume=1;if(voice)u.voice=voice;
+      u.onend=next;u.onerror=()=>{aiSpeaking=false;setSpeakingUi(false);if(aiVoiceStatus)aiVoiceStatus.textContent="Voice playback failed — tap 🔊 to retry";};
+      speechSynthesis.speak(u);
+    };
+    aiSpeaking=true;setSpeakingUi(true);next();
+  };
+  if(speechSynthesis.getVoices().length) run();
+  else {speechSynthesis.onvoiceschanged=run;setTimeout(run,700);}
+}
+async function askAi(message,options={}){
+  if(!message || !aiMessages) return;
+  addAiMessage(message,"user");
+  aiHistory.push({role:"user",content:message});
+  const loading=document.createElement("div");
+  loading.className="ai-msg ai-msg-bot";loading.textContent="Thinking…";aiMessages.appendChild(loading);
+  const sendButton=aiForm?.querySelector('button[type="submit"],button:not([type])');
+  if(sendButton){sendButton.disabled=true;sendButton.setAttribute("aria-busy","true");}
+  try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),30000);
+    const res=await fetch("/api/chat",{
+      method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({message,language:aiLanguage?.value||"en-IN",history:aiHistory.slice(0,-1).slice(-8)}),
+      signal:controller.signal
+    });
+    clearTimeout(timeout);
+    let data={};try{data=await res.json()}catch(_){}
+    loading.remove();
+    if(!res.ok) throw new Error(data.error||"AI request failed");
+    const reply=(data.reply||"Please continue with WhatsApp and our team will assist you.").trim();
+    addAiMessage(reply);aiHistory.push({role:"assistant",content:reply});
+    if(options.voice) speakLucky(reply);
+  }catch(e){
+    loading.remove();
+    const msg=e?.name==="AbortError"?"LUCKY is taking too long to respond. Please try again or use WhatsApp.":"LUCKY is temporarily unavailable. Please try again or use WhatsApp.";
+    addAiMessage(msg);
+    if(options.voice) speakLucky(msg);
+  }finally{
+    if(sendButton){sendButton.disabled=false;sendButton.removeAttribute("aria-busy");}
+  }
+}
+if("speechSynthesis" in window && aiSpeak){
   aiSpeak.addEventListener("click",()=>{
-    const msgs=aiMessages?.querySelectorAll(".ai-msg-bot"); const last=msgs?.[msgs.length-1];
-    if(!last) return;
+    const msgs=aiMessages?.querySelectorAll(".ai-msg-bot");const last=msgs?.[msgs.length-1];if(!last)return;
     if(aiSpeaking){speechSynthesis.cancel();aiSpeaking=false;setSpeakingUi(false);return;}
     speakLucky(last.textContent);
   });
