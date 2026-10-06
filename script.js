@@ -754,3 +754,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   panel?.addEventListener("click",e=>{if(e.target===panel)closePanel();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closePanel();});
 });
+
+/* Overseas worker category selection */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll(".jobs-category-choice-card[data-job-category]").forEach(card=>{
+    card.addEventListener("click",()=>{
+      const field=document.querySelector("#jobCategory");
+      if(field){field.value=card.dataset.jobCategory; field.dispatchEvent(new Event("change",{bubbles:true}));}
+    });
+  });
+});
