@@ -152,57 +152,16 @@ const aiToggle=document.querySelector("#aiChatToggle"),aiPanel=document.querySel
 const aiHistory=[];
 const aiLanguage=document.querySelector("#aiLanguage");
 function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
-async function askAi(message){
-  if(!message || !aiMessages) return;
-  addAiMessage(message,"user");
-  aiHistory.push({role:"user",content:message});
-  const loading=document.createElement("div");
-  loading.className="ai-msg ai-msg-bot";
-  loading.textContent="Thinking…";
-  aiMessages.appendChild(loading);
-  const sendButton=aiForm?.querySelector('button[type="submit"],button:not([type])');
-  if(sendButton){sendButton.disabled=true;sendButton.setAttribute("aria-busy","true");}
-  try{
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),30000);
-    const res=await fetch("/api/chat",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({message,language:aiLanguage?.value||"en-IN",history:aiHistory.slice(0,-1).slice(-8)}),
-      signal:controller.signal
-    });
-    clearTimeout(timeout);
-    let data={};
-    try{data=await res.json()}catch(_){}
-    loading.remove();
-    if(!res.ok) throw new Error(data.error||"AI request failed");
-    const reply=(data.reply||"Please continue with WhatsApp and our team will assist you.").trim();
-    addAiMessage(reply);
-    aiHistory.push({role:"assistant",content:reply});
-  }catch(e){
-    loading.remove();
-    const msg=e?.name==="AbortError"
-      ?"LUCKY is taking too long to respond. Please try again or use WhatsApp."
-      :"LUCKY is temporarily unavailable. Please try again or use WhatsApp.";
-    addAiMessage(msg);
-  }finally{
-    if(sendButton){sendButton.disabled=false;sendButton.removeAttribute("aria-busy");}
-  }
+function getVoiceLocale(){
+  const map={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","de-LI":"de-LI","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"}; return map[aiLanguage?.value]||"en-IN";
 }
-if(aiToggle)aiToggle.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();if(aiPanel){aiPanel.hidden=false;aiPanel.style.display="";aiPanel.setAttribute("aria-hidden","false");}aiToggle.hidden=true;setTimeout(()=>aiInput?.focus(),0)});
-if(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
-if(aiClose)aiClose.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();if(aiPanel){aiPanel.hidden=true;aiPanel.setAttribute("aria-hidden","true");aiPanel.style.display="none";}if(aiToggle){aiToggle.hidden=false;aiToggle.removeAttribute("aria-hidden");aiToggle.focus();}if(aiRecognition&&aiRecognition._running){try{aiRecognition.stop()}catch(_){}}});
-if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
-const aiMic=document.querySelector("#aiMic"), aiSpeak=document.querySelector("#aiSpeak");
-let aiRecognition=null, aiSpeaking=false;
-if("speechSynthesis" in window && aiSpeak){
+function setSpeakingUi(speaking){
+  if("speechSynthesis" in window && aiSpeak){
   aiSpeak.addEventListener("click",()=>{
     const msgs=aiMessages?.querySelectorAll(".ai-msg-bot"); const last=msgs?.[msgs.length-1];
     if(!last) return;
-    if(aiSpeaking){speechSynthesis.cancel(); aiSpeaking=false; aiSpeak.classList.remove("active"); aiSpeak.textContent="🔊"; return;}
-    const u=new SpeechSynthesisUtterance(last.textContent);
-    const langMap={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"};
-    u.lang=langMap[aiLanguage?.value]||"en-IN"; u.onend=()=>{aiSpeaking=false;aiSpeak.classList.remove("active");aiSpeak.textContent="🔊"}; aiSpeaking=true;aiSpeak.classList.add("active");aiSpeak.textContent="⏹️";speechSynthesis.speak(u);
+    if(aiSpeaking){speechSynthesis.cancel();aiSpeaking=false;setSpeakingUi(false);return;}
+    speakLucky(last.textContent);
   });
 }
 const aiVoiceMode=document.querySelector("#aiVoiceMode");
@@ -236,7 +195,11 @@ if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in windo
   aiVoiceMic?.addEventListener("click",startLuckyRecognition);
   aiRecognition.onresult=e=>{
     const v=e.results?.[0]?.[0]?.transcript?.trim();
-    if(v){if(aiInput)aiInput.value=v;askAi(v);if(aiInput)aiInput.value="";}
+    if(v){
+      if(aiInput)aiInput.value=v;
+      askAi(v,{voice:true});
+      if(aiInput)aiInput.value="";
+    }
   };
   aiRecognition.onend=()=>{aiRecognition._running=false;setVoiceUi(false);};
   aiRecognition.onerror=()=>{aiRecognition._running=false;setVoiceUi(false);if(aiVoiceStatus)aiVoiceStatus.textContent="Voice input unavailable — try again";};
