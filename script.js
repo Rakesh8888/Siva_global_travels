@@ -849,3 +849,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   toggle?.addEventListener("click",()=>setTheme(document.body.classList.contains("night-mode")?"day":"night"));
   setTheme(saved);
 });
+
+
+/* SIVA FINAL FALLBACK */
+window.addEventListener("load",()=>{
+  if(!window.THREE){
+    document.documentElement.classList.add("no-three");
+    const host=document.querySelector("#heroGlobe3D");
+    if(host) host.setAttribute("aria-label","3D globe fallback");
+  }
+});
