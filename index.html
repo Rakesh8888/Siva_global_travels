@@ -353,5 +353,15 @@
 </footer>
 
 <script src="script.js"></script>
+<div class="ai-chat" id="aiChat">
+  <button class="ai-chat-toggle" id="aiChatToggle" aria-label="Open AI customer assistant">✦ AI</button>
+  <div class="ai-chat-panel" id="aiChatPanel" hidden>
+    <div class="ai-chat-head"><div><strong>Siva AI Assistant</strong><small>Travel • Visa • Jobs • Cruise</small></div><button id="aiChatClose" aria-label="Close">×</button></div>
+    <div class="ai-chat-messages" id="aiChatMessages"><div class="ai-msg ai-msg-bot">Hello! 👋 I’m the Siva Global Travels assistant. I can help with travel, visa, overseas jobs and cruise-job enquiries.</div></div>
+    <div class="ai-quick"><button data-ai="Overseas job assistance">Overseas Jobs</button><button data-ai="Visa assistance">Visa</button><button data-ai="Tour packages">Travel</button><button data-ai="Cruise jobs">Cruise Jobs</button></div>
+    <form class="ai-chat-form" id="aiChatForm"><input id="aiChatInput" placeholder="Type your enquiry..." autocomplete="off" required><button>➤</button></form>
+    <div class="ai-chat-foot">AI guidance only • No visa or job guarantee</div>
+  </div>
+</div>
 </body>
 </html>
