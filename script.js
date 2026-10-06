@@ -116,10 +116,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const jobRole = document.querySelector("#enquiryJobRole")?.value.trim() || "";
             const goal = document.querySelector("#enquiryGoal").value.trim();
             const message = document.querySelector("#enquiryMessage").value.trim();
+            const cv = document.querySelector("#cvUpload")?.files?.[0] || null;
+            if (cv && cv.size > 5 * 1024 * 1024) {
+                alert("Please select a CV smaller than 5 MB.");
+                return;
+            }
             const note = document.querySelector("#formNote");
 
             const text = [
                 "Hello Siva Global Travels,",
+                "",
+                cv ? `CV / Resume selected: ${cv.name}` : "CV / Resume: Not attached yet.",
                 "",
                 `Name: ${name}`,
                 `Service: ${service}`,
