@@ -23,14 +23,25 @@ The selected response language is: ${language}. Reply in that language. Supporte
       ...history.filter(x => x && (x.role === "user" || x.role === "assistant")).slice(-8),
       { role: "user", content: message }
     ];
+    if (!process.env.OPENAI_API_KEY) {
+      return res.status(503).json({ error: "AI service is not configured yet." });
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
     const r = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + process.env.OPENAI_API_KEY },
-      body: JSON.stringify({ model: "gpt-6-luna", input })
+      body: JSON.stringify({ model: "gpt-6-luna", input }),
+      signal: controller.signal
     });
-    const data = await r.json();
-    if (!r.ok) return res.status(500).json({ error: "AI request failed" });
-    return res.status(200).json({ reply: data.output_text || "Please continue with WhatsApp for assistance." });
+    clearTimeout(timer);
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      console.error("LUCKY AI provider error:", r.status, data);
+      return res.status(r.status >= 500 ? 502 : 500).json({ error: "AI provider request failed." });
+    }
+    const reply = typeof data.output_text === "string" ? data.output_text.trim() : "";
+    return res.status(200).json({ reply: reply || "I could not generate a reply. Please try again." });
   } catch (e) {
     return res.status(500).json({ error: "Server error" });
   }
