@@ -832,7 +832,18 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-/* WHITE / DARK MODE TOGGLE */
+/* DAY / NIGHT MODE */
 document.addEventListener("DOMContentLoaded",()=>{
-
+  const day=document.querySelector("#dayModeBtn");
+  const night=document.querySelector("#nightModeBtn");
+  const saved=localStorage.getItem("sivaTheme")||"day";
+  function setTheme(mode){
+    document.body.classList.toggle("night-mode",mode==="night");
+    day?.classList.toggle("active",mode==="day");
+    night?.classList.toggle("active",mode==="night");
+    localStorage.setItem("sivaTheme",mode);
+  }
+  day?.addEventListener("click",()=>setTheme("day"));
+  night?.addEventListener("click",()=>setTheme("night"));
+  setTheme(saved);
 });
