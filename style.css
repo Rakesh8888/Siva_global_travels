@@ -938,3 +938,52 @@ footer {
         bottom: 38px;
     }
 }
+
+
+/* REALISTIC EARTH OVERRIDE */
+.globe-3d {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 390px;
+    height: 390px;
+    object-position: 52% 50%;
+    transform: scale(1.18);
+    box-shadow:
+        inset -35px -20px 55px rgba(0,0,0,.58),
+        0 0 35px rgba(40,180,255,.45);
+    animation: globeRealFloat 5s ease-in-out infinite;
+}
+
+@keyframes globeRealFloat {
+    0%,100% { transform: scale(1.18) translateY(0); }
+    50% { transform: scale(1.20) translateY(-8px); }
+}
+
+/* Tighter plane silhouette so the source checkerboard is hidden */
+.plane-3d {
+    clip-path: polygon(
+        3% 31%, 7% 34%, 20% 39%, 29% 45%,
+        35% 43%, 39% 38%, 45% 33%, 54% 29%,
+        64% 27%, 75% 28%, 86% 30%, 96% 34%,
+        99% 38%, 97% 43%, 90% 47%, 82% 49%,
+        77% 54%, 75% 62%, 71% 61%, 68% 52%,
+        61% 48%, 55% 47%, 51% 51%, 46% 57%,
+        40% 59%, 34% 53%, 29% 48%, 22% 45%,
+        14% 42%, 8% 39%, 4% 37%
+    );
+}
+
+@media (max-width: 768px) {
+    .globe-3d {
+        width: 285px;
+        height: 285px;
+        left: 37px;
+        top: 37px;
+        transform: scale(1.16);
+    }
+
+    @keyframes globeRealFloat {
+        0%,100% { transform: scale(1.16) translateY(0); }
+        50% { transform: scale(1.18) translateY(-6px); }
+    }
+}
