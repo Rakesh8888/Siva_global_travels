@@ -11,13 +11,34 @@ CONVERSATIONAL STYLE:
 - Never invent vacancies, employers, salaries or fees.
 - For applications or specific current vacancies, collect name, destination, job type, job role and experience, then direct the user to WhatsApp at +91 91826 41172.`;
 
+function corsHeaders(request) {
+  const origin = request.headers.get("Origin");
+  return {
+    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Vary": "Origin"
+  };
+}
+
+function jsonResponse(data, status, request) {
+  return Response.json(data, {
+    status,
+    headers: corsHeaders(request)
+  });
+}
+
 async function handleChat(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(request) });
+  }
+
   if (request.method !== "POST") {
-    return Response.json({ error: "Method not allowed" }, { status: 405 });
+    return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
 
   if (!env.OPENAI_API_KEY) {
-    return Response.json({ error: "AI service is not configured yet." }, { status: 503 });
+    return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
   try {
@@ -27,7 +48,7 @@ async function handleChat(request, env) {
     const history = Array.isArray(body?.history) ? body.history : [];
 
     if (!message || typeof message !== "string") {
-      return Response.json({ error: "Message is required" }, { status: 400 });
+      return jsonResponse({ error: "Message is required" }, 400, request);
     }
 
     const input = [
@@ -63,9 +84,10 @@ async function handleChat(request, env) {
 
     if (!response.ok) {
       console.error("LUCKY AI provider error:", response.status, data);
-      return Response.json(
+      return jsonResponse(
         { error: "AI provider request failed." },
-        { status: response.status >= 500 ? 502 : 500 }
+        response.status >= 500 ? 502 : 500,
+        request
       );
     }
 
@@ -74,12 +96,14 @@ async function handleChat(request, env) {
         ? data.output_text.trim()
         : "";
 
-    return Response.json({
-      reply: reply || "I could not generate a reply. Please try again."
-    });
+    return jsonResponse(
+      { reply: reply || "I could not generate a reply. Please try again." },
+      200,
+      request
+    );
   } catch (error) {
     console.error("LUCKY AI error:", error);
-    return Response.json({ error: "Server error" }, { status: 500 });
+    return jsonResponse({ error: "Server error" }, 500, request);
   }
 }
 
