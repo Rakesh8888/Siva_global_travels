@@ -92,6 +92,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    document.querySelectorAll(".vacancy-apply").forEach((button) => {
+        button.addEventListener("click", () => {
+            const role = button.dataset.role || "";
+            const service = document.querySelector("#enquiryService");
+            const jobType = document.querySelector("#enquiryJobType");
+            const jobRole = document.querySelector("#enquiryJobRole");
+            const goal = document.querySelector("#enquiryGoal");
+            if (service) service.value = "Overseas Job Assistance";
+            if (jobType) jobType.value = button.closest(".vacancy-card")?.querySelector(".vacancy-top span")?.textContent.includes("BLUE") ? "Unskilled / Blue-Collar Jobs" : "Skilled Jobs";
+            if (jobRole) jobRole.value = role;
+            if (goal) goal.value = "Current vacancy enquiry";
+        });
+    });
+
     const enquiryForm = document.querySelector("#enquiryForm");
     if (enquiryForm) {
         enquiryForm.addEventListener("submit", (event) => {
