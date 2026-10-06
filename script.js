@@ -83,6 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
             note.textContent = CONTACT_CONFIG.whatsappNumber
                 ? "WhatsApp opened for Siva Global Travels."
                 : "WhatsApp opened. The business number will be connected when the official number is added.";
+            if (window.innerWidth < 700) {
+                note.scrollIntoView({behavior:"smooth", block:"nearest"});
+            }
         });
     }
 });
