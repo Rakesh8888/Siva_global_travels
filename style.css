@@ -202,3 +202,13 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 
 .destination-israel:before{background:linear-gradient(135deg,#315a78,#071522)}
 .destination-russia:before{background:linear-gradient(135deg,#633f45,#071522)}
+
+/* OVERSEAS JOBS SHOWCASE */
+.jobs-showcase{padding:105px 5vw;background:linear-gradient(180deg,#06192b,#020812)}
+.jobs-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.job-card{min-height:210px;padding:25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(18,57,86,.8),rgba(3,13,25,.95));text-decoration:none;display:flex;flex-direction:column;transition:.4s}
+.job-card>span{font-size:30px}.job-card strong{font-size:27px;margin-top:auto}.job-card small{color:var(--muted);font-size:11px;margin-top:5px}.job-card b{color:var(--orange);font-size:10px;letter-spacing:1px;margin-top:16px}
+.job-card:hover{transform:translateY(-7px);border-color:rgba(255,157,46,.5);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.jobs-note{max-width:1100px;margin:22px auto 0;color:#60788b;font-size:10px;line-height:1.6;text-align:center}
+@media(max-width:900px){.jobs-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.jobs-showcase{padding:75px 18px}.jobs-grid{grid-template-columns:1fr}.job-card{min-height:185px}}
