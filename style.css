@@ -177,3 +177,6 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .contact-secondary{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.04);text-decoration:none;color:#d8e7f1;font-size:12px;font-weight:800}
 .contact-secondary:hover{border-color:rgba(255,157,46,.5);color:var(--orange)}
 .whatsapp{position:relative}
+
+.contact-actions .contact-secondary{position:relative}
+@media(max-width:700px){.contact-actions{width:100%}.contact-actions .whatsapp,.contact-actions .contact-secondary{width:min(100%,260px)}}
