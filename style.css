@@ -1649,3 +1649,49 @@ input,select,textarea,.flight-fields input,.flight-fields button{background:rgba
   .destination-choice small{font-size:9px!important}
   .destination-choice b{font-size:8px!important;margin-top:9px!important}
 }
+
+/* DAY / NIGHT MODE BUTTONS */
+.theme-mode-buttons{
+  position:fixed;top:74px;right:5vw;z-index:120;
+  display:flex;gap:2px;padding:3px;
+  border:1px solid rgba(19,120,170,.20);border-radius:22px;
+  background:rgba(255,255,255,.82);backdrop-filter:blur(10px);
+  box-shadow:0 5px 18px rgba(20,100,140,.10);
+}
+.mode-btn{
+  border:0;border-radius:18px;padding:7px 10px;
+  background:transparent;color:#55738a;
+  font-size:8px;font-weight:800;letter-spacing:.7px;cursor:pointer;
+}
+.mode-btn.active{background:#1387c5;color:#fff;box-shadow:0 3px 10px rgba(19,135,197,.22)}
+.mode-btn:hover{transform:translateY(-1px)}
+body.night-mode{
+  --navy:#030b18;--blue:#0b2d4d;--blue2:#0b5c8e;
+  --white:#f7fbff;--muted:#a9bdce;--line:rgba(255,255,255,.12);
+  background:#030b18!important;color:#f7fbff!important;
+}
+body.night-mode .site-nav{background:linear-gradient(180deg,rgba(2,9,20,.94),rgba(2,9,20,.72))!important}
+body.night-mode .nav-links{color:#d7e6f1!important}
+body.night-mode .nav-cta{color:#fff!important;background:rgba(3,11,24,.65)!important;border-color:rgba(255,157,46,.45)!important}
+body.night-mode .hero-3d{background:radial-gradient(circle at 72% 50%,#104b70 0%,#061a2e 33%,#020812 72%)!important}
+body.night-mode .hero-copy h1{color:#f7fbff!important;text-shadow:0 20px 50px rgba(0,0,0,.45)!important}
+body.night-mode .hero-lead{color:#bfd0dc!important}.night-mode .hero-trust{color:#91a8ba!important}.night-mode .hero-trust strong{color:#fff!important}
+body.night-mode .btn-secondary{color:#fff!important;background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.12)!important}
+body.night-mode .route-label{background:rgba(2,10,24,.78)!important;color:#fff!important}
+body.night-mode .floating-card{background:rgba(4,15,30,.78)!important;color:#fff!important;border-color:rgba(255,255,255,.14)!important}
+body.night-mode .services{background:linear-gradient(180deg,#020812,#06192b)!important}
+body.night-mode .service-card{background:linear-gradient(145deg,rgba(19,52,82,.82),rgba(4,16,29,.92))!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 20px 50px rgba(0,0,0,.25)!important}
+body.night-mode .service-card p{color:#a9bdce!important}.night-mode .service-card .card-top{color:#718da2!important}
+body.night-mode .destination-showcase,body.night-mode .jobs-showcase,body.night-mode .job-categories,body.night-mode .faq-section{background:linear-gradient(180deg,#020812,#06192b)!important}
+body.night-mode .destination-choice,body.night-mode .jobs-category-choice-card{background:linear-gradient(145deg,#0b2a38,#041521)!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
+body.night-mode .trust-enquiry,body.night-mode .about-section,body.night-mode .detail-content{background:#06192b!important}
+body.night-mode .enquiry-panel,body.night-mode .trust-panel,body.night-mode .payment-card,body.night-mode .app-download-btn{background:rgba(4,16,29,.92)!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
+body.night-mode input,body.night-mode select,body.night-mode textarea,body.night-mode .flight-fields input,body.night-mode .flight-fields button{background:rgba(0,0,0,.2)!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
+body.night-mode .contact{background:#01060e!important}body.night-mode footer{background:#00040a!important;color:#60788b!important}
+body.night-mode .app-download{background:linear-gradient(180deg,#06192b,#020812)!important}
+body.night-mode .theme-mode-buttons{background:rgba(3,11,24,.86);border-color:rgba(255,157,46,.35)}
+body.night-mode .mode-btn{color:#a9bdce}.night-mode .mode-btn.active{background:#ff8a00;color:#fff}
+@media(max-width:700px){
+  .theme-mode-buttons{top:68px;right:12px}
+  .mode-btn{padding:6px 8px;font-size:7px}
+}
