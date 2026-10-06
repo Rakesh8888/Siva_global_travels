@@ -182,13 +182,15 @@ if("speechSynthesis" in window && aiSpeak){
 if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)){
   const R=window.SpeechRecognition||window.webkitSpeechRecognition; aiRecognition=new R(); aiRecognition.continuous=false;aiRecognition.interimResults=false;
   aiMic.addEventListener("click",()=>{
+    const voiceMode=document.querySelector("#aiVoiceMode"), voiceMic=document.querySelector("#aiVoiceMic"), voiceStatus=document.querySelector("#aiVoiceStatus");
+    if(voiceMode) voiceMode.hidden=false;
     if(aiRecognition._running){aiRecognition.stop();return;}
     const langMap={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"};
-    aiRecognition.lang=langMap[aiLanguage?.value]||"en-IN"; aiRecognition._running=true;aiMic.classList.add("active");aiMic.textContent="⏹️";aiRecognition.start();
+    aiRecognition.lang=langMap[aiLanguage?.value]||"en-IN"; aiRecognition._running=true;aiMic.classList.add("active");aiMic.textContent="⏹️";if(voiceMic)voiceMic.classList.add("active");if(voiceStatus)voiceStatus.textContent="Listening… speak now";aiRecognition.start();
   });
   aiRecognition.onresult=e=>{const v=e.results[0][0].transcript;if(aiInput){aiInput.value=v;askAi(v);aiInput.value=""}};
-  aiRecognition.onend=()=>{aiRecognition._running=false;aiMic.classList.remove("active");aiMic.textContent="🎙️"};
-  aiRecognition.onerror=()=>{aiRecognition._running=false;aiMic.classList.remove("active");aiMic.textContent="🎙️"};
+  aiRecognition.onend=()=>{aiRecognition._running=false;aiMic.classList.remove("active");aiMic.textContent="🎙️";if(voiceMic)voiceMic.classList.remove("active");if(voiceStatus)voiceStatus.textContent="Tap the microphone to speak"};
+  aiRecognition.onerror=()=>{aiRecognition._running=false;aiMic.classList.remove("active");aiMic.textContent="🎙️";if(voiceMic)voiceMic.classList.remove("active");if(voiceStatus)voiceStatus.textContent="Voice input unavailable — try again"};
 } else if(aiMic){aiMic.disabled=true;aiMic.title="Voice input is not supported in this browser";}
 
 document.querySelectorAll("[data-ai]").forEach(b=>b.addEventListener("click",()=>askAi(b.dataset.ai)));
