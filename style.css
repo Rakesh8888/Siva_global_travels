@@ -1518,3 +1518,15 @@ body.light-mode .ai-voice-overlay{color:#102033}
 /* Better desktop/mobile logo proportions */
 .logo-text img{object-fit:contain!important}
 .site-nav .brand-logo{object-fit:contain!important}
+
+
+/* Refined logo sizing */
+.site-nav .brand-logo{width:230px;max-height:54px}
+.logo-text{width:min(500px,82vw)}
+.logo-text img{width:100%;max-height:145px}
+@media(max-width:700px){
+  .site-nav .brand{width:145px!important;flex-basis:145px!important;height:38px!important}
+  .site-nav .brand-logo{width:145px!important;max-height:38px!important}
+  .logo-text{width:min(330px,86vw)!important;margin:0 auto 18px!important}
+  .logo-text img{width:100%!important;max-height:102px!important}
+}
