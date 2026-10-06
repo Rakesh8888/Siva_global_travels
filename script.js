@@ -438,6 +438,21 @@ function initHeroGlobe3D(){
   ring.rotation.z=-.18;
   scene.add(ring);
 
+  let flightRouteGroup=null,flightRoutePlane=null;
+  function geoPoint(lat,lon,r=1.685){const p=(90-lat)*Math.PI/180,t=(lon+180)*Math.PI/180;return new THREE.Vector3(-r*Math.sin(p)*Math.cos(t),r*Math.cos(p),r*Math.sin(p)*Math.sin(t));}
+  function arcPoint(a,b,t){const ang=a.angleTo(b);if(ang<.0001)return a.clone().lerp(b,t).normalize();const s=Math.sin(ang);return a.clone().multiplyScalar(Math.sin((1-t)*ang)/s).add(b.clone().multiplyScalar(Math.sin(t*ang)/s)).normalize();}
+  window.renderFlightRoute=(from,to)=>{
+    if(flightRouteGroup)group.remove(flightRouteGroup);
+    flightRouteGroup=new THREE.Group();
+    const start=geoPoint(from.lat,from.lon),end=geoPoint(to.lat,to.lon),pts=[];
+    for(let i=0;i<=80;i++){const t=i/80,p=arcPoint(start.clone().normalize(),end.clone().normalize(),t);p.multiplyScalar(1.685+Math.sin(Math.PI*t)*.12);pts.push(p);}
+    flightRouteGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xff9d2e,transparent:true,opacity:.95})));
+    const markerMat=new THREE.MeshStandardMaterial({color:0xff9d2e,emissive:0x8a3d00,emissiveIntensity:1.2});
+    [start,end].forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.045,16,12),markerMat.clone());m.position.copy(p);flightRouteGroup.add(m);});
+    flightRoutePlane=new THREE.Mesh(new THREE.SphereGeometry(.075,16,10),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xff9d2e,emissiveIntensity:1}));
+    flightRouteGroup.add(flightRoutePlane);group.add(flightRouteGroup);flightRouteState={start,end,t:0};
+  };
+
   function resize(){
     const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);
     renderer.setSize(w,h,false);
@@ -452,10 +467,12 @@ function initHeroGlobe3D(){
     earth.rotation.y+=.009;
     atmosphere.rotation.y+=.004;
     ring.rotation.y+=.0025;
+    if(flightRouteState&&flightRoutePlane){flightRouteState.t=(flightRouteState.t+.002)%1;const t=flightRouteState.t,p=arcPoint(flightRouteState.start.clone().normalize(),flightRouteState.end.clone().normalize(),t);p.multiplyScalar(1.685+Math.sin(Math.PI*t)*.12);flightRoutePlane.position.copy(p);}
     group.rotation.x=Math.sin(performance.now()*.00025)*.025;
     renderer.render(scene,camera);
   }
   animate();
+  if(window.renderFlightRoute)window.renderFlightRoute({lat:14.4673,lon:78.8242},{lat:29.3759,lon:47.9774});
 }
 document.addEventListener("DOMContentLoaded",initHeroGlobe3D);
 
