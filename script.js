@@ -60,6 +60,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    document.querySelectorAll(".job-card").forEach((card) => {
+        card.addEventListener("click", () => {
+            const country = card.dataset.jobCountry || "";
+            const service = document.querySelector("#enquiryService");
+            const goal = document.querySelector("#enquiryGoal");
+            if (service) service.value = "Overseas Job Assistance";
+            if (goal && country) goal.value = country + " job assistance";
+        });
+    });
+
+    document.querySelectorAll(".destination-card").forEach((card) => {
+        card.addEventListener("click", () => {
+            const country = card.dataset.destination || "";
+            const service = document.querySelector("#enquiryService");
+            const goal = document.querySelector("#enquiryGoal");
+            if (service && (country === "Israel" || country === "Russia")) service.value = "Overseas Job Assistance";
+            if (goal && country) goal.value = country + ((country === "Israel" || country === "Russia") ? " job assistance" : " enquiry");
+        });
+    });
+
     const enquiryForm = document.querySelector("#enquiryForm");
     if (enquiryForm) {
         enquiryForm.addEventListener("submit", (event) => {
