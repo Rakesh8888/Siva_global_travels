@@ -165,7 +165,7 @@ async function askAi(message){
 }
 if(aiToggle)aiToggle.addEventListener("click",()=>{aiPanel.hidden=false;aiToggle.hidden=true;aiInput?.focus()});
 if(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
-if(aiClose)aiClose.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false});\nconst aiCancel=document.querySelector("#aiCancel"); if(aiCancel) aiCancel.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false;aiHistory=[];if(aiMessages)aiMessages.innerHTML="";});
+if(aiClose)aiClose.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false;});
 if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
 const aiMic=document.querySelector("#aiMic"), aiSpeak=document.querySelector("#aiSpeak");
 let aiRecognition=null, aiSpeaking=false;
