@@ -1530,3 +1530,37 @@ body.light-mode .ai-voice-overlay{color:#102033}
   .logo-text{width:min(330px,86vw)!important;margin:0 auto 18px!important}
   .logo-text img{width:100%!important;max-height:102px!important}
 }
+
+
+/* Compact merged jobs button */
+.jobs-category-choice{display:flex!important;justify-content:center!important}
+.jobs-category-choice-card-merged{
+  width:190px!important;
+  min-width:190px!important;
+  max-width:190px!important;
+  min-height:64px!important;
+  height:64px!important;
+  padding:9px 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  border-radius:7px!important;
+}
+.jobs-category-choice-card-merged .choice-icon{font-size:16px!important}
+.jobs-category-choice-card-merged strong{font-size:10px!important;line-height:1.15!important}
+.jobs-category-choice-card-merged b{font-size:7px!important;white-space:nowrap!important}
+.jobs-category-choice-card-merged small,.jobs-category-choice-card-merged .choice-number{display:none!important}
+@media(max-width:700px){
+  .jobs-category-choice-card-merged{
+    width:145px!important;
+    min-width:145px!important;
+    max-width:145px!important;
+    height:52px!important;
+    min-height:52px!important;
+    padding:7px 8px!important;
+  }
+  .jobs-category-choice-card-merged .choice-icon{font-size:13px!important}
+  .jobs-category-choice-card-merged strong{font-size:8px!important}
+  .jobs-category-choice-card-merged b{font-size:6px!important}
+}
