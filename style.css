@@ -228,3 +228,7 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .category-tags i{font-style:normal;font-size:9px;padding:7px 9px;border:1px solid rgba(255,255,255,.12);border-radius:20px;color:#d1e0e9;background:rgba(255,255,255,.04)}
 .category-card b{font-size:10px;letter-spacing:1px;color:var(--orange);margin-top:22px}
 @media(max-width:700px){.job-categories{padding:75px 18px}.job-category-grid{grid-template-columns:1fr}.category-card{min-height:275px;padding:24px}.category-card strong{font-size:31px}}
+
+/* JOB ENQUIRY FIELDS */
+.enquiry-form label:has(#enquiryJobType),.enquiry-form label:has(#enquiryJobRole){animation:fieldIn .35s ease both}
+@keyframes fieldIn{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:none}}
