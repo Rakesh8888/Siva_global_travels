@@ -1764,3 +1764,89 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
   .jobs-category-choice-card-merged{width:140px!important;min-width:140px!important;max-width:140px!important;height:50px!important;min-height:50px!important}
   .jobs-category-choice-card-merged strong{font-size:7.5px!important}
 }
+
+/* DESKTOP PREMIUM TRAVEL LAYOUT — mobile remains unchanged */
+.desktop-topbar{display:none}
+@media(min-width:1000px){
+  .desktop-topbar{
+    display:flex;align-items:center;gap:28px;
+    min-height:38px;padding:0 5vw;
+    background:linear-gradient(90deg,#087fd0,#19a8e8);
+    color:#fff;font-size:12px;font-weight:700;letter-spacing:.2px;
+  }
+  .desktop-topbar-spacer{flex:1}
+  .site-nav{
+    min-height:78px!important;height:78px!important;
+    padding:0 5vw!important;
+    background:rgba(255,255,255,.98)!important;
+    border-bottom:1px solid rgba(19,120,170,.12);
+  }
+  .site-nav .brand{width:220px!important;height:62px!important}
+  .site-nav .brand-logo{width:220px!important;max-height:62px!important}
+  .nav-links{gap:22px!important;font-size:13px!important}
+  .nav-links a{font-weight:750!important}
+  .nav-cta{padding:10px 16px!important;border-radius:22px!important}
+  .theme-mode-toggle{top:88px!important;right:2.2vw!important;width:34px!important;height:34px!important;font-size:16px!important}
+  
+  .hero-3d{
+    min-height:650px!important;
+    padding:54px 5vw 46px!important;
+    background:radial-gradient(circle at 50% 10%,#ffffff 0%,#dff5ff 32%,#8edcff 72%,#42b8ea 100%)!important;
+    overflow:hidden!important;
+  }
+  .hero-copy{
+    width:min(760px,62vw)!important;
+    max-width:760px!important;
+    text-align:center!important;
+    align-items:center!important;
+    position:relative!important;
+    z-index:8!important;
+  }
+  .hero-copy .eyebrow{justify-content:center!important}
+  .hero-logo-lockup{width:min(520px,45vw)!important;margin:4px auto 8px!important}
+  .hero-logo-lockup img{width:100%!important}
+  .hero-copy h1{
+    font-size:clamp(38px,4vw,62px)!important;
+    line-height:.98!important;
+    margin:5px 0 10px!important;
+  }
+  .hero-lead{max-width:650px!important;font-size:15px!important;line-height:1.6!important;margin:0 auto 16px!important}
+  .hero-copy .buttons{justify-content:center!important;max-width:440px!important;margin:0 auto!important}
+  .hero-copy .buttons .btn{width:170px!important;max-width:170px!important;height:42px!important;min-height:42px!important;font-size:10px!important}
+  .flight-visualiser{width:min(620px,58vw)!important;margin:14px auto 0!important}
+  .hero-trust{justify-content:center!important}
+  
+  .earth-scene{
+    opacity:.96!important;
+    width:58vw!important;
+    max-width:850px!important;
+    right:-4vw!important;
+    top:8%!important;
+  }
+  .globe-wrap{width:min(38vw,520px)!important;height:min(38vw,520px)!important}
+  .floating-card{transform:scale(.88)!important}
+  
+  .services,.destination-showcase,.jobs-showcase,.trust-enquiry,.payment-section,.app-download,.contact{
+    padding-left:7vw!important;padding-right:7vw!important;
+  }
+  .service-grid{
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  .service-card{
+    min-height:118px!important;height:118px!important;
+    padding:14px!important;border-radius:10px!important;
+  }
+  .service-card h3{font-size:14px!important}
+  .service-card .icon{font-size:18px!important}
+  .service-card > a{width:74px!important;min-width:74px!important;max-width:74px!important;height:30px!important;font-size:7px!important}
+  .destination-choice-grid{grid-template-columns:repeat(3,1fr)!important;gap:14px!important}
+  .destination-choice{
+    min-height:135px!important;height:135px!important;
+    padding:16px!important;
+  }
+  .destination-choice strong{font-size:17px!important}
+  .destination-choice .choice-icon{font-size:22px!important}
+  .jobs-category-choice-card-merged{width:210px!important;min-width:210px!important;max-width:210px!important;height:62px!important;min-height:62px!important}
+}
