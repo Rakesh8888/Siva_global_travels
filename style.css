@@ -199,3 +199,6 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .destination-schengen:before{background:linear-gradient(135deg,#164f73,#071522)}
 @media(max-width:900px){.destination-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.destination-showcase{padding:75px 18px}.destination-grid{grid-template-columns:1fr}.destination-card{min-height:210px}}
+
+.destination-israel:before{background:linear-gradient(135deg,#315a78,#071522)}
+.destination-russia:before{background:linear-gradient(135deg,#633f45,#071522)}
