@@ -1711,3 +1711,56 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
 @media(max-width:700px){
   .theme-mode-toggle{top:68px;right:12px;width:34px;height:34px;font-size:16px}
 }
+/* PROFESSIONAL COMPACT UI — keep Day/Night mode unchanged */
+.destination-choice{
+  transform:none!important;
+  margin:0!important;
+  min-height:135px!important;height:135px!important;
+  padding:16px!important;border-radius:12px!important;
+}
+.destination-choice .choice-icon{font-size:22px!important}
+.destination-choice strong{font-size:17px!important}
+.destination-choice small{font-size:10px!important}
+.destination-choice b{font-size:8px!important;margin-top:10px!important}
+
+.service-card{
+  transform:none!important;
+  margin:0!important;
+  min-height:50px!important;height:50px!important;
+  padding:7px 10px!important;
+}
+.service-card h3{font-size:11px!important}
+.service-card .icon{font-size:15px!important}
+.service-card > a{
+  width:66px!important;max-width:66px!important;min-width:66px!important;
+  height:32px!important;min-height:32px!important;
+  padding:6px 5px!important;font-size:7px!important;
+}
+
+.jobs-category-choice-card-merged{
+  transform:none!important;
+  width:175px!important;min-width:175px!important;max-width:175px!important;
+  height:58px!important;min-height:58px!important;
+  padding:8px 10px!important;
+}
+.jobs-category-choice-card-merged strong{font-size:9px!important}
+.jobs-category-choice-card-merged b{font-size:6.5px!important}
+
+.payment-card{
+  min-height:36px!important;height:36px!important;
+  padding:5px 8px!important;
+}
+.payment-card strong{font-size:8px!important}
+.payment-card b{height:23px!important;min-height:23px!important;font-size:5.5px!important}
+
+@media(max-width:700px){
+  .destination-choice{min-height:105px!important;height:105px!important;padding:12px!important}
+  .destination-choice .choice-icon{font-size:18px!important}
+  .destination-choice strong{font-size:13px!important}
+  .destination-choice small{font-size:8px!important}
+  .destination-choice b{font-size:7px!important;margin-top:7px!important}
+  .service-card{min-height:46px!important;height:46px!important}
+  .service-card h3{font-size:10px!important}
+  .jobs-category-choice-card-merged{width:140px!important;min-width:140px!important;max-width:140px!important;height:50px!important;min-height:50px!important}
+  .jobs-category-choice-card-merged strong{font-size:7.5px!important}
+}
