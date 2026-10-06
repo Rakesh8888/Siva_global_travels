@@ -565,3 +565,26 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .ai-chat-head-actions .ai-cancel-btn::after{content:"Cancel";font-size:8px;}
   .ai-chat-head-actions select{width:92px!important;}
 }
+
+
+/* FINAL LUCKY AI MOBILE HEADER — no Cancel button */
+.ai-cancel-btn{display:none!important}
+.ai-chat-head-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;flex-wrap:nowrap!important}
+.ai-chat-head-actions select{width:118px!important;max-width:118px!important;height:34px!important;padding:7px 8px!important;font-size:10px!important}
+.ai-chat-head-actions > #aiChatClose{display:flex!important;width:30px!important;height:34px!important;align-items:center!important;justify-content:center!important;font-size:25px!important;line-height:1!important}
+@media(max-width:700px){
+  .ai-chat-panel{width:calc(100vw - 24px)!important;height:min(500px,calc(100dvh - 90px))!important}
+  .ai-chat-head{padding:13px 12px 11px!important;align-items:center!important;gap:8px!important}
+  .ai-chat-title strong{font-size:24px!important;line-height:1!important}
+  .ai-chat-title small{font-size:8px!important;line-height:1.25!important;margin-top:4px!important}
+  .ai-chat-head-actions{gap:5px!important}
+  .ai-chat-head-actions select{width:112px!important;max-width:112px!important;height:34px!important;font-size:9px!important}
+  .ai-chat-head-actions > #aiChatClose{width:28px!important;height:34px!important;font-size:24px!important}
+}
+@media(max-width:390px){
+  .ai-chat-panel{width:calc(100vw - 16px)!important}
+  .ai-chat-head{gap:5px!important}
+  .ai-chat-title strong{font-size:22px!important}
+  .ai-chat-title small{font-size:7px!important;max-width:135px!important}
+  .ai-chat-head-actions select{width:100px!important;max-width:100px!important;font-size:8px!important}
+}
