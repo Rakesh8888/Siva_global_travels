@@ -1271,3 +1271,94 @@ main .buttons .btn{
   .logo-text{width:min(300px,84vw)}
   .logo-text img{max-height:82px}
 }
+
+
+/* WHITE / DARK MODE */
+.theme-toggle{
+  position:fixed;top:78px;right:5vw;z-index:110;
+  display:inline-flex;align-items:center;gap:6px;height:30px;
+  padding:5px 9px;border:1px solid rgba(255,157,46,.45);border-radius:20px;
+  background:rgba(3,11,24,.78);color:#fff;font-size:8px;font-weight:800;
+  letter-spacing:1px;cursor:pointer;backdrop-filter:blur(8px);
+}
+.theme-toggle .theme-icon{font-size:12px;line-height:1;color:var(--orange)}
+.theme-toggle:hover{transform:translateY(-1px);border-color:var(--orange)}
+
+body.light-mode{
+  --navy:#f5f8fc;
+  --blue:#e6eef7;
+  --blue2:#176fa8;
+  --white:#102033;
+  --muted:#52677b;
+  --line:rgba(10,38,65,.14);
+  background:#f5f8fc;color:#102033;
+}
+body.light-mode .site-nav{
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.72));
+}
+body.light-mode .brand{color:#102033}
+body.light-mode .brand b{color:#e66e16}
+body.light-mode .nav-links{color:#20384e}
+body.light-mode .nav-cta{color:#102033}
+body.light-mode .hero-3d{
+  background:radial-gradient(circle at 72% 50%,#d9f2ff 0%,#edf6fb 38%,#f5f8fc 75%);
+}
+body.light-mode .hero-grid{opacity:.09;background-image:linear-gradient(rgba(10,50,80,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(10,50,80,.12) 1px,transparent 1px)}
+body.light-mode .stars{opacity:.08}
+body.light-mode .hero-orb{opacity:.18}
+body.light-mode .hero-copy h1{color:#102033;text-shadow:0 15px 35px rgba(10,50,80,.12)}
+body.light-mode .hero-lead{color:#52677b}
+body.light-mode .hero-trust{color:#52677b}
+body.light-mode .hero-trust strong{color:#102033}
+body.light-mode .btn-secondary{color:#102033;background:rgba(10,50,80,.04);border-color:rgba(10,50,80,.16)}
+body.light-mode .section-heading h2,
+body.light-mode .contact h2,
+body.light-mode .trust-panel h2{color:#102033}
+body.light-mode .service-card,
+body.light-mode .destination-choice,
+body.light-mode .jobs-category-choice-card,
+body.light-mode .enquiry-panel,
+body.light-mode .trust-panel,
+body.light-mode .payment-card,
+body.light-mode .app-download-btn{
+  background:rgba(255,255,255,.88);
+  color:#102033;
+  border-color:rgba(10,50,80,.12);
+  box-shadow:0 12px 35px rgba(20,55,80,.08);
+}
+body.light-mode .service-card p,
+body.light-mode .destination-choice small,
+body.light-mode .jobs-category-choice-card small,
+body.light-mode .enquiry-panel,
+body.light-mode .trust-panel p{color:#52677b}
+body.light-mode .destination-showcase,
+body.light-mode .jobs-showcase,
+body.light-mode .trust-enquiry,
+body.light-mode .services{background:#f5f8fc}
+body.light-mode .destinations-strip{border-color:rgba(10,50,80,.12)}
+body.light-mode .destination-pill-main,
+body.light-mode .destination-pill-more{color:#17324a;background:#fff;border-color:rgba(10,50,80,.12)}
+body.light-mode .theme-toggle{background:rgba(255,255,255,.92);color:#102033}
+body.light-mode .theme-toggle .theme-icon{color:#e66e16}
+body.light-mode .theme-toggle .theme-label{font-size:8px}
+body.light-mode .flight-visualiser,
+body.light-mode .flight-fields input,
+body.light-mode .flight-fields button{
+  background:rgba(255,255,255,.8);color:#102033;border-color:rgba(10,50,80,.14)
+}
+body.light-mode .flight-status{color:#52677b}
+body.light-mode footer{background:#eaf1f7;color:#20384e}
+body.light-mode .app-download{background:linear-gradient(180deg,#eaf3fa,#f5f8fc)}
+body.light-mode .app-download-btn{color:#102033}
+body.light-mode .payment-section{background:#edf4f9}
+body.light-mode .faq-item{background:#fff;border-color:rgba(10,50,80,.12);color:#102033}
+body.light-mode .faq-item p{color:#52677b}
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea{background:#fff;color:#102033;border-color:rgba(10,50,80,.16)}
+body.light-mode .ai-chat-panel,
+body.light-mode .ai-voice-overlay{color:#102033}
+@media(max-width:700px){
+  .theme-toggle{top:68px;right:14px;height:27px;padding:4px 7px;font-size:7px}
+  .theme-toggle .theme-icon{font-size:11px}
+}
