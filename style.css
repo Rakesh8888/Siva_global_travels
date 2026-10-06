@@ -771,3 +771,23 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
   .job-role-panel-inner{padding:28px 20px}
   .job-role-list{grid-template-columns:1fr}
 }
+
+
+/* COMPACT SQUARE SERVICE CARDS — mobile friendly */
+.service-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.service-card{min-height:220px!important;height:220px!important;padding:16px!important;border-radius:0!important;box-shadow:0 12px 28px rgba(0,0,0,.22)!important}
+.service-card:before{width:85px!important;height:85px!important;right:-42px!important;top:-42px!important}
+.service-card .icon{font-size:22px!important}
+.service-card h3{font-size:16px!important;line-height:1.15!important;margin:24px 0 8px!important}
+.service-card p{font-size:10px!important;line-height:1.45!important;margin:0!important}
+.service-card a{font-size:9px!important;margin-top:auto!important;letter-spacing:.8px!important}
+@media(max-width:900px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+  .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .service-card{min-height:175px!important;height:175px!important;padding:13px!important}
+  .service-card .icon{font-size:20px!important}
+  .service-card h3{font-size:14px!important;line-height:1.12!important;margin:17px 0 6px!important}
+  .service-card p{font-size:9px!important;line-height:1.4!important}
+  .service-card a{font-size:8px!important;margin-top:auto!important}
+  .card-top{font-size:8px!important}
+}
