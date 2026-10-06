@@ -1362,3 +1362,159 @@ body.light-mode .ai-voice-overlay{color:#102033}
   .theme-toggle{top:68px;right:14px;height:27px;padding:4px 7px;font-size:7px}
   .theme-toggle .theme-icon{font-size:11px}
 }
+
+
+/* MOBILE BRAND / HERO POLISH */
+@media(max-width:700px){
+  .site-nav{
+    padding:10px 14px!important;
+    min-height:62px!important;
+    gap:8px!important;
+  }
+  .site-nav .brand{
+    width:132px!important;
+    height:34px!important;
+    flex:0 0 132px!important;
+    overflow:hidden!important;
+  }
+  .site-nav .brand-logo{
+    width:132px!important;
+    max-height:34px!important;
+  }
+  .nav-links{
+    display:flex!important;
+    margin-left:auto!important;
+    gap:6px!important;
+  }
+  .nav-links a:not(.nav-cta){display:none!important}
+  .nav-cta{
+    padding:8px 11px!important;
+    font-size:10px!important;
+    white-space:nowrap!important;
+    border-radius:18px!important;
+  }
+  .theme-toggle{
+    position:static!important;
+    order:3!important;
+    flex:0 0 31px!important;
+    width:31px!important;
+    min-width:31px!important;
+    height:31px!important;
+    padding:0!important;
+    justify-content:center!important;
+    border-radius:50%!important;
+    font-size:0!important;
+  }
+  .theme-toggle .theme-icon{
+    font-size:15px!important;
+  }
+  .theme-toggle .theme-label{display:none!important}
+
+  .hero-3d{
+    min-height:auto!important;
+    padding:104px 18px 42px!important;
+    display:block!important;
+  }
+  .hero-copy{
+    width:100%!important;
+    transform:none!important;
+    text-align:center!important;
+  }
+  .eyebrow{
+    justify-content:center!important;
+    font-size:8px!important;
+    letter-spacing:2.3px!important;
+    margin-bottom:14px!important;
+  }
+  .logo-text{
+    width:250px!important;
+    max-width:78vw!important;
+    height:auto!important;
+    margin:0 auto 16px!important;
+  }
+  .logo-text img{
+    width:100%!important;
+    max-height:70px!important;
+    object-fit:contain!important;
+  }
+  .hero-copy h1{
+    font-size:43px!important;
+    line-height:.94!important;
+    letter-spacing:-2.4px!important;
+    margin-bottom:18px!important;
+  }
+  .hero-lead{
+    font-size:14px!important;
+    line-height:1.55!important;
+    margin:0 auto 22px!important;
+    max-width:390px!important;
+  }
+  .hero-copy .buttons{
+    max-width:300px!important;
+    margin:0 auto!important;
+    justify-content:center!important;
+  }
+  .hero-copy .buttons .btn{
+    width:auto!important;
+    min-width:120px!important;
+    max-width:140px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:8px 11px!important;
+    font-size:10px!important;
+  }
+  .flight-visualiser{
+    margin-top:24px!important;
+    padding:14px!important;
+    border-radius:14px!important;
+  }
+  .flight-visualiser-title{
+    font-size:9px!important;
+    letter-spacing:1.8px!important;
+  }
+  .flight-fields{
+    grid-template-columns:1fr 42px 1fr!important;
+    gap:6px!important;
+  }
+  .flight-fields label{
+    font-size:7px!important;
+  }
+  .flight-fields input{
+    width:100%!important;
+    height:48px!important;
+    padding:8px 9px!important;
+    font-size:10px!important;
+  }
+  #flightShow{
+    grid-column:1/-1!important;
+    width:100%!important;
+    height:42px!important;
+    min-height:42px!important;
+  }
+  .flight-status{font-size:9px!important}
+  .earth-scene{
+    position:relative!important;
+    right:auto!important;
+    top:auto!important;
+    width:100%!important;
+    height:300px!important;
+    transform:none!important;
+    margin-top:-25px!important;
+    pointer-events:none!important;
+  }
+  .hero-trust{
+    position:relative!important;
+    z-index:30!important;
+    justify-content:center!important;
+    gap:12px!important;
+    margin-top:0!important;
+  }
+  .hero-trust strong{font-size:15px!important}
+  .hero-trust span{font-size:7px!important}
+  .hero-trust i{height:24px!important}
+  .scroll-cue{display:none!important}
+}
+
+/* Better desktop/mobile logo proportions */
+.logo-text img{object-fit:contain!important}
+.site-nav .brand-logo{object-fit:contain!important}
