@@ -1207,3 +1207,43 @@ main .buttons .btn{
     font-size:5px!important;
   }
 }
+
+
+/* APP DOWNLOAD */
+.app-download{
+  padding:80px 5vw;
+  background:linear-gradient(180deg,#06192b,#020812);
+}
+.app-download .section-heading{margin-bottom:28px}
+.app-download-buttons{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.app-download-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-width:170px;
+  height:44px;
+  padding:7px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:5px;
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  text-decoration:none;
+  box-sizing:border-box;
+}
+.app-download-btn .app-icon{font-size:15px;line-height:1;color:var(--orange)}
+.app-download-btn small{display:block;color:#71899a;font-size:6px;letter-spacing:1px;line-height:1.1}
+.app-download-btn strong{display:block;font-size:10px;margin-top:2px}
+.app-download-btn:hover{border-color:rgba(255,157,46,.45);background:rgba(255,157,46,.07)}
+@media(max-width:700px){
+  .app-download{padding:65px 14px}
+  .app-download-buttons{gap:7px}
+  .app-download-btn{min-width:145px;height:40px;padding:6px 9px}
+  .app-download-btn .app-icon{font-size:13px}
+  .app-download-btn strong{font-size:9px}
+}
