@@ -194,3 +194,138 @@ if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in windo
 } else if(aiMic){aiMic.disabled=true;aiMic.title="Voice input is not supported in this browser";}
 
 document.querySelectorAll("[data-ai]").forEach(b=>b.addEventListener("click",()=>askAi(b.dataset.ai)));
+
+
+/* LUCKY 3D WORLD — interactive globe, aircraft and cruise ship */
+let lucky3D = null;
+function initLucky3DWorld(){
+  const host=document.querySelector("#aiGlobe3D");
+  if(!host || !window.THREE || lucky3D) return;
+  const THREE=window.THREE;
+  host.innerHTML="";
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+  camera.position.set(0,0,7.2);
+
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setClearColor(0x000000,0);
+  host.appendChild(renderer.domElement);
+
+  const globeGroup=new THREE.Group();
+  scene.add(globeGroup);
+
+  const loader=new THREE.TextureLoader();
+  loader.crossOrigin="anonymous";
+  const earthTexture=loader.load(
+    "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg",
+    undefined,
+    undefined,
+    ()=>{}
+  );
+  const earth=new THREE.Mesh(
+    new THREE.SphereGeometry(1.72,64,64),
+    new THREE.MeshPhongMaterial({map:earthTexture,shininess:18,specular:0x335577})
+  );
+  globeGroup.add(earth);
+
+  const atmosphere=new THREE.Mesh(
+    new THREE.SphereGeometry(1.79,64,64),
+    new THREE.MeshBasicMaterial({color:0x66bfff,transparent:true,opacity:.10,side:THREE.BackSide})
+  );
+  globeGroup.add(atmosphere);
+
+  const halo=new THREE.Mesh(
+    new THREE.RingGeometry(1.92,2.02,96),
+    new THREE.MeshBasicMaterial({color:0xff9d2e,transparent:true,opacity:.26,side:THREE.DoubleSide})
+  );
+  halo.rotation.x=Math.PI/2;
+  globeGroup.add(halo);
+
+  const starsGeo=new THREE.BufferGeometry();
+  const starCount=700, positions=new Float32Array(starCount*3);
+  for(let i=0;i<starCount;i++){
+    const r=12+Math.random()*8, a=Math.random()*Math.PI*2, z=(Math.random()*2-1)*r, q=Math.sqrt(Math.max(0,r*r-z*z));
+    positions[i*3]=Math.cos(a)*q; positions[i*3+1]=z; positions[i*3+2]=Math.sin(a)*q;
+  }
+  starsGeo.setAttribute("position",new THREE.BufferAttribute(positions,3));
+  scene.add(new THREE.Points(starsGeo,new THREE.PointsMaterial({color:0xffffff,size:.025,transparent:true,opacity:.7})));
+
+  scene.add(new THREE.AmbientLight(0x9fc7e8,1.5));
+  const keyLight=new THREE.DirectionalLight(0xffffff,2.7); keyLight.position.set(4,4,6); scene.add(keyLight);
+  const rimLight=new THREE.PointLight(0xff9d2e,7,12); rimLight.position.set(-4,1,3); scene.add(rimLight);
+
+  function makePlane(){
+    const g=new THREE.Group();
+    const white=new THREE.MeshStandardMaterial({color:0xf4f7fb,metalness:.35,roughness:.28});
+    const orange=new THREE.MeshStandardMaterial({color:0xff9d2e,metalness:.3,roughness:.3});
+    const body=new THREE.Mesh(new THREE.CapsuleGeometry(.10,.72,6,12),white);
+    body.rotation.z=Math.PI/2; g.add(body);
+    const wing=new THREE.Mesh(new THREE.BoxGeometry(.85,.035,.24),white); wing.position.set(0,-.02,0); g.add(wing);
+    const tail=new THREE.Mesh(new THREE.BoxGeometry(.25,.035,.14),white); tail.position.set(-.28,.08,0); g.add(tail);
+    const nose=new THREE.Mesh(new THREE.SphereGeometry(.11,16,10),orange); nose.position.x=.40; g.add(nose);
+    g.scale.setScalar(.48);
+    return g;
+  }
+  const planeOrbit=new THREE.Group(); scene.add(planeOrbit);
+  const plane=makePlane(); plane.position.set(0,0,2.15); plane.rotation.z=Math.PI/2; planeOrbit.add(plane);
+
+  function makeShip(){
+    const g=new THREE.Group();
+    const hullMat=new THREE.MeshStandardMaterial({color:0xf5f7f8,metalness:.25,roughness:.32});
+    const deckMat=new THREE.MeshStandardMaterial({color:0xd8e0e6,metalness:.2,roughness:.4});
+    const orangeMat=new THREE.MeshStandardMaterial({color:0xff9d2e,metalness:.2,roughness:.35});
+    const hull=new THREE.Mesh(new THREE.BoxGeometry(.95,.20,.34),hullMat); hull.position.y=-.05; g.add(hull);
+    const deck=new THREE.Mesh(new THREE.BoxGeometry(.72,.12,.28),deckMat); deck.position.set(.02,.12,0); g.add(deck);
+    const bridge=new THREE.Mesh(new THREE.BoxGeometry(.28,.22,.25),hullMat); bridge.position.set(-.16,.27,0); g.add(bridge);
+    for(let i=0;i<3;i++){const funnel=new THREE.Mesh(new THREE.CylinderGeometry(.035,.05,.18,12),orangeMat); funnel.position.set(.18+i*.13,.27,0); g.add(funnel);}
+    g.scale.setScalar(.78);
+    return g;
+  }
+  const shipOrbit=new THREE.Group(); scene.add(shipOrbit);
+  const ship=makeShip(); ship.position.set(0,0,-2.22); ship.rotation.y=Math.PI; shipOrbit.add(ship);
+
+  const routeRing=new THREE.Mesh(
+    new THREE.TorusGeometry(2.16,.018,8,128),
+    new THREE.MeshBasicMaterial({color:0xff9d2e,transparent:true,opacity:.72})
+  );
+  routeRing.rotation.x=.32; routeRing.rotation.z=.18; scene.add(routeRing);
+
+  function resize(){
+    const w=Math.max(1,host.clientWidth), h=Math.max(1,host.clientHeight);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize",resize,{passive:true});
+
+  let raf=0, running=true;
+  function animate(){
+    if(!running) return;
+    raf=requestAnimationFrame(animate);
+    earth.rotation.y+=.0019;
+    globeGroup.rotation.x=Math.sin(performance.now()*.00018)*.035;
+    planeOrbit.rotation.y+=.008;
+    shipOrbit.rotation.y-=.0035;
+    plane.rotation.z=Math.sin(performance.now()*.002)*.035;
+    ship.rotation.y=Math.PI+Math.sin(performance.now()*.0013)*.05;
+    routeRing.rotation.y+=.0012;
+    renderer.render(scene,camera);
+  }
+  animate();
+  lucky3D={scene,renderer,host,stop(){running=false;cancelAnimationFrame(raf);renderer.dispose();}};
+}
+function openLuckyVoice3D(){initLucky3DWorld();}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const voiceMode=document.querySelector("#aiVoiceMode");
+  const voiceClose=document.querySelector("#aiVoiceClose");
+  const voiceCancel=document.querySelector("#aiVoiceCancel");
+  const closeVoice=()=>{
+    if(voiceMode) voiceMode.hidden=true;
+    if(aiRecognition && aiRecognition._running){try{aiRecognition.stop()}catch(e){}}
+  };
+  [voiceClose,voiceCancel].forEach(b=>b&&b.addEventListener("click",closeVoice));
+  const voiceObserver=new MutationObserver(()=>{if(voiceMode && !voiceMode.hidden) openLuckyVoice3D();});
+  if(voiceMode) voiceObserver.observe(voiceMode,{attributes:true,attributeFilter:["hidden"]});
+});
