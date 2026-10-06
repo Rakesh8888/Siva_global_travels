@@ -329,8 +329,8 @@ function initLucky3DWorld(){
   function animate(){
     if(!running) return;
     raf=requestAnimationFrame(animate);
-    earth.rotation.y+=.0019;
-    globeGroup.rotation.x=Math.sin(performance.now()*.00018)*.035;
+    earth.rotation.y+=.008;
+    globeGroup.rotation.x=Math.sin(performance.now()*.00035)*.045;
     planeOrbit.rotation.y+=.008;
     shipOrbit.rotation.y-=.0035;
     plane.rotation.z=Math.sin(performance.now()*.002)*.035;
@@ -377,16 +377,24 @@ function initHeroGlobe3D(){
   const group=new THREE.Group();
   scene.add(group);
 
-  const texture=new THREE.TextureLoader().load(
+  const textureLoader=new THREE.TextureLoader();
+  textureLoader.crossOrigin="anonymous";
+  const texture=textureLoader.load(
     "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg"
   );
   texture.colorSpace=THREE.SRGBColorSpace;
+  texture.anisotropy=8;
+  const normalTexture=textureLoader.load(
+    "https://threejs.org/examples/textures/planets/earth_normal_2048.jpg"
+  );
 
   const earth=new THREE.Mesh(
     new THREE.SphereGeometry(1.62,64,64),
     new THREE.MeshPhongMaterial({
       map:texture,
-      shininess:22,
+      normalMap:normalTexture,
+      normalScale:new THREE.Vector2(.45,.45),
+      shininess:28,
       specular:new THREE.Color(0x244d72)
     })
   );
@@ -441,9 +449,9 @@ function initHeroGlobe3D(){
 
   function animate(){
     requestAnimationFrame(animate);
-    earth.rotation.y+=.0024;
-    atmosphere.rotation.y+=.0015;
-    ring.rotation.y+=.001;
+    earth.rotation.y+=.009;
+    atmosphere.rotation.y+=.004;
+    ring.rotation.y+=.0025;
     group.rotation.x=Math.sin(performance.now()*.00025)*.025;
     renderer.render(scene,camera);
   }
