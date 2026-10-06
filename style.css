@@ -180,3 +180,22 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 
 .contact-actions .contact-secondary{position:relative}
 @media(max-width:700px){.contact-actions{width:100%}.contact-actions .whatsapp,.contact-actions .contact-secondary{width:min(100%,260px)}}
+
+/* DESTINATION SHOWCASE */
+.destination-showcase{padding:105px 5vw;background:#020812;position:relative}
+.destination-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.destination-card{min-height:245px;padding:24px;border:1px solid var(--line);border-radius:18px;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;position:relative;background:#0a2034;isolation:isolate;transition:.4s}
+.destination-card:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(135deg,rgba(20,117,163,.8),rgba(2,9,18,.95))}
+.destination-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.78) 78%)}
+.destination-card:hover{transform:translateY(-8px);border-color:rgba(255,157,46,.55);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.destination-code{font-size:9px;letter-spacing:2px;color:var(--orange);font-weight:800;margin-bottom:auto}
+.destination-card strong{font-size:30px;letter-spacing:-1px}
+.destination-card small{color:#b4c7d4;font-size:11px;margin-top:5px}
+.destination-card b{font-size:10px;letter-spacing:1px;color:#fff;margin-top:18px}
+.destination-kuwait:before{background:linear-gradient(135deg,#7b5428,#071522)}
+.destination-germany:before{background:linear-gradient(135deg,#294c6e,#08131f)}
+.destination-italy:before{background:linear-gradient(135deg,#35634e,#071522)}
+.destination-luxembourg:before{background:linear-gradient(135deg,#4c3d68,#071522)}
+.destination-schengen:before{background:linear-gradient(135deg,#164f73,#071522)}
+@media(max-width:900px){.destination-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.destination-showcase{padding:75px 18px}.destination-grid{grid-template-columns:1fr}.destination-card{min-height:210px}}
