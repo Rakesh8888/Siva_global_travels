@@ -1000,3 +1000,29 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
     font-size:10px!important;
   }
 }
+
+
+/* HERO BUTTONS — reduce length by 70% */
+.hero-copy .buttons{
+  max-width:320px!important;
+}
+.hero-copy .buttons .btn{
+  min-height:42px!important;
+  height:42px!important;
+  padding:9px 10px!important;
+  font-size:10px!important;
+}
+@media(max-width:700px){
+  .hero-copy .buttons{
+    max-width:260px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    gap:7px!important;
+  }
+  .hero-copy .buttons .btn{
+    min-height:40px!important;
+    height:40px!important;
+    padding:8px 6px!important;
+    font-size:9px!important;
+  }
+}
