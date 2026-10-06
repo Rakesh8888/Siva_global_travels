@@ -1146,3 +1146,64 @@ main .buttons .btn{
     font-size:5.5px!important;
   }
 }
+
+
+/* MERGED PAYMENT BUTTONS */
+.payment-grid{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:6px!important;
+}
+.payment-card{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-height:38px!important;
+  height:38px!important;
+  padding:5px 8px!important;
+  margin:0!important;
+  border-radius:5px!important;
+  flex:0 0 auto!important;
+}
+.payment-card > span{
+  font-size:12px!important;
+  line-height:1!important;
+}
+.payment-card strong{
+  font-size:9px!important;
+  white-space:nowrap!important;
+}
+.payment-card small{
+  display:none!important;
+}
+.payment-card b{
+  width:auto!important;
+  min-width:auto!important;
+  max-width:none!important;
+  height:24px!important;
+  min-height:24px!important;
+  padding:4px 6px!important;
+  font-size:5.5px!important;
+  margin:0!important;
+}
+@media(max-width:700px){
+  .payment-grid{
+    gap:5px!important;
+    flex-wrap:wrap!important;
+  }
+  .payment-card{
+    min-height:34px!important;
+    height:34px!important;
+    padding:4px 6px!important;
+    gap:5px!important;
+  }
+  .payment-card > span{font-size:10px!important}
+  .payment-card strong{font-size:8px!important}
+  .payment-card b{
+    height:21px!important;
+    min-height:21px!important;
+    padding:3px 5px!important;
+    font-size:5px!important;
+  }
+}
