@@ -290,3 +290,22 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .ai-voice-btn{width:38px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
 .ai-voice-btn:hover{background:rgba(255,157,46,.14)}
 .ai-voice-btn.active{background:rgba(255,157,46,.22);border-color:rgba(255,157,46,.5)}
+
+.ai-voice-mode{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 42%,#18334a 0%,#071522 34%,#02070d 78%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+.ai-voice-mode[hidden]{display:none}
+.ai-voice-top{position:absolute;top:28px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center}.ai-voice-top strong{font-size:15px}.ai-voice-top span{font-size:11px;color:#9db2c0}
+.ai-globe{width:min(62vw,300px);height:min(62vw,300px);border-radius:50%;position:relative;overflow:hidden;background:
+radial-gradient(circle at 35% 28%,rgba(255,255,255,.98) 0 5%,rgba(255,225,164,.9) 18%,rgba(255,157,46,.95) 45%,rgba(104,55,12,.8) 67%,#081522 100%);
+box-shadow:0 0 45px rgba(255,157,46,.25),inset -28px -25px 55px rgba(0,0,0,.35),inset 20px 12px 35px rgba(255,255,255,.2)}
+.ai-globe:before{content:"";position:absolute;inset:9%;border-radius:50%;background:
+radial-gradient(ellipse at 30% 38%,rgba(255,255,255,.8),transparent 28%),
+radial-gradient(ellipse at 58% 62%,rgba(255,184,75,.5),transparent 32%),
+radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-blend-mode:screen;filter:blur(7px)}
+.ai-globe:after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(20deg,transparent 0 23px,rgba(255,255,255,.09) 24px 26px,transparent 27px 48px);opacity:.45;transform:rotate(-12deg)}
+.ai-voice-status{margin-top:38px;color:#c9d7df;font-size:14px;text-align:center}
+.ai-voice-actions{position:absolute;bottom:38px;display:flex;gap:18px;align-items:center}
+.ai-voice-mic,.ai-voice-close{border:0;border-radius:50%;width:64px;height:64px;font-size:25px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.ai-voice-mic{background:#fff;color:#071522}.ai-voice-close{background:#111820;color:#fff}
+.ai-voice-mic.active{background:var(--orange);color:#fff;animation:aiPulse 1.4s infinite}
+@keyframes aiPulse{50%{box-shadow:0 0 0 14px rgba(255,157,46,.08),0 10px 30px rgba(0,0,0,.35)}}
+@media(max-width:520px){.ai-globe{width:240px;height:240px}.ai-voice-top{top:22px}.ai-voice-actions{bottom:28px}}
