@@ -111,6 +111,10 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/api/health") {
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.OPENAI_API_KEY) }, 200, request);
+    }
+
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
     }
