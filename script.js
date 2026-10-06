@@ -1,54 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+    const hero = document.querySelector(".hero-3d");
+    const scene = document.querySelector(".earth-scene");
     const cards = document.querySelectorAll(".service-card");
 
     cards.forEach((card, index) => {
         card.style.opacity = "0";
-        card.style.transform = "translateY(30px)";
-
-        setTimeout(() => {
-            card.style.transition = "0.7s ease";
+        card.style.transform = "translateY(24px)";
+        const reveal = () => {
+            card.style.transition = "opacity .7s ease, transform .7s ease";
             card.style.opacity = "1";
             card.style.transform = "translateY(0)";
-        }, index * 150);
+        };
+        setTimeout(reveal, 250 + index * 120);
     });
 
-    const hero = document.querySelector(".hero");
-
-    if (hero) {
+    if (hero && scene && window.matchMedia("(pointer:fine)").matches) {
         hero.addEventListener("mousemove", (event) => {
+            const x = (window.innerWidth / 2 - event.clientX) / 55;
+            const y = (window.innerHeight / 2 - event.clientY) / 55;
+            scene.style.transform = `translateY(-50%) translate(${x}px,${y}px)`;
+        });
+        hero.addEventListener("mouseleave", () => {
+            scene.style.transform = "translateY(-50%)";
+        });
+    }
+    
+    const enquiryForm = document.querySelector("#enquiryForm");
+    if (enquiryForm) {
+        enquiryForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const name = document.querySelector("#enquiryName").value.trim();
+            const service = document.querySelector("#enquiryService").value;
+            const goal = document.querySelector("#enquiryGoal").value.trim();
+            const message = document.querySelector("#enquiryMessage").value.trim();
+            const note = document.querySelector("#formNote");
 
-            const x = (window.innerWidth / 2 - event.clientX) / 40;
-            const y = (window.innerHeight / 2 - event.clientY) / 40;
+            const text = [
+                "Hello Siva Global Travels,",
+                "",
+                `Name: ${name}`,
+                `Service: ${service}`,
+                `Destination / Goal: ${goal || "Not specified"}`,
+                `Message: ${message || "Please contact me regarding this enquiry."}`
+            ].join("\n");
 
-            hero.style.backgroundPosition =
-                `${50 + x}% ${50 + y}%`;
+            window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+            note.textContent = "WhatsApp opened with your enquiry message. Choose the business contact to send it.";
         });
     }
 
 });
-/* 3D HERO MOUSE PARALLAX */
-
-const hero3D = document.querySelector(".hero-3d");
-const earthScene = document.querySelector(".earth-scene");
-
-if (hero3D && earthScene) {
-
-    hero3D.addEventListener("mousemove", (event) => {
-
-        const x =
-            (window.innerWidth / 2 - event.clientX) / 30;
-
-        const y =
-            (window.innerHeight / 2 - event.clientY) / 30;
-
-        earthScene.style.transform =
-            `translate(${x}px, ${y}px)`;
-    });
-
-    hero3D.addEventListener("mouseleave", () => {
-
-        earthScene.style.transform =
-            "translate(0,0)";
-    });
-}
