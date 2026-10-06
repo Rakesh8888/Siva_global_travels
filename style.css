@@ -232,3 +232,17 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 /* JOB ENQUIRY FIELDS */
 .enquiry-form label:has(#enquiryJobType),.enquiry-form label:has(#enquiryJobRole){animation:fieldIn .35s ease both}
 @keyframes fieldIn{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* VACANCIES */
+.vacancies-section{padding:105px 5vw;background:linear-gradient(180deg,#020812,#06192b)}
+.vacancy-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.vacancy-card{padding:23px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(17,52,80,.78),rgba(3,13,25,.96));min-height:285px;display:flex;flex-direction:column;transition:.4s}
+.vacancy-card:hover{transform:translateY(-7px);border-color:rgba(255,157,46,.5);box-shadow:0 22px 55px rgba(0,0,0,.3)}
+.vacancy-top{display:flex;justify-content:space-between;color:var(--orange);font-size:8px;letter-spacing:1.5px;font-weight:800}
+.vacancy-card h3{font-size:21px;line-height:1.15;margin:35px 0 10px}
+.vacancy-card p{color:var(--muted);font-size:11px;line-height:1.6}
+.vacancy-meta{display:flex;flex-direction:column;gap:7px;margin-top:auto;color:#b8cad6;font-size:9px}
+.vacancy-apply{margin-top:18px;border:1px solid rgba(255,157,46,.35);border-radius:7px;background:rgba(255,157,46,.08);color:var(--orange);padding:11px;font-size:10px;font-weight:800;cursor:pointer}
+.vacancy-disclaimer{max-width:900px;margin:25px auto 0;text-align:center;color:#60788b;font-size:10px;line-height:1.6}
+@media(max-width:1000px){.vacancy-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.vacancies-section{padding:75px 18px}.vacancy-grid{grid-template-columns:1fr}.vacancy-card{min-height:255px}}
