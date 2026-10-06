@@ -670,3 +670,13 @@ function initHeroCruise3D(){
   animate();
 }
 document.addEventListener("DOMContentLoaded",initHeroCruise3D);
+
+/* FLIGHT LOCATION SEARCH */
+const FLIGHT_DEFAULTS={"Kadapa, India":{lat:14.4673,lon:78.8242,label:"Kadapa, India"},"Kuwait City, Kuwait":{lat:29.3759,lon:47.9774,label:"Kuwait City, Kuwait"}};
+async function findFlightPlace(value){const key=Object.keys(FLIGHT_DEFAULTS).find(k=>k.toLowerCase()===value.trim().toLowerCase());if(key)return FLIGHT_DEFAULTS[key];const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(value.trim()));if(!r.ok)throw Error("lookup");const d=await r.json();if(!d[0])throw Error("notfound");return{lat:+d[0].lat,lon:+d[0].lon,label:d[0].display_name.split(",").slice(0,2).join(",")};}
+document.addEventListener("DOMContentLoaded",()=>{
+ const show=document.querySelector("#flightShow"),swap=document.querySelector("#flightSwap"),from=document.querySelector("#flightFrom"),to=document.querySelector("#flightTo"),status=document.querySelector("#flightStatus");
+ if(!show||!from||!to)return;
+ swap?.addEventListener("click",()=>{const x=from.value;from.value=to.value;to.value=x;});
+ show.addEventListener("click",async()=>{show.disabled=true;status.className="flight-status loading";status.textContent="Finding accurate coordinates…";try{const[a,b]=await Promise.all([findFlightPlace(from.value),findFlightPlace(to.value)]);window.renderFlightRoute(a,b);document.querySelector(".route-from").textContent=a.label.split(",")[0].toUpperCase();document.querySelector(".route-to").textContent=b.label.split(",")[0].toUpperCase();status.className="flight-status success";status.textContent=a.label+" → "+b.label+" • 3D route ready";}catch(e){status.className="flight-status error";status.textContent="Location not found. Try City, Country."}finally{show.disabled=false;}});
+});
