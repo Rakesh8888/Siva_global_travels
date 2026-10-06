@@ -1,6 +1,6 @@
 const CONTACT_CONFIG = {
     // Add the real business details here when ready. Empty values stay hidden.
-    whatsappNumber: "",
+    whatsappNumber: "9182641172",
     email: "",
     instagram: "",
     facebook: ""
