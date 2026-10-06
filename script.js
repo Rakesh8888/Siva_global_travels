@@ -832,18 +832,20 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-/* DAY / NIGHT MODE */
+/* ONE-TAP DAY / NIGHT MODE */
 document.addEventListener("DOMContentLoaded",()=>{
-  const day=document.querySelector("#dayModeBtn");
-  const night=document.querySelector("#nightModeBtn");
+  const toggle=document.querySelector("#themeModeToggle");
+  const icon=document.querySelector("#themeModeIcon");
   const saved=localStorage.getItem("sivaTheme")||"day";
   function setTheme(mode){
     document.body.classList.toggle("night-mode",mode==="night");
-    day?.classList.toggle("active",mode==="day");
-    night?.classList.toggle("active",mode==="night");
+    if(icon) icon.textContent=mode==="night"?"☾":"☀";
+    if(toggle){
+      toggle.setAttribute("aria-label",mode==="night"?"Switch to day mode":"Switch to night mode");
+      toggle.title=mode==="night"?"Day mode":"Night mode";
+    }
     localStorage.setItem("sivaTheme",mode);
   }
-  day?.addEventListener("click",()=>setTheme("day"));
-  night?.addEventListener("click",()=>setTheme("night"));
+  toggle?.addEventListener("click",()=>setTheme(document.body.classList.contains("night-mode")?"day":"night"));
   setTheme(saved);
 });
