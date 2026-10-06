@@ -87,6 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const goal = document.querySelector("#enquiryGoal");
             if (service) service.value = "Overseas Job Assistance";
             if (goal && category) goal.value = category;
+            const jobType = document.querySelector("#enquiryJobType");
+            if (jobType) jobType.value = category === "Skilled Jobs" ? "Skilled Jobs" : "Unskilled / Blue-Collar Jobs";
         });
     });
 
@@ -96,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             const name = document.querySelector("#enquiryName").value.trim();
             const service = document.querySelector("#enquiryService").value;
+            const jobType = document.querySelector("#enquiryJobType")?.value || "";
+            const jobRole = document.querySelector("#enquiryJobRole")?.value.trim() || "";
             const goal = document.querySelector("#enquiryGoal").value.trim();
             const message = document.querySelector("#enquiryMessage").value.trim();
             const note = document.querySelector("#formNote");
@@ -105,6 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
                 `Name: ${name}`,
                 `Service: ${service}`,
+                ...(jobType ? [`Job Type: ${jobType}`] : []),
+                ...(jobRole ? [`Job Role: ${jobRole}`] : []),
                 `Destination / Goal: ${goal || "Not specified"}`,
                 `Message: ${message || "Please contact me regarding this enquiry."}`
             ].join("\\n");
