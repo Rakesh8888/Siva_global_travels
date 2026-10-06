@@ -1,34 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
-<title>SIVA GLOBAL TRAVELS</title><desc>Official Siva Global Travels logo in red, blue and green with crown, globe, luggage and location pin.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 474">
 <defs>
-  <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a00"/><stop offset=".55" stop-color="#ff3d00"/><stop offset="1" stop-color="#d60000"/></linearGradient>
-  <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b9a3c"/><stop offset="1" stop-color="#006b2b"/></linearGradient>
-  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#176cff"/><stop offset="1" stop-color="#002b8f"/></linearGradient>
-  <radialGradient id="earth"><stop offset="0" stop-color="#55e6ff"/><stop offset=".55" stop-color="#0a83df"/><stop offset="1" stop-color="#003b9b"/></radialGradient>
-  <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-opacity=".35"/></filter>
+ <linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff8a00"/><stop offset=".55" stop-color="#ff2b00"/><stop offset="1" stop-color="#d50000"/></linearGradient>
+ <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0aa34a"/><stop offset="1" stop-color="#006b2b"/></linearGradient>
+ <radialGradient id="e"><stop stop-color="#45e6ff"/><stop offset=".55" stop-color="#0786df"/><stop offset="1" stop-color="#003a9b"/></radialGradient>
+ <filter id="s"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity=".28"/></filter>
 </defs>
-<g filter="url(#shadow)">
-  <text x="38" y="132" font-family="Arial Black,Arial,sans-serif" font-size="145" font-weight="900" letter-spacing="-10" fill="url(#red)">SIVA</text>
-  <g transform="translate(255 3)">
-    <path d="M0 35 L13 7 L31 26 L52 0 L70 27 L90 8 L101 35 L92 47 L8 47 Z" fill="#f5b400" stroke="#9b6400" stroke-width="4"/>
-    <circle cx="13" cy="7" r="5" fill="#ffd84d"/><circle cx="52" cy="0" r="5" fill="#ffd84d"/><circle cx="90" cy="8" r="5" fill="#ffd84d"/>
-    <rect x="3" y="42" width="98" height="13" rx="5" fill="#c98700"/>
-  </g>
-  <text x="40" y="255" font-family="Arial Black,Arial,sans-serif" font-size="92" font-weight="900" letter-spacing="-3" fill="#f5f7ff" stroke="#0b2d6b" stroke-width="5" paint-order="stroke">GL</text>
-  <g transform="translate(170 185)">
-    <circle cx="48" cy="42" r="47" fill="url(#earth)" stroke="#bcefff" stroke-width="3"/>
-    <path d="M14 22c12-13 23-16 31-10-5 8-2 13-11 17-6 3-8 11-15 13-7-5-9-12-5-20zm34 13c12-4 18 2 20 9-7 3-11 8-10 16-11 2-17-4-17-12 0-6 3-10 7-13zm14 26c10 0 20 7 24 14-8 8-19 11-31 9-2-8-1-15 7-23z" fill="#fff" opacity=".95"/>
-  </g>
-  <text x="274" y="255" font-family="Arial Black,Arial,sans-serif" font-size="92" font-weight="900" letter-spacing="-3" fill="#f5f7ff" stroke="#0b2d6b" stroke-width="5" paint-order="stroke">BAL</text>
-  <text x="510" y="255" font-family="Arial Black,Arial,sans-serif" font-size="92" font-weight="900" letter-spacing="-3" fill="url(#green)">TRAVELS</text>
-  <g transform="translate(1025 130) rotate(12)">
-    <rect x="25" y="20" width="42" height="115" rx="10" fill="#15191d"/>
-    <rect x="37" y="0" width="18" height="34" rx="5" fill="#15191d"/>
-    <rect x="32" y="-3" width="30" height="8" rx="4" fill="#159447"/>
-    <circle cx="34" cy="136" r="15" fill="#fff" stroke="#111" stroke-width="8"/>
-    <circle cx="62" cy="136" r="15" fill="#fff" stroke="#111" stroke-width="8"/>
-  </g>
-  <path d="M1142 265c0-31 25-56 55-56s55 25 55 56c0 44-55 72-55 72s-55-28-55-72z" fill="#e31818"/>
-  <circle cx="1197" cy="265" r="19" fill="#fff"/><circle cx="1197" cy="265" r="9" fill="#e31818"/>
+<g filter="url(#s)">
+ <text x="62" y="210" font-family="Arial Black,Arial,sans-serif" font-size="205" font-weight="900" letter-spacing="-8" fill="url(#r)">SIVA</text>
+ <g transform="translate(270 20)">
+   <path d="M0 48 L18 12 L42 38 L69 3 L94 38 L120 13 L136 48 L125 65 L10 65 Z" fill="#f6b800" stroke="#9b6500" stroke-width="5"/>
+   <circle cx="18" cy="12" r="6" fill="#ffd84a"/><circle cx="69" cy="3" r="6" fill="#ffd84a"/><circle cx="120" cy="13" r="6" fill="#ffd84a"/>
+   <rect x="7" y="59" width="123" height="16" rx="6" fill="#c88900"/>
+ </g>
+ <text x="55" y="410" font-family="Arial Black,Arial,sans-serif" font-size="154" font-weight="900" letter-spacing="-7" fill="#f7f9ff" stroke="#0b2d70" stroke-width="7" paint-order="stroke">GL</text>
+ <g transform="translate(245 286)">
+   <circle cx="65" cy="65" r="64" fill="url(#e)" stroke="#d7f6ff" stroke-width="4"/>
+   <path d="M28 40c17-18 34-22 48-13-7 11-4 18-17 24-9 4-11 15-21 19-11-7-15-18-10-30zm49 16c17-6 27 3 29 14-11 5-17 11-16 24-16 3-25-6-24-18 0-9 5-15 11-20zm20 39c15 0 28 10 34 21-11 12-27 17-44 14-3-13-1-24 10-35z" fill="#fff"/>
+ </g>
+ <text x="380" y="410" font-family="Arial Black,Arial,sans-serif" font-size="154" font-weight="900" letter-spacing="-7" fill="#f7f9ff" stroke="#0b2d70" stroke-width="7" paint-order="stroke">BAL</text>
+ <text x="710" y="410" font-family="Arial Black,Arial,sans-serif" font-size="154" font-weight="900" letter-spacing="-7" fill="url(#g)">TRAVELS</text>
+ <g transform="translate(1195 230) rotate(10)">
+   <rect x="34" y="28" width="62" height="151" rx="14" fill="#15191d"/>
+   <rect x="51" y="0" width="28" height="45" rx="7" fill="#15191d"/>
+   <rect x="43" y="-4" width="44" height="12" rx="6" fill="#159447"/>
+   <circle cx="48" cy="184" r="20" fill="#fff" stroke="#111" stroke-width="9"/><circle cx="84" cy="184" r="20" fill="#fff" stroke="#111" stroke-width="9"/>
+ </g>
+ <path d="M1390 350c0-40 32-72 70-72s70 32 70 72c0 57-70 93-70 93s-70-36-70-93z" fill="#e31818"/>
+ <circle cx="1460" cy="350" r="24" fill="#fff"/><circle cx="1460" cy="350" r="11" fill="#e31818"/>
 </g>
 </svg>
