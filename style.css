@@ -276,3 +276,10 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 .payment-note{margin-top:20px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,157,46,.2);background:rgba(255,157,46,.05);color:#a8bac7;font-size:11px;line-height:1.6}
 @media(max-width:800px){.payment-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.payment-section{padding:70px 5%}.payment-grid{grid-template-columns:1fr}.payment-card{min-height:125px}}
+
+/* LUCKY AI compact popup */
+.ai-chat-toggle{width:48px;height:48px;border-radius:50%;font-size:0;box-shadow:0 8px 28px rgba(0,0,0,.35);position:relative}
+.ai-chat-toggle::after{content:"AI";font-size:13px;font-weight:900;letter-spacing:.5px}
+.ai-chat-toggle::before{content:"LUCKY";position:absolute;right:56px;white-space:nowrap;padding:5px 8px;border-radius:10px;background:#071522;color:#dce8f0;border:1px solid rgba(255,255,255,.12);font-size:9px;opacity:.9}
+.ai-chat{right:18px;bottom:18px}
+@media(max-width:700px){.ai-chat-toggle{width:44px;height:44px}.ai-chat-toggle::before{display:none}.ai-chat{right:12px;bottom:12px}}
