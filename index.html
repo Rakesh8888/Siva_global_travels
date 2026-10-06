@@ -186,86 +186,33 @@
 
 <section class="jobs-showcase" id="overseas-jobs">
   <div class="section-heading">
-    <div><span class="section-kicker">OVERSEAS CAREERS</span><h2>Skilled &amp;<br><em>Unskilled Workers.</em></h2></div>
-    <p>Choose your worker category first. Country selection can be handled later during your job enquiry.</p>
+    <div><span class="section-kicker">OVERSEAS CAREERS</span><h2>Choose your<br><em>Job Category.</em></h2></div>
+    <p>Only two main choices are shown here. Open a category to see the available job-role options.</p>
   </div>
   <div class="jobs-category-choice">
-    <a href="#enquiry" class="jobs-category-choice-card" data-job-category="Skilled Jobs">
+    <button type="button" class="jobs-category-choice-card" data-job-category="Skilled Jobs">
       <span class="choice-number">01</span><span class="choice-icon">🛠️</span>
-      <strong>Skilled Workers</strong>
-      <small>Experienced &amp; technical professionals</small>
-      <div class="choice-tags"><i>Painter</i><i>Electrician</i><i>Welder</i><i>Technician</i><i>Forklift Operator</i></div>
-      <b>Skilled Job Enquiry ↗</b>
-    </a>
-    <a href="#enquiry" class="jobs-category-choice-card" data-job-category="Unskilled / Blue-Collar Jobs">
+      <strong>Skilled Jobs</strong>
+      <small>Open to explore skilled job roles</small>
+      <b>View Skilled Jobs ↗</b>
+    </button>
+    <button type="button" class="jobs-category-choice-card" data-job-category="Unskilled Jobs">
       <span class="choice-number">02</span><span class="choice-icon">👷</span>
-      <strong>Unskilled Workers</strong>
-      <small>General workforce &amp; support roles</small>
-      <div class="choice-tags"><i>Helper</i><i>Cleaner</i><i>Loader</i><i>Warehouse</i><i>Construction Helper</i></div>
-      <b>Unskilled Job Enquiry ↗</b>
-    </a>
+      <strong>Unskilled Jobs</strong>
+      <small>Open to explore unskilled job roles</small>
+      <b>View Unskilled Jobs ↗</b>
+    </button>
   </div>
-  <div class="jobs-note">Country, employer, salary and vacancy details can be discussed after selecting your worker category.</div>
-</section>
 
-<section class="job-categories" id="job-categories">
-  <div class="section-heading">
-    <div><span class="section-kicker">JOB CATEGORIES</span><h2>Skilled &amp;<br><em>Blue-Collar Careers.</em></h2></div>
-    <p>Explore skilled and unskilled overseas job opportunities and start an enquiry based on your experience.</p>
+  <div class="job-role-panel" id="jobRolePanel" hidden>
+    <div class="job-role-panel-inner">
+      <button class="job-role-panel-close" id="jobRolePanelClose" type="button" aria-label="Close job roles">✕</button>
+      <span class="section-kicker" id="jobRolePanelKicker">JOB CATEGORY</span>
+      <h3 id="jobRolePanelTitle">Job Roles</h3>
+      <p id="jobRolePanelText"></p>
+      <div class="job-role-list" id="jobRoleList"></div>
+    </div>
   </div>
-  <div class="job-category-grid">
-    <a href="#enquiry" class="category-card category-skilled" data-job-category="Skilled Jobs">
-      <span class="category-label">01 • SKILLED</span><strong>Skilled Jobs</strong>
-      <small>Technical &amp; experienced professionals</small>
-      <div class="category-tags"><i>Painter</i><i>Electrician</i><i>Welder</i><i>Technician</i><i>Forklift Operator</i></div>
-      <b>Find Skilled Jobs ↗</b>
-    </a>
-    <a href="#enquiry" class="category-card category-blue" data-job-category="Unskilled / Blue-Collar Jobs">
-      <span class="category-label">02 • BLUE-COLLAR</span><strong>Unskilled / Blue-Collar Jobs</strong>
-      <small>General workforce &amp; support roles</small>
-      <div class="category-tags"><i>Helper</i><i>Cleaner</i><i>Loader</i><i>Warehouse</i><i>Construction Helper</i></div>
-      <b>Find Blue-Collar Jobs ↗</b>
-    </a>
-  </div>
-  <div class="jobs-note">Job availability, salary, eligibility, employer selection and visa decisions depend on the actual vacancy and relevant authorities.</div>
-</section>
-
-<section class="vacancies-section" id="vacancies">
-  <div class="section-heading">
-    <div><span class="section-kicker">OVERSEAS OPPORTUNITIES</span><h2>Find your next<br><em>career move.</em></h2></div>
-    <p>Browse role categories and ask us about current vacancies, eligibility, employer requirements and application steps.</p>
-  </div>
-  <div class="vacancy-grid">
-    <article class="vacancy-card">
-      <div class="vacancy-top"><span>SKILLED</span><span>ENQUIRE</span></div>
-      <h3>Painter / Finishing Painter</h3>
-      <p>Construction • Maintenance • Finishing</p>
-      <div class="vacancy-meta"><b>🌍 Gulf / Europe</b><b>💼 Skilled</b></div>
-      <button class="vacancy-apply" data-role="Painter / Finishing Painter">Check Vacancy ↗</button>
-    </article>
-    <article class="vacancy-card">
-      <div class="vacancy-top"><span>SKILLED</span><span>ENQUIRE</span></div>
-      <h3>Welder / Fabricator</h3>
-      <p>Industrial • Construction • Fabrication</p>
-      <div class="vacancy-meta"><b>🌍 International</b><b>💼 Skilled</b></div>
-      <button class="vacancy-apply" data-role="Welder / Fabricator">Check Vacancy ↗</button>
-    </article>
-    <article class="vacancy-card">
-      <div class="vacancy-top"><span>BLUE-COLLAR</span><span>ENQUIRE</span></div>
-      <h3>Warehouse / Loader</h3>
-      <p>Warehouse • Logistics • General Support</p>
-      <div class="vacancy-meta"><b>🌍 International</b><b>💼 Blue-Collar</b></div>
-      <button class="vacancy-apply" data-role="Warehouse / Loader">Check Vacancy ↗</button>
-    </article>
-    <article class="vacancy-card">
-      <div class="vacancy-top"><span>BLUE-COLLAR</span><span>ENQUIRE</span></div>
-      <h3>Construction Helper</h3>
-      <p>Construction • Site Support • General Workforce</p>
-      <div class="vacancy-meta"><b>🌍 International</b><b>💼 Blue-Collar</b></div>
-      <button class="vacancy-apply" data-role="Construction Helper">Check Vacancy ↗</button>
-    </article>
-  </div>
-  <div class="vacancy-disclaimer">Vacancies, salary, benefits, accommodation, employer selection and visa approval are subject to the actual opening and relevant employer/authorities. Confirm current details before applying.</div>
 </section>
 
 <section class="trust-enquiry" id="enquiry">
