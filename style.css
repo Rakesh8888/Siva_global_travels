@@ -309,3 +309,37 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
 .ai-voice-mic.active{background:var(--orange);color:#fff;animation:aiPulse 1.4s infinite}
 @keyframes aiPulse{50%{box-shadow:0 0 0 14px rgba(255,157,46,.08),0 10px 30px rgba(0,0,0,.35)}}
 @media(max-width:520px){.ai-globe{width:240px;height:240px}.ai-voice-top{top:22px}.ai-voice-actions{bottom:28px}}
+
+
+/* LUCKY AI 3D VOICE UPGRADE */
+.ai-chat-head{align-items:flex-start;gap:10px}
+.ai-chat-title{min-width:0;flex:1}
+.ai-chat-title strong{font-size:28px;line-height:.9;letter-spacing:2px;font-weight:950;color:#fff}
+.ai-chat-title small{font-size:9px;letter-spacing:.9px;text-transform:uppercase;margin-top:8px;color:#a9bfcd}
+.ai-chat-head-actions{flex-wrap:wrap;justify-content:flex-end}
+.ai-cancel-btn{font-weight:800;white-space:nowrap}
+.ai-voice-mode{background:
+  radial-gradient(circle at 50% 42%,rgba(255,157,46,.13),transparent 25%),
+  radial-gradient(circle at 50% 50%,#0c2336 0%,#04101b 48%,#01060b 100%);
+}
+.ai-voice-top{top:22px;left:22px;right:22px}
+.ai-voice-brand{display:flex;flex-direction:column;gap:5px}
+.ai-voice-brand strong{font-size:32px;line-height:.9;letter-spacing:3px;font-weight:950}
+.ai-voice-brand span{font-size:9px;letter-spacing:1.5px;color:#9db4c2}
+.ai-voice-cancel{border:1px solid rgba(255,255,255,.18);background:rgba(3,12,20,.72);backdrop-filter:blur(12px);color:#fff;border-radius:999px;padding:10px 14px;font-size:11px;font-weight:800;cursor:pointer}
+.ai-voice-cancel:hover{border-color:rgba(255,157,46,.65);background:rgba(255,157,46,.12)}
+.ai-globe{width:min(72vw,440px);height:min(72vw,440px);border-radius:50%;position:relative;overflow:visible;background:transparent;box-shadow:none}
+.ai-globe canvas{display:block;width:100%;height:100%;border-radius:50%;touch-action:none}
+.ai-voice-status{margin-top:16px;font-size:14px;min-height:20px}
+.ai-voice-actions{bottom:30px}
+@media(max-width:600px){
+  .ai-chat-head{padding:13px}
+  .ai-chat-title strong{font-size:24px}
+  .ai-chat-head-actions{gap:5px}
+  .ai-chat-head-actions select{max-width:110px}
+  .ai-cancel-btn{font-size:8px;padding:6px 7px}
+  .ai-voice-top{top:15px;left:15px;right:15px}
+  .ai-voice-brand strong{font-size:27px}
+  .ai-voice-cancel{padding:8px 11px;font-size:10px}
+  .ai-globe{width:88vw;height:88vw;max-width:390px;max-height:390px}
+}
