@@ -1619,3 +1619,33 @@ input,select,textarea,.flight-fields input,.flight-fields button{background:rgba
 .ai-voice-mode{background:radial-gradient(circle at 50% 42%,#8edcff 0%,#c9efff 34%,#eaf8ff 78%)!important;color:#12324a!important}
 .detail-hero{background:radial-gradient(circle at 70% 40%,#8edcff 0%,#c9efff 38%,#eaf8ff 78%)!important}
 .detail-orb{background:radial-gradient(circle at 35% 30%,#38b9ed,#1287c4 45%,#075b91 72%)!important}
+
+
+/* DESTINATION BUTTONS — restore professional readable size */
+.destination-choice{
+  transform:none!important;
+  margin:0!important;
+  min-height:180px!important;
+  height:180px!important;
+  padding:20px!important;
+  border-radius:14px!important;
+}
+.destination-choice .choice-number{font-size:10px!important}
+.destination-choice .choice-icon{font-size:25px!important}
+.destination-choice strong{font-size:20px!important}
+.destination-choice small{font-size:11px!important;margin-top:7px!important}
+.destination-choice b{font-size:9px!important;margin-top:16px!important}
+@media(max-width:700px){
+  .destination-choice{
+    transform:none!important;
+    margin:0!important;
+    min-height:125px!important;
+    height:125px!important;
+    padding:14px!important;
+    border-radius:10px!important;
+  }
+  .destination-choice .choice-icon{font-size:20px!important}
+  .destination-choice strong{font-size:15px!important}
+  .destination-choice small{font-size:9px!important}
+  .destination-choice b{font-size:8px!important;margin-top:9px!important}
+}
