@@ -45,6 +45,16 @@
             <a href="#services" class="btn btn-primary">Explore Services <span>↗</span></a>
             <a href="#contact" class="btn btn-secondary">Talk to Us</a>
         </div>
+        <div class="flight-visualiser" aria-label="3D flight route visualiser">
+            <div class="flight-visualiser-title"><span>✈</span> 3D FLIGHT VISUALISATION <small>Accurate city coordinates</small></div>
+            <div class="flight-fields">
+                <label>FROM<input id="flightFrom" value="Kadapa, India" autocomplete="off"></label>
+                <button id="flightSwap" type="button" aria-label="Swap departure and destination">⇄</button>
+                <label>TO<input id="flightTo" value="Kuwait City, Kuwait" autocomplete="off"></label>
+                <button id="flightShow" type="button">SHOW ROUTE</button>
+            </div>
+            <div id="flightStatus" class="flight-status">Kadapa 🇮🇳 → Kuwait 🇰🇼 • Ready</div>
+        </div>
         <div class="hero-trust">
             <div><strong>4</strong><span>Core Services</span></div>
             <i></i>
