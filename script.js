@@ -24,4 +24,29 @@ document.addEventListener("DOMContentLoaded", () => {
             scene.style.transform = "translateY(-50%)";
         });
     }
+    
+    const enquiryForm = document.querySelector("#enquiryForm");
+    if (enquiryForm) {
+        enquiryForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const name = document.querySelector("#enquiryName").value.trim();
+            const service = document.querySelector("#enquiryService").value;
+            const goal = document.querySelector("#enquiryGoal").value.trim();
+            const message = document.querySelector("#enquiryMessage").value.trim();
+            const note = document.querySelector("#formNote");
+
+            const text = [
+                "Hello Siva Global Travels,",
+                "",
+                `Name: ${name}`,
+                `Service: ${service}`,
+                `Destination / Goal: ${goal || "Not specified"}`,
+                `Message: ${message || "Please contact me regarding this enquiry."}`
+            ].join("\n");
+
+            window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+            note.textContent = "WhatsApp opened with your enquiry message. Choose the business contact to send it.";
+        });
+    }
+
 });
