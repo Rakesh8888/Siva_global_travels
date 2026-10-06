@@ -748,3 +748,26 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
 .jobs-category-choice-card .choice-tags i{font-style:normal;padding:7px 10px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(255,255,255,.04);font-size:12px;color:#d8e2e7}
 .jobs-category-choice-card b{display:block;position:relative;margin-top:24px;color:#ff922d;font-size:12px;letter-spacing:.12em}
 @media(max-width:700px){.jobs-category-choice{grid-template-columns:1fr}.jobs-category-choice-card{min-height:235px}.jobs-category-choice-card strong{font-size:26px}}
+
+/* FINAL JOB CATEGORY UI — only Skilled Jobs and Unskilled Jobs on the main page */
+.jobs-category-choice-card{appearance:none;width:100%;text-align:left;cursor:pointer;font:inherit}
+.jobs-category-choice-card strong{font-size:32px!important}
+.jobs-category-choice-card small{font-size:14px!important}
+.jobs-category-choice-card b{margin-top:30px!important}
+.job-role-panel{position:fixed;inset:0;z-index:1001;display:grid;place-items:center;padding:20px;background:rgba(1,9,15,.84);backdrop-filter:blur(12px)}
+.job-role-panel[hidden]{display:none!important}
+.job-role-panel-inner{position:relative;width:min(820px,100%);max-height:min(82vh,720px);overflow:auto;padding:34px;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:linear-gradient(145deg,#0b2938,#03121e);box-shadow:0 35px 100px rgba(0,0,0,.5)}
+.job-role-panel-inner h3{margin:6px 0 8px;color:#fff;font-size:clamp(28px,4vw,44px)}
+.job-role-panel-inner>p{margin:0 0 24px;color:#91a8b5;line-height:1.6}
+.job-role-panel-close{position:absolute;right:20px;top:18px;width:42px;height:42px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;font-size:20px;cursor:pointer}
+.job-role-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.job-role-option{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:16px 17px;border:1px solid rgba(255,255,255,.10);border-radius:15px;background:rgba(255,255,255,.04);color:#e9f0f4;text-decoration:none;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
+.job-role-option:hover{border-color:rgba(255,145,35,.55);background:rgba(255,145,35,.09);transform:translateY(-2px)}
+.job-role-option span:last-child{color:#ff922d;font-size:18px}
+@media(max-width:700px){
+  .jobs-category-choice{grid-template-columns:1fr}
+  .jobs-category-choice-card{min-height:210px}
+  .jobs-category-choice-card strong{font-size:27px!important}
+  .job-role-panel-inner{padding:28px 20px}
+  .job-role-list{grid-template-columns:1fr}
+}
