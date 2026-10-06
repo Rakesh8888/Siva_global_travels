@@ -815,3 +815,84 @@ radial-gradient(ellipse at 70% 28%,rgba(255,255,255,.35),transparent 20%);mix-bl
 .service-card{width:100%!important;box-sizing:border-box!important}
 @media(max-width:900px){.service-grid{grid-template-columns:1fr!important}}
 @media(max-width:700px){.service-grid{grid-template-columns:1fr!important;gap:7px!important}.service-card{height:35px!important;min-height:35px!important}}
+
+
+/* FINAL COMPACT SERVICE CARDS + DESTINATION OPTIONS */
+.service-grid{
+  grid-template-columns:1fr!important;
+  gap:6px!important;
+}
+.service-card{
+  min-height:50px!important;
+  height:50px!important;
+  padding:7px 10px!important;
+  border-radius:4px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:8px!important;
+  overflow:hidden!important;
+}
+.service-card:before{display:none!important}
+.service-card .card-top{
+  flex:0 0 22px!important;
+  width:22px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.service-card .card-top span:last-child{display:none!important}
+.service-card .icon{font-size:15px!important;line-height:1!important}
+.service-card .card-number{display:none!important}
+.service-card h3{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.1!important;
+  letter-spacing:.1px!important;
+  flex:1 1 auto!important;
+}
+.service-card p{display:none!important}
+.service-card a{
+  margin:0!important;
+  flex:0 0 auto!important;
+  font-size:8px!important;
+  letter-spacing:.6px!important;
+}
+.destination-pills{
+  display:flex!important;
+  gap:7px!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end!important;
+}
+.destination-pills a{
+  text-decoration:none!important;
+}
+.destination-pill-main,.destination-pill-more{
+  padding:8px 10px!important;
+  border:1px solid var(--line)!important;
+  border-radius:20px!important;
+  background:rgba(255,255,255,.035)!important;
+  font-size:9px!important;
+  color:#c4d3de!important;
+  letter-spacing:.2px!important;
+  transition:.3s!important;
+}
+.destination-pill-more{
+  color:var(--orange)!important;
+  border-color:rgba(255,157,46,.35)!important;
+}
+.destination-pill-main:hover,.destination-pill-more:hover{
+  border-color:rgba(255,157,46,.55)!important;
+  transform:translateY(-2px);
+}
+@media(max-width:700px){
+  .service-grid{grid-template-columns:1fr!important;gap:5px!important}
+  .service-card{height:46px!important;min-height:46px!important;padding:6px 9px!important}
+  .service-card .card-top{flex-basis:20px!important;width:20px!important}
+  .service-card .icon{font-size:14px!important}
+  .service-card h3{font-size:11px!important}
+  .service-card a{font-size:7px!important}
+  .destinations-strip{width:100%!important}
+  .destination-pills{justify-content:flex-start!important}
+  .destination-pill-main,.destination-pill-more{font-size:8px!important;padding:7px 9px!important}
+}
