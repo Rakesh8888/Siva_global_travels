@@ -146,3 +146,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+/* SIVA AI ASSISTANT */
+const aiToggle=document.querySelector("#aiChatToggle"),aiPanel=document.querySelector("#aiChatPanel"),aiClose=document.querySelector("#aiChatClose"),aiForm=document.querySelector("#aiChatForm"),aiInput=document.querySelector("#aiChatInput"),aiMessages=document.querySelector("#aiChatMessages");
+const aiHistory=[];
+function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
+async function askAi(message){
+  addAiMessage(message,"user"); aiHistory.push({role:"user",content:message});
+  const loading=document.createElement("div"); loading.className="ai-msg ai-msg-bot"; loading.textContent="Thinking…"; aiMessages.appendChild(loading);
+  try{
+    const res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,history:aiHistory.slice(-8)})});
+    const data=await res.json();
+    loading.remove();
+    const reply=data.reply||"Please continue with WhatsApp and our team will assist you.";
+    addAiMessage(reply); aiHistory.push({role:"assistant",content:reply});
+  }catch(e){loading.remove();addAiMessage("I’m temporarily unavailable. Please use WhatsApp for direct assistance.");}
+}
+if(aiToggle)aiToggle.addEventListener("click",()=>{aiPanel.hidden=false;aiToggle.hidden=true;aiInput?.focus()});
+if(aiClose)aiClose.addEventListener("click",()=>{aiPanel.hidden=true;aiToggle.hidden=false});
+if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
+document.querySelectorAll("[data-ai]").forEach(b=>b.addEventListener("click",()=>askAi(b.dataset.ai)));
