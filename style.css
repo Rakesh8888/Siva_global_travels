@@ -286,3 +286,7 @@ footer a{text-decoration:none;color:#8fa5b5}footer a:hover{color:var(--orange)}
 
 .ai-cancel-btn{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#b8c8d3;border-radius:7px;padding:6px 8px;font-size:9px;cursor:pointer}
 .ai-cancel-btn:hover{background:rgba(255,157,46,.12);color:#fff}
+
+.ai-voice-btn{width:38px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
+.ai-voice-btn:hover{background:rgba(255,157,46,.14)}
+.ai-voice-btn.active{background:rgba(255,157,46,.22);border-color:rgba(255,157,46,.5)}
