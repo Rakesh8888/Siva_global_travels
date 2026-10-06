@@ -835,3 +835,106 @@ footer {
     .ship-deck { left: 30px; width: 75px; }
     .ship-windows { width: 90px; }
 }
+
+
+/* FINAL MOBILE HERO FIX */
+.plane-3d {
+    width: 330px;
+    clip-path: polygon(
+        4% 34%, 7% 38%, 27% 42%, 31% 38%, 34% 42%,
+        40% 46%, 43% 43%, 48% 37%, 55% 32%, 65% 29%,
+        75% 28%, 86% 29%, 94% 33%, 98% 37%, 99% 40%,
+        96% 43%, 89% 45%, 82% 47%, 80% 55%, 79% 63%,
+        75% 62%, 72% 55%, 70% 50%, 63% 48%, 56% 48%,
+        52% 50%, 48% 54%, 44% 55%, 38% 52%, 34% 49%,
+        29% 48%, 25% 46%, 19% 45%, 11% 43%, 6% 41%
+    );
+}
+
+.airplane {
+    width: 330px;
+    height: 150px;
+    left: 0;
+    top: 105px;
+    overflow: visible;
+}
+
+@media (max-width: 768px) {
+    .hero-3d {
+        min-height: 760px;
+        padding: 70px 16px 0;
+    }
+
+    .hero-3d-content {
+        max-width: 100%;
+    }
+
+    .hero-3d h1 {
+        font-size: 48px;
+        margin-bottom: 18px;
+    }
+
+    .hero-3d p {
+        font-size: 16px;
+        line-height: 1.45;
+        margin-bottom: 22px;
+    }
+
+    .earth-scene {
+        width: 360px;
+        height: 360px;
+        right: 50%;
+        bottom: -55px;
+        transform: translateX(50%);
+    }
+
+    .globe-3d {
+        width: 285px;
+        height: 285px;
+        left: 37px;
+        top: 37px;
+    }
+
+    .plane-3d {
+        width: 245px;
+    }
+
+    .airplane {
+        width: 245px;
+        height: 120px;
+        left: 0;
+        top: 105px;
+    }
+
+    .flight-route {
+        width: 250px;
+        height: 105px;
+        left: 55px;
+        top: 190px;
+    }
+
+    .route-from {
+        left: 18px;
+        top: 285px;
+        font-size: 9px;
+    }
+
+    .route-to {
+        left: 265px;
+        top: 195px;
+        font-size: 9px;
+    }
+
+    .journey-badge {
+        left: 76px;
+        bottom: 8px;
+        padding: 7px 11px;
+    }
+
+    .cruise-ship {
+        width: 135px;
+        height: 52px;
+        right: -4px;
+        bottom: 38px;
+    }
+}
