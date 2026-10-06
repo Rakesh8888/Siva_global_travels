@@ -150,7 +150,33 @@ document.addEventListener("DOMContentLoaded", () => {
 /* SIVA AI ASSISTANT */
 const aiToggle=document.querySelector("#aiChatToggle"),aiPanel=document.querySelector("#aiChatPanel"),aiClose=document.querySelector("#aiChatClose"),aiForm=document.querySelector("#aiChatForm"),aiInput=document.querySelector("#aiChatInput"),aiMessages=document.querySelector("#aiChatMessages");
 const aiHistory=[];
+let aiSpeaking=false;
+let aiRecognition=null;
+const AI_API_URL = window.SIVA_AI_API_URL || "/api/chat";
 const aiLanguage=document.querySelector("#aiLanguage");
+
+if (aiToggle && aiPanel) {
+  aiToggle.addEventListener("click", () => {
+    aiPanel.hidden = !aiPanel.hidden;
+    aiToggle.setAttribute("aria-expanded", String(!aiPanel.hidden));
+    if (!aiPanel.hidden) aiInput?.focus();
+  });
+}
+if (aiClose && aiPanel) {
+  aiClose.addEventListener("click", () => {
+    aiPanel.hidden = true;
+    aiToggle?.setAttribute("aria-expanded", "false");
+  });
+}
+if (aiForm) {
+  aiForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = aiInput?.value.trim();
+    if (!message) return;
+    aiInput.value = "";
+    askAi(message);
+  });
+}
 function addAiMessage(text,role="bot"){const el=document.createElement("div");el.className="ai-msg "+(role==="user"?"ai-msg-user":"ai-msg-bot");el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;}
 function getVoiceLocale(){
   const map={"te":"te-IN","hi":"hi-IN","ta":"ta-IN","kn":"kn-IN","ml":"ml-IN","ur-IN":"ur-IN","ar-KW":"ar-KW","bn-IN":"bn-IN","de":"de-DE","fr":"fr-FR","es":"es-ES","ru":"ru-RU","he":"he-IL","it-IT":"it-IT","en-CA":"en-CA","fr-CA":"fr-CA","de-CH":"de-CH","fr-CH":"fr-CH","it-CH":"it-CH","mt-MT":"mt-MT","sl-SI":"sl-SI","el-GR":"el-GR","pl-PL":"pl-PL","sv-SE":"sv-SE","da-DK":"da-DK","nb-NO":"nb-NO","fi-FI":"fi-FI","nl-NL":"nl-NL","pt-PT":"pt-PT","cs-CZ":"cs-CZ","sk-SK":"sk-SK","hu-HU":"hu-HU","et-EE":"et-EE","lv-LV":"lv-LV","lt-LT":"lt-LT","ro-RO":"ro-RO","bg-BG":"bg-BG","hr-HR":"hr-HR","ga-IE":"ga-IE","is-IS":"is-IS","de-LI":"de-LI","lb-LU":"lb-LU","de-AT":"de-AT","zh-CN":"zh-CN","th-TH":"th-TH","ja-JP":"ja-JP","ko-KR":"ko-KR","en-AU":"en-AU","en-IN":"en-IN","en":"en-US"}; 
@@ -193,7 +219,7 @@ async function askAi(message,options={}){
   try{
     const controller=new AbortController();
     const timeout=setTimeout(()=>controller.abort(),30000);
-    const res=await fetch("/api/chat",{
+    const res=await fetch(AI_API_URL,{
       method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
       body:JSON.stringify({message,language:aiLanguage?.value||"en-IN",history:aiHistory.slice(0,-1).slice(-8)}),
       signal:controller.signal
