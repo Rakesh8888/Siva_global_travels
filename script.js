@@ -80,6 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    document.querySelectorAll(".category-card").forEach((card) => {
+        card.addEventListener("click", () => {
+            const category = card.dataset.jobCategory || "";
+            const service = document.querySelector("#enquiryService");
+            const goal = document.querySelector("#enquiryGoal");
+            if (service) service.value = "Overseas Job Assistance";
+            if (goal && category) goal.value = category;
+        });
+    });
+
     const enquiryForm = document.querySelector("#enquiryForm");
     if (enquiryForm) {
         enquiryForm.addEventListener("submit", (event) => {
