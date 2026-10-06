@@ -1083,3 +1083,29 @@ main .buttons .btn{
     font-size:9px!important;
   }
 }
+
+
+/* SERVICE CARD BUTTONS — reduce length by 70% */
+.service-card > a{
+  width:66px!important;
+  max-width:66px!important;
+  min-width:66px!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:6px 5px!important;
+  font-size:7px!important;
+  letter-spacing:.3px!important;
+  white-space:nowrap!important;
+}
+.service-card > a span{margin-left:3px!important}
+@media(max-width:700px){
+  .service-card > a{
+    width:55px!important;
+    max-width:55px!important;
+    min-width:55px!important;
+    height:28px!important;
+    min-height:28px!important;
+    padding:5px 3px!important;
+    font-size:6px!important;
+  }
+}
