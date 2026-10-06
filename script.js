@@ -424,3 +424,92 @@ function initHeroGlobe3D(){
   animate();
 }
 document.addEventListener("DOMContentLoaded",initHeroGlobe3D);
+
+
+/* PREMIUM HERO 3D AIRCRAFT */
+let heroAircraftReady=false;
+function initHeroAircraft3D(){
+  const host=document.querySelector("#heroAirplane3D");
+  if(!host || !window.THREE || heroAircraftReady) return;
+  heroAircraftReady=true;
+  const THREE=window.THREE;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(35,1,.1,50);
+  camera.position.set(0,0,4.5);
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setClearColor(0x000000,0);
+  host.innerHTML="";
+  host.appendChild(renderer.domElement);
+
+  const aircraft=new THREE.Group();
+  aircraft.rotation.set(.10,.15,-.12);
+  aircraft.scale.setScalar(1.15);
+  scene.add(aircraft);
+
+  const white=new THREE.MeshStandardMaterial({color:0xf7fafc,metalness:.45,roughness:.24});
+  const orange=new THREE.MeshStandardMaterial({color:0xff8f1f,metalness:.35,roughness:.25});
+  const dark=new THREE.MeshStandardMaterial({color:0x24364a,metalness:.35,roughness:.3});
+
+  const fuselage=new THREE.Mesh(new THREE.CapsuleGeometry(.17,1.55,8,20),white);
+  fuselage.rotation.z=Math.PI/2;
+  aircraft.add(fuselage);
+
+  const nose=new THREE.Mesh(new THREE.SphereGeometry(.175,20,12),orange);
+  nose.position.x=.86;
+  aircraft.add(nose);
+
+  const wing=new THREE.Mesh(new THREE.BoxGeometry(.95,.045,.55),white);
+  wing.position.set(.05,0,0);
+  wing.rotation.y=-.10;
+  aircraft.add(wing);
+
+  const tailWing=new THREE.Mesh(new THREE.BoxGeometry(.38,.04,.25),white);
+  tailWing.position.set(-.66,.12,0);
+  aircraft.add(tailWing);
+
+  const tailFin=new THREE.Mesh(new THREE.BoxGeometry(.24,.36,.045),white);
+  tailFin.position.set(-.64,.17,0);
+  tailFin.rotation.z=-.28;
+  aircraft.add(tailFin);
+
+  for(const z of [-.25,.25]){
+    const engine=new THREE.Mesh(new THREE.CylinderGeometry(.075,.095,.38,18),dark);
+    engine.rotation.x=Math.PI/2;
+    engine.position.set(.18,-.10,z);
+    aircraft.add(engine);
+  }
+
+  const stripe=new THREE.Mesh(new THREE.BoxGeometry(1.05,.025,.015),orange);
+  stripe.position.set(.05,-.16,.08);
+  aircraft.add(stripe);
+
+  scene.add(new THREE.HemisphereLight(0xb9ddff,0x172437,2.1));
+  const key=new THREE.DirectionalLight(0xffffff,3);
+  key.position.set(3,4,5);
+  scene.add(key);
+  const rim=new THREE.PointLight(0xff9d2e,3,10);
+  rim.position.set(-2,1,2);
+  scene.add(rim);
+
+  function resize(){
+    const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize",resize,{passive:true});
+
+  const clock=new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    aircraft.rotation.y=.16+Math.sin(t*.7)*.08;
+    aircraft.rotation.z=-.10+Math.sin(t*1.2)*.035;
+    aircraft.position.y=Math.sin(t*1.4)*.06;
+    renderer.render(scene,camera);
+  }
+  animate();
+}
+document.addEventListener("DOMContentLoaded",initHeroAircraft3D);
