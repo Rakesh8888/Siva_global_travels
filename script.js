@@ -707,3 +707,50 @@ document.addEventListener("DOMContentLoaded",()=>{
  swap?.addEventListener("click",()=>{const x=from.value;from.value=to.value;to.value=x;});
  show.addEventListener("click",async()=>{show.disabled=true;status.className="flight-status loading";status.textContent="Finding accurate coordinates…";try{const[a,b]=await Promise.all([findFlightPlace(from.value),findFlightPlace(to.value)]);window.renderFlightRoute(a,b);document.querySelector(".route-from").textContent=a.label.split(",")[0].toUpperCase();document.querySelector(".route-to").textContent=b.label.split(",")[0].toUpperCase();status.className="flight-status success";status.textContent=a.label+" → "+b.label+" • 3D route ready";}catch(e){status.className="flight-status error";status.textContent="Location not found. Try City, Country."}finally{show.disabled=false;}});
 });
+
+/* DESTINATION CATEGORY POPUP */
+document.addEventListener("DOMContentLoaded",()=>{
+  const panel=document.querySelector("#destinationCountryPanel");
+  const close=document.querySelector("#destinationPanelClose");
+  const title=document.querySelector("#destinationPanelTitle");
+  const kicker=document.querySelector("#destinationPanelKicker");
+  const textEl=document.querySelector("#destinationPanelText");
+  const countries=document.querySelector("#destinationPanelCountries");
+  const data={
+    gulf:{
+      kicker:"GULF COUNTRIES",
+      title:"Gulf Countries",
+      text:"Choose a Gulf destination for travel, visa or overseas career enquiry.",
+      items:[
+        ["🇰🇼","Kuwait"],["🇦🇪","United Arab Emirates"],["🇶🇦","Qatar"],["🇧🇭","Bahrain"]
+      ]
+    },
+    europe:{
+      kicker:"EUROPE • SCHENGEN",
+      title:"Europe (Schengen) Countries",
+      text:"Explore Schengen destinations. Visa eligibility and final decisions are handled by the relevant authorities.",
+      items:[
+        ["🇦🇹","Austria"],["🇧🇪","Belgium"],["🇧🇬","Bulgaria"],["🇭🇷","Croatia"],["🇨🇿","Czechia"],["🇩🇰","Denmark"],["🇪🇪","Estonia"],["🇫🇮","Finland"],["🇫🇷","France"],["🇩🇪","Germany"],["🇬🇷","Greece"],["🇭🇺","Hungary"],["🇮🇸","Iceland"],["🇮🇹","Italy"],["🇱🇻","Latvia"],["🇱🇮","Liechtenstein"],["🇱🇹","Lithuania"],["🇱🇺","Luxembourg"],["🇲🇹","Malta"],["🇳🇱","Netherlands"],["🇳🇴","Norway"],["🇵🇱","Poland"],["🇵🇹","Portugal"],["🇷🇴","Romania"],["🇸🇰","Slovakia"],["🇸🇮","Slovenia"],["🇪🇸","Spain"],["🇸🇪","Sweden"],["🇨🇭","Switzerland"]
+      ]
+    },
+    other:{
+      kicker:"OTHER COUNTRIES",
+      title:"Other Countries",
+      text:"Explore selected destinations outside the Gulf and Schengen groups.",
+      items:[
+        ["🇷🇺","Russia"],["🇮🇱","Israel"],["🇯🇵","Japan"],["🇨🇦","Canada"],["🇬🇧","United Kingdom"],["🇦🇺","Australia"],["🇳🇿","New Zealand"],["🇸🇬","Singapore"]
+      ]
+    }
+  };
+  function openPanel(key){
+    const d=data[key]; if(!d||!panel)return;
+    kicker.textContent=d.kicker; title.textContent=d.title; textEl.textContent=d.text;
+    countries.innerHTML=d.items.map(([flag,name])=>'<a href="#enquiry" data-destination="'+name.replace(/"/g,"&quot;")+'"><span>'+flag+'</span>'+name+'</a>').join("");
+    panel.hidden=false; document.body.classList.add("destination-panel-open");
+  }
+  document.querySelectorAll("[data-destination-panel]").forEach(btn=>btn.addEventListener("click",()=>openPanel(btn.dataset.destinationPanel)));
+  function closePanel(){if(panel)panel.hidden=true;document.body.classList.remove("destination-panel-open");}
+  close?.addEventListener("click",closePanel);
+  panel?.addEventListener("click",e=>{if(e.target===panel)closePanel();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closePanel();});
+});
