@@ -1922,3 +1922,10 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
   .section-heading p{font-size:10px!important}
   .destination-choice{max-width:260px!important}
 }
+
+
+/* SIVA FINAL NO-THREE FALLBACK */
+.no-three .hero-globe-3d{display:none!important}
+.no-three .globe-3d{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important;z-index:4!important;opacity:.92!important;box-shadow:0 0 45px rgba(50,170,255,.35)!important}
+.no-three .globe-wrap{background:radial-gradient(circle at 35% 30%,rgba(80,190,255,.18),rgba(0,0,0,0) 62%)}
+@media(max-width:700px){.no-three .globe-3d{width:100%!important;height:100%!important}}
