@@ -189,9 +189,9 @@ async function askAi(message){
     if(sendButton){sendButton.disabled=false;sendButton.removeAttribute("aria-busy");}
   }
 }
-if(aiToggle)aiToggle.addEventListener("click",()=>{if(aiPanel){aiPanel.hidden=false;aiPanel.setAttribute("aria-hidden","false");}aiToggle.hidden=true;setTimeout(()=>aiInput?.focus(),0)});
+if(aiToggle)aiToggle.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();if(aiPanel){aiPanel.hidden=false;aiPanel.style.display="";aiPanel.setAttribute("aria-hidden","false");}aiToggle.hidden=true;setTimeout(()=>aiInput?.focus(),0)});
 if(aiLanguage)aiLanguage.addEventListener("change",()=>{aiInput?.focus()});
-if(aiClose)aiClose.addEventListener("click",()=>{if(aiPanel){aiPanel.hidden=true;aiPanel.setAttribute("aria-hidden","true");}if(aiToggle){aiToggle.hidden=false;aiToggle.focus();}if(aiRecognition&&aiRecognition._running){try{aiRecognition.stop()}catch(_){}}});
+if(aiClose)aiClose.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();if(aiPanel){aiPanel.hidden=true;aiPanel.setAttribute("aria-hidden","true");aiPanel.style.display="none";}if(aiToggle){aiToggle.hidden=false;aiToggle.removeAttribute("aria-hidden");aiToggle.focus();}if(aiRecognition&&aiRecognition._running){try{aiRecognition.stop()}catch(_){}}});
 if(aiForm)aiForm.addEventListener("submit",e=>{e.preventDefault();const v=aiInput.value.trim();if(v){aiInput.value="";askAi(v)}});
 const aiMic=document.querySelector("#aiMic"), aiSpeak=document.querySelector("#aiSpeak");
 let aiRecognition=null, aiSpeaking=false;
