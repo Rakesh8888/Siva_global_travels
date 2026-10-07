@@ -87,9 +87,20 @@ async function handleChat(request, env) {
 
     if (!response.ok) {
       console.error("LUCKY AI provider error:", response.status, data);
+      const providerError = data?.error || {};
+      const safeMessage =
+        typeof providerError?.message === "string"
+          ? providerError.message.slice(0, 300)
+          : "OpenAI rejected the request.";
       return jsonResponse(
-        { error: "AI provider request failed." },
-        response.status >= 500 ? 502 : 500,
+        {
+          error: "OpenAI request failed.",
+          providerStatus: response.status,
+          providerType: providerError?.type || null,
+          providerCode: providerError?.code || null,
+          providerMessage: safeMessage
+        },
+        response.status >= 500 ? 502 : response.status,
         request
       );
     }
@@ -106,7 +117,10 @@ async function handleChat(request, env) {
     );
   } catch (error) {
     console.error("LUCKY AI error:", error);
-    return jsonResponse({ error: "Server error" }, 500, request);
+    if (error?.name === "AbortError") {
+      return jsonResponse({ error: "OpenAI request timed out." }, 504, request);
+    }
+    return jsonResponse({ error: "Server error", detail: String(error?.message || "Unknown error").slice(0, 200) }, 500, request);
   }
 }
 
