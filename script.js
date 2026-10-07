@@ -227,7 +227,7 @@ async function askAi(message,options={}){
     clearTimeout(timeout);
     let data={};try{data=await res.json()}catch(_){}
     loading.remove();
-    if(!res.ok) throw new Error(data.error||"AI request failed");
+    if(!res.ok){ const err=new Error(data.error||"AI request failed"); err.providerMessage=data.providerMessage; err.providerCode=data.providerCode; err.providerStatus=data.providerStatus; throw err; }
     const reply=(data.reply||"Please continue with WhatsApp and our team will assist you.").trim();
     addAiMessage(reply);aiHistory.push({role:"assistant",content:reply});
     if(options.voice) speakLucky(reply);
