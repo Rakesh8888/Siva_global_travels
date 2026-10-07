@@ -2327,3 +2327,41 @@ footer{background:#e7f5fc !important;color:#5f7888 !important}
 .payment-card,.app-download-card,.faq-item,.about-card,.destination-choice,.jobs-category-choice-card{background:#fff !important;color:#12324a !important;border-color:rgba(15,91,135,.14) !important}
 .night-mode *{color:inherit}
 .night-mode .hero-3d,.night-mode .services,.night-mode .trust-enquiry,.night-mode .contact,.night-mode footer,.night-mode .detail-content,.night-mode .detail-hero{background-color:transparent !important}
+
+
+/* MOBILE SERVICE CARDS — clean compact layout */
+@media(max-width:700px){
+  .service-grid{grid-template-columns:1fr!important;gap:8px!important;}
+  .service-grid .service-card{
+    transform:none!important;
+    margin:0!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:145px!important;
+    padding:14px!important;
+    box-sizing:border-box!important;
+    border-radius:10px!important;
+  }
+  .service-grid .service-card .card-top{font-size:10px!important;}
+  .service-grid .service-card .icon{font-size:22px!important;}
+  .service-grid .service-card h3{
+    font-size:15px!important;
+    line-height:1.15!important;
+    margin:10px 0 6px!important;
+  }
+  .service-grid .service-card p{
+    font-size:10px!important;
+    line-height:1.4!important;
+    min-height:0!important;
+    margin:0 0 10px!important;
+  }
+  .service-grid .service-card>a{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:32px!important;
+    min-height:32px!important;
+    margin-top:auto!important;
+    font-size:8px!important;
+  }
+}
