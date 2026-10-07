@@ -16,7 +16,7 @@
   <text x="690" y="245" font-family="Arial Black,Arial,sans-serif" font-size="184" font-weight="900" letter-spacing="-7" fill="#0758c9">GLOBAL</text>
   <text x="1335" y="245" font-family="Arial Black,Arial,sans-serif" font-size="174" font-weight="900" font-style="italic" letter-spacing="-8" fill="url(#travels)">TRAVELS</text>
   <path d="M720 302 C980 350 1280 347 1660 296" fill="none" stroke="url(#blue)" stroke-width="11" stroke-linecap="round"/>
-  <g transform="translate(250 270)">
+  <g transform="translate(1545 270)">
     <path d="M0 0 C0 -34 27 -61 61 -61s61 27 61 61c0 49-61 91-61 91S0 49 0 0z" fill="#e51b23" stroke="#fff" stroke-width="6"/>
     <circle cx="61" cy="0" r="20" fill="#fff"/><circle cx="61" cy="0" r="9" fill="#e51b23"/>
   </g>
