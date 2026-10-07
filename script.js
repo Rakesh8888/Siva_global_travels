@@ -446,6 +446,8 @@ function initHeroGlobe3D(){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.setClearColor(0x000000,0);
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.35;
   host.innerHTML="";
   host.appendChild(renderer.domElement);
 
@@ -523,8 +525,8 @@ function initHeroGlobe3D(){
   );
   group.add(glow);
 
-  scene.add(new THREE.AmbientLight(0x9fc9e8,1.2));
-  const sun=new THREE.DirectionalLight(0xffffff,2.8);
+  scene.add(new THREE.AmbientLight(0xcfeaff,1.8));
+  const sun=new THREE.DirectionalLight(0xffffff,3.6);
   sun.position.set(4,3,5);
   scene.add(sun);
   const warm=new THREE.PointLight(0xff9d2e,3.2,10);
@@ -547,10 +549,10 @@ function initHeroGlobe3D(){
     flightRouteGroup=new THREE.Group();
     const start=geoPoint(from.lat,from.lon),end=geoPoint(to.lat,to.lon),pts=[];
     for(let i=0;i<=80;i++){const t=i/80,p=arcPoint(start.clone().normalize(),end.clone().normalize(),t);p.multiplyScalar(1.685+Math.sin(Math.PI*t)*.12);pts.push(p);}
-    flightRouteGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xff9d2e,transparent:true,opacity:.95})));
-    const markerMat=new THREE.MeshStandardMaterial({color:0xff9d2e,emissive:0x8a3d00,emissiveIntensity:1.2});
+    flightRouteGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xff8a18,transparent:true,opacity:1,depthTest:false,depthWrite:false})));
+    const markerMat=new THREE.MeshStandardMaterial({color:0xff8a18,emissive:0x8a3d00,emissiveIntensity:1.5,depthTest:false,depthWrite:false});
     [start,end].forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.045,16,12),markerMat.clone());m.position.copy(p);flightRouteGroup.add(m);});
-    flightRoutePlane=new THREE.Mesh(new THREE.SphereGeometry(.075,16,10),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xff9d2e,emissiveIntensity:1}));
+    flightRoutePlane=new THREE.Mesh(new THREE.SphereGeometry(.075,16,10),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xff8a18,emissiveIntensity:1.4,depthTest:false,depthWrite:false}));
     flightRouteGroup.add(flightRoutePlane);group.add(flightRouteGroup);flightRouteState={start,end,t:0};
   };
 
