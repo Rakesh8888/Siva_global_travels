@@ -2086,7 +2086,7 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
 .service-grid .service-card p{min-height:96px;}
 
 /* All WhatsApp/contact buttons use one compact size. */
-.whatsapp,.contact-secondary,.detail-cta .whatsapp{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:190px!important;max-width:190px!important;height:46px!important;min-height:46px!important;padding:0 18px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important;overflow:hidden!important;}
+.whatsapp,.contact-secondary,.detail-cta .whatsapp{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:133px!important;max-width:133px!important;height:32px!important;min-height:32px!important;padding:0 10px!important;box-sizing:border-box!important;border-radius:999px!important;white-space:nowrap!important;overflow:hidden!important;font-size:10px!important;}
 .contact-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:center!important;gap:10px!important;}
 
 /* Stronger logo sizing and clean placement. */
@@ -2114,7 +2114,7 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
   .hero-logo-lockup{width:92vw!important;}
   .hero-logo-lockup:after,.hero-logo-lockup:before{display:none!important;}
   .hero-3d .globe-wrap{width:82vw!important;height:82vw!important;}
-  .whatsapp,.contact-secondary,.detail-cta .whatsapp{width:190px!important;max-width:190px!important;height:44px!important;min-height:44px!important;padding:0 14px!important;font-size:13px!important;}
+  .whatsapp,.contact-secondary,.detail-cta .whatsapp{width:133px!important;max-width:133px!important;height:32px!important;min-height:32px!important;padding:0 10px!important;font-size:10px!important;}
   .service-grid .service-card>a{height:46px!important;min-height:46px!important;}
 }
 
