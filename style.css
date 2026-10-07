@@ -1929,3 +1929,22 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
 .no-three .globe-3d{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important;z-index:4!important;opacity:.92!important;box-shadow:0 0 45px rgba(50,170,255,.35)!important}
 .no-three .globe-wrap{background:radial-gradient(circle at 35% 30%,rgba(80,190,255,.18),rgba(0,0,0,0) 62%)}
 @media(max-width:700px){.no-three .globe-3d{width:100%!important;height:100%!important}}
+
+/* SIVA 3D CARD DEPTH — desktop pointer only */
+@media (pointer:fine){
+  .service-card,.destination-choice,.jobs-category-choice-card,.payment-card,.app-download-btn{
+    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+    transform-style:preserve-3d;will-change:transform;position:relative;overflow:hidden;
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .service-card::after,.destination-choice::after,.jobs-category-choice-card::after,.payment-card::after,.app-download-btn::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.24),transparent 42%);
+    opacity:.65;
+  }
+  .service-card:hover,.destination-choice:hover,.jobs-category-choice-card:hover,.payment-card:hover,.app-download-btn:hover{
+    box-shadow:0 22px 55px rgba(0,80,130,.18);
+  }
+}
+.hero-3d .earth-scene{transform:translateY(-50%) translate3d(var(--hero-x,0px),var(--hero-y,0px),0);transition:transform .35s ease-out;}
+@media(max-width:999px){.hero-3d .earth-scene{transform:translateY(-50%) translate3d(0,0,0)!important}}
