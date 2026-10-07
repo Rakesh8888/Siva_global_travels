@@ -276,6 +276,7 @@ function startLuckyRecognition(){
 if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)){
   const R=window.SpeechRecognition||window.webkitSpeechRecognition;
   aiRecognition=new R();
+  window.aiRecognition=aiRecognition;
   aiMic.addEventListener("click",startLuckyRecognition);
   aiVoiceMic?.addEventListener("click",startLuckyRecognition);
   aiRecognition.onresult=e=>{
@@ -287,7 +288,7 @@ if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in windo
     }
   };
   aiRecognition.onend=()=>{aiRecognition._running=false;setVoiceUi(false);};
-  aiRecognition.onerror=(event)=>{aiRecognition._running=false;setVoiceUi(false);const code=event?.error;if(code==="not-allowed"||code==="service-not-allowed")aiVoiceStatus.textContent="Microphone permission blocked — allow microphone access.";else if(code==="audio-capture")aiVoiceStatus.textContent="No microphone available.";else if(code==="no-speech")aiVoiceStatus.textContent="No speech detected — tap and speak again.";else if(code==="network")aiVoiceStatus.textContent="Voice recognition needs an internet connection.";else if(code==="language-not-supported")aiVoiceStatus.textContent="Selected voice language is not supported here.";else aiVoiceStatus.textContent="Voice input stopped — tap and try again.";};
+  aiRecognition.onerror=(event)=>{aiRecognition._running=false;setVoiceUi(false);const code=event?.error;const msg=code==="not-allowed"||code==="service-not-allowed"?"Microphone permission blocked — allow microphone access.":code==="audio-capture"?"No microphone available.":code==="no-speech"?"No speech detected — tap and speak again.":code==="network"?"Voice recognition needs an internet connection.":code==="language-not-supported"?"Selected voice language is not supported here.":"Voice input stopped — tap and try again.";if(aiVoiceStatus)aiVoiceStatus.textContent=msg;};
 } else if(aiMic){
   aiMic.disabled=true;
   aiMic.title="Voice input is not supported in this browser";
