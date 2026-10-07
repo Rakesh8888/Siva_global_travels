@@ -152,7 +152,7 @@ const aiToggle=document.querySelector("#aiChatToggle"),aiPanel=document.querySel
 const aiHistory=[];
 let aiSpeaking=false;
 let aiRecognition=null;
-const AI_API_URL = window.SIVA_AI_API_URL || "https://siva-global-travels.sivaramtotti.workers.dev/api/chat";
+const AI_API_URL = window.SIVA_AI_API_URL || "/api/chat";
 const aiLanguage=document.querySelector("#aiLanguage");
 
 if (aiToggle && aiPanel) {
