@@ -885,3 +885,28 @@ window.addEventListener("load",()=>{
     if(host) host.setAttribute("aria-label","3D globe fallback");
   }
 });
+
+/* SIVA 3D INTERACTION LAYER — lightweight, mobile-safe */
+document.addEventListener("DOMContentLoaded",()=>{
+  const fine=window.matchMedia("(pointer:fine)").matches;
+  if(!fine) return;
+  document.querySelectorAll(".service-card,.destination-choice,.jobs-category-choice-card,.payment-card,.app-download-btn").forEach(card=>{
+    card.addEventListener("pointermove",e=>{
+      const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      card.style.setProperty("--rx",(-y*6).toFixed(2)+"deg"); card.style.setProperty("--ry",(x*8).toFixed(2)+"deg");
+      card.style.setProperty("--mx",(x*100).toFixed(1)+"%"); card.style.setProperty("--my",(y*100).toFixed(1)+"%");
+    });
+    card.addEventListener("pointerleave",()=>{
+      card.style.setProperty("--rx","0deg"); card.style.setProperty("--ry","0deg");
+      card.style.setProperty("--mx","50%"); card.style.setProperty("--my","50%");
+    });
+  });
+  const hero=document.querySelector(".hero-3d");
+  if(hero){
+    hero.addEventListener("pointermove",e=>{
+      const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      hero.style.setProperty("--hero-x",(x*18).toFixed(2)+"px"); hero.style.setProperty("--hero-y",(y*12).toFixed(2)+"px");
+    });
+    hero.addEventListener("pointerleave",()=>{hero.style.setProperty("--hero-x","0px");hero.style.setProperty("--hero-y","0px");});
+  }
+});
