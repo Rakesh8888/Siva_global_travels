@@ -2128,3 +2128,139 @@ body.night-mode .theme-mode-toggle{background:rgba(3,11,24,.88);color:#ffb24d;bo
 @media (prefers-reduced-motion:reduce){
   .ai-voice-mic.active,.ai-voice-btn.active{animation:none!important;}
 }
+
+
+/* LIGHT TRAVEL THEME — BLACK BACKGROUNDS REMOVED */
+:root{
+  --navy:#f6fbff;
+  --blue:#0b5c8e;
+  --blue2:#1596c8;
+  --orange:#ff7a00;
+  --orange2:#ff4d00;
+  --white:#123047;
+  --muted:#587184;
+  --line:rgba(18,70,100,.14);
+}
+body{background:#f6fbff;color:#123047}
+.site-nav{
+  background:rgba(255,255,255,.92);
+  color:#123047;
+  border-bottom:1px solid rgba(18,70,100,.08);
+}
+.brand{color:#123047}
+.brand b{color:#ff6b00}
+.brand-mark{border-color:rgba(255,107,0,.55);color:#ff6b00}
+.nav-links{color:#31566d}
+.nav-cta{color:#123047;border-color:rgba(18,96,140,.25);background:#fff}
+
+.hero-3d{
+  background:
+    radial-gradient(circle at 78% 38%,rgba(63,190,235,.30) 0%,rgba(63,190,235,.10) 24%,transparent 48%),
+    linear-gradient(180deg,#e9f8ff 0%,#f8fcff 58%,#eef9fd 100%);
+  color:#123047;
+}
+.hero-grid{
+  opacity:.28;
+  background-image:
+    linear-gradient(rgba(17,104,145,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(17,104,145,.08) 1px,transparent 1px);
+}
+.stars,.stars:before,.stars:after{
+  background-image:
+    radial-gradient(circle,rgba(22,113,155,.28) 1px,transparent 1px),
+    radial-gradient(circle,rgba(255,126,0,.18) 1px,transparent 1px);
+  opacity:.35;
+}
+.orb-one{background:radial-gradient(circle,rgba(47,181,230,.45),transparent 65%)}
+.orb-two{background:radial-gradient(circle,rgba(255,125,32,.25),transparent 68%)}
+.logo-text{color:#155273}
+.hero-copy h1{color:#123047;text-shadow:none}
+.hero-copy h1 em,.section-heading h2 em,.contact h2 em{color:#ff6b00}
+.hero-lead{color:#557184}
+.hero-trust{color:#607d8f}
+.hero-trust strong{color:#123047}
+.hero-trust i{background:rgba(18,70,100,.14)}
+
+.btn-secondary{
+  color:#16445e;
+  border-color:rgba(18,96,140,.22);
+  background:#fff;
+}
+.btn-primary{background:linear-gradient(135deg,#ff8a00,#ff5b00)}
+
+.earth-scene{filter:drop-shadow(0 25px 45px rgba(20,100,135,.14))}
+.globe-shadow{background:rgba(24,92,120,.18)}
+.scene-ring{border-color:rgba(24,143,190,.38);box-shadow:0 0 18px rgba(38,170,230,.10)}
+.ring-b{border-color:rgba(255,126,0,.30)}
+.ring-c{border-color:rgba(18,96,140,.16)}
+.route-label{
+  color:#16445e;
+  background:rgba(255,255,255,.90);
+  border-color:rgba(255,126,0,.35);
+  box-shadow:0 10px 25px rgba(18,70,100,.10);
+}
+.floating-card{
+  color:#123047;
+  background:rgba(255,255,255,.92);
+  border-color:rgba(18,96,140,.14);
+  box-shadow:0 15px 40px rgba(18,70,100,.13);
+}
+.floating-card small{color:#668397}
+.floating-card strong{color:#123047}
+.pulse-dot{box-shadow:0 0 14px #40c98a}
+
+.services{
+  background:linear-gradient(180deg,#f7fcff,#eaf7fc);
+  color:#123047;
+}
+.section-heading p{color:#5c7688}
+.service-card{
+  color:#123047;
+  border-color:rgba(18,96,140,.13);
+  background:linear-gradient(145deg,#ffffff,#eef9fd);
+  box-shadow:0 20px 50px rgba(18,70,100,.10);
+}
+.service-card p{color:#5c7688}
+.service-card .card-top{color:#7891a1}
+.service-travel{background:radial-gradient(circle at 90% 10%,rgba(43,177,240,.18),transparent 38%),linear-gradient(145deg,#ffffff,#eaf8fd)}
+.service-jobs{background:radial-gradient(circle at 90% 10%,rgba(255,157,46,.13),transparent 38%),linear-gradient(145deg,#ffffff,#fff6eb)}
+.service-visa{background:radial-gradient(circle at 90% 10%,rgba(107,149,255,.13),transparent 38%),linear-gradient(145deg,#ffffff,#eef3ff)}
+.service-cruise{background:radial-gradient(circle at 90% 10%,rgba(43,214,184,.13),transparent 38%),linear-gradient(145deg,#ffffff,#edfcf9)}
+.destination-pills span{background:#fff;color:#4e6b7d;border-color:rgba(18,96,140,.13)}
+
+.trust-enquiry{background:#eaf7fc}
+.trust-panel,.enquiry-panel{
+  background:linear-gradient(145deg,#ffffff,#f3fbfe);
+  border-color:rgba(18,96,140,.13);
+  box-shadow:0 24px 70px rgba(18,70,100,.10);
+}
+.trust-panel h2,.enquiry-panel h3{color:#123047}
+.trust-panel>p,.trust-points small{color:#5c7688}
+.trust-points>div{border-color:rgba(18,96,140,.13)}
+.enquiry-form label{color:#607b8c}
+.enquiry-form input,.enquiry-form select,.enquiry-form textarea{
+  background:#fff;
+  color:#123047;
+  border-color:rgba(18,96,140,.16);
+}
+.enquiry-form input::placeholder,.enquiry-form textarea::placeholder{color:#91a5b2}
+.enquiry-form select option{background:#fff;color:#123047}
+.form-note{color:#6e8796}
+
+.contact{
+  background:linear-gradient(180deg,#ffffff,#eaf8fd);
+  color:#123047;
+}
+.contact-glow{background:radial-gradient(circle,rgba(255,126,25,.14),transparent 68%)}
+.contact p{color:#5c7688}
+.whatsapp{box-shadow:0 14px 35px rgba(32,199,106,.16)}
+footer{background:#e8f6fb;color:#6b8595;border-top:1px solid rgba(18,96,140,.10)}
+
+.scroll-cue{color:#6c8798}
+.scroll-cue span{background:#ff6b00}
+
+@media(max-width:700px){
+  .site-nav{background:rgba(255,255,255,.96)}
+  .hero-3d{background:linear-gradient(180deg,#e9f8ff,#f8fcff 60%,#edf9fd)}
+  .earth-scene{filter:drop-shadow(0 20px 35px rgba(20,100,135,.12))}
+}
