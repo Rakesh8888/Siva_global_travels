@@ -919,3 +919,24 @@ document.addEventListener("visibilitychange",()=>{
     document.querySelectorAll("canvas").forEach(c=>{c.style.visibility="visible";});
   }
 });
+
+/* 3D SHAPE PARALLAX — pointer devices only */
+document.addEventListener("DOMContentLoaded",()=>{
+  if(!window.matchMedia("(pointer:fine)").matches) return;
+  const field=document.querySelector(".shape3d-field");
+  if(!field) return;
+  const shapes=field.querySelectorAll(".shape3d");
+  const move=(e)=>{
+    const r=field.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    shapes.forEach((el,i)=>{
+      const depth=(i+1)*5;
+      el.style.marginLeft=(x*depth).toFixed(1)+"px";
+      el.style.marginTop=(y*depth).toFixed(1)+"px";
+    });
+  };
+  field.parentElement?.addEventListener("pointermove",move,{passive:true});
+  field.parentElement?.addEventListener("pointerleave",()=>{
+    shapes.forEach(el=>{el.style.marginLeft="0";el.style.marginTop="0";});
+  });
+});
