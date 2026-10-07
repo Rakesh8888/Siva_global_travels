@@ -940,3 +940,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     shapes.forEach(el=>{el.style.marginLeft="0";el.style.marginTop="0";});
   });
 });
+
+
+/* CINEMATIC 3D HERO INTERACTION */
+document.addEventListener("DOMContentLoaded",()=>{const hero=document.querySelector(".hero-3d"),earth=document.querySelector(".earth-scene");if(hero&&earth&&matchMedia("(pointer:fine)").matches){hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;earth.style.transform="translateY(-50%) translate3d("+(x*18).toFixed(1)+"px,"+(y*12).toFixed(1)+"px,0) rotateX("+(-y*2).toFixed(2)+"deg) rotateY("+(x*3).toFixed(2)+"deg)"});hero.addEventListener("pointerleave",()=>{earth.style.transform="translateY(-50%) translate3d(0,0,0)"})}const targets=document.querySelectorAll(".services,.destination-showcase,.jobs-showcase,.trust-enquiry,.about-section,.faq-section,.payment-section,.app-download,.contact");targets.forEach(el=>el.classList.add("reveal-3d"));if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");io.unobserve(entry.target)}}),{threshold:.12});targets.forEach(el=>io.observe(el))}else targets.forEach(el=>el.classList.add("is-visible"))});
