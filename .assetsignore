@@ -3,3 +3,6 @@ wrangler.jsonc
 .assetsignore
 api/
 .github/
+node_modules/
+.wrangler/
+.git/
