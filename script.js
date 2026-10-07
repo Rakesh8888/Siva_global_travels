@@ -307,7 +307,7 @@ function initLucky3DWorld(){
   camera.position.set(0,0,7.2);
 
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.setClearColor(0x000000,0);
   host.appendChild(renderer.domElement);
 
@@ -442,7 +442,7 @@ function initHeroGlobe3D(){
   camera.position.set(0,0,5.9);
 
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.setClearColor(0x000000,0);
   host.innerHTML="";
   host.appendChild(renderer.domElement);
@@ -561,7 +561,7 @@ function initHeroAircraft3D(){
   const camera=new THREE.PerspectiveCamera(35,1,.1,50);
   camera.position.set(0,0,4.5);
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.setClearColor(0x000000,0);
   host.innerHTML="";
   host.appendChild(renderer.domElement);
@@ -650,7 +650,7 @@ function initHeroCruise3D(){
   const camera=new THREE.PerspectiveCamera(34,1,.1,60);
   camera.position.set(0,0,5.6);
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.setClearColor(0x000000,0);
   host.innerHTML="";
   host.appendChild(renderer.domElement);
@@ -908,5 +908,14 @@ document.addEventListener("DOMContentLoaded",()=>{
       hero.style.setProperty("--hero-x",(x*18).toFixed(2)+"px"); hero.style.setProperty("--hero-y",(y*12).toFixed(2)+"px");
     });
     hero.addEventListener("pointerleave",()=>{hero.style.setProperty("--hero-x","0px");hero.style.setProperty("--hero-y","0px");});
+  }
+});
+
+/* SIVA 3D PERFORMANCE GUARD */
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    document.querySelectorAll("canvas").forEach(c=>{c.style.visibility="hidden";});
+  }else{
+    document.querySelectorAll("canvas").forEach(c=>{c.style.visibility="visible";});
   }
 });
