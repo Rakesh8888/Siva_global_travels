@@ -1,0 +1,12 @@
+{
+  "name": "siva-global-travels",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "preview": "wrangler dev",
+    "tunnel": "cloudflared tunnel --url http://localhost:8787"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
