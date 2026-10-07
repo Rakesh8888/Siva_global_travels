@@ -235,7 +235,7 @@ async function askAi(message,options={}){
     loading.remove();
     let msg="LUCKY could not connect to the AI service. Please try again or use WhatsApp.";
     if(e?.name==="AbortError") msg="LUCKY AI timed out. Please try again.";
-    else if(e?.message) msg="LUCKY AI connection error. Please try again.";
+    else if(e?.message) msg="LUCKY AI error: "+e.message;
     addAiMessage(msg);
     if(options.voice) speakLucky(msg);
   }finally{
