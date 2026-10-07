@@ -2417,3 +2417,138 @@ footer{background:#e7f5fc !important;color:#5f7888 !important}
 @media(min-width:701px){
   .earth-scene{z-index:12!important}
 }
+
+
+/* COMPACT HERO — FINAL SIZE FIX */
+.hero-3d{
+  min-height:720px!important;
+  padding-bottom:28px!important;
+}
+.hero-copy{
+  max-width:520px!important;
+}
+.hero-logo-lockup img{
+  max-width:330px!important;
+}
+.earth-scene{
+  width:min(500px,44vw)!important;
+  height:min(500px,44vw)!important;
+  right:0!important;
+}
+.flight-visualiser{
+  transform:scale(.88);
+  transform-origin:left top;
+  margin-bottom:-18px!important;
+}
+@media(max-width:700px){
+  .hero-3d{
+    min-height:690px!important;
+    padding:22px 14px 20px!important;
+    overflow:hidden!important;
+  }
+  .hero-copy{
+    width:100%!important;
+    max-width:100%!important;
+    padding:0!important;
+  }
+  .hero-logo-lockup{
+    margin:8px 0 8px!important;
+    max-width:240px!important;
+  }
+  .hero-logo-lockup img{
+    width:230px!important;
+    max-width:230px!important;
+    height:auto!important;
+  }
+  .hero-lead{
+    font-size:12px!important;
+    line-height:1.35!important;
+    max-width:330px!important;
+    margin:6px 0 10px!important;
+  }
+  .hero-copy .buttons{
+    gap:7px!important;
+    margin-bottom:6px!important;
+  }
+  .hero-copy .buttons .btn{
+    width:92px!important;
+    max-width:92px!important;
+    height:28px!important;
+    min-height:28px!important;
+    padding:5px 6px!important;
+    font-size:7px!important;
+  }
+  .flight-visualiser{
+    width:100%!important;
+    max-width:340px!important;
+    margin:5px 0 0!important;
+    transform:none!important;
+    padding:8px!important;
+    border-radius:9px!important;
+  }
+  .flight-visualiser-title{
+    font-size:8px!important;
+    line-height:1.2!important;
+    margin-bottom:6px!important;
+  }
+  .flight-visualiser-title small{
+    font-size:6px!important;
+  }
+  .flight-fields{
+    gap:5px!important;
+  }
+  .flight-fields label{
+    font-size:6px!important;
+  }
+  .flight-fields input{
+    height:27px!important;
+    min-height:27px!important;
+    font-size:8px!important;
+    padding:4px 6px!important;
+  }
+  #flightSwap{
+    width:24px!important;
+    height:24px!important;
+    min-width:24px!important;
+    font-size:11px!important;
+  }
+  #flightShow{
+    height:27px!important;
+    min-height:27px!important;
+    font-size:7px!important;
+    padding:4px 7px!important;
+  }
+  .flight-status{
+    font-size:7px!important;
+    margin-top:5px!important;
+  }
+  .hero-trust{
+    margin-top:8px!important;
+    gap:8px!important;
+  }
+  .hero-trust strong{
+    font-size:13px!important;
+  }
+  .hero-trust span{
+    font-size:6px!important;
+  }
+  .earth-scene{
+    top:395px!important;
+    right:50%!important;
+    width:250px!important;
+    height:250px!important;
+    transform:translateX(50%)!important;
+  }
+  .globe-wrap{
+    inset:12%!important;
+  }
+  .scene-ring{
+    transform:scale(.75)!important;
+  }
+  #heroAirplane3D,#heroCruise3D{
+    transform:scale(.72)!important;
+  }
+  .floating-card{
+    transform:scale(.68)!important;
+  }
+}
