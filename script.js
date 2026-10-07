@@ -452,6 +452,32 @@ function initHeroGlobe3D(){
   const group=new THREE.Group();
   scene.add(group);
 
+  // Touch / mouse drag interaction for the hero Earth.
+  let dragging=false, lastX=0, lastY=0;
+  const dragHost=host;
+  const startDrag=(e)=>{
+    dragging=true;
+    lastX=e.clientX;
+    lastY=e.clientY;
+    dragHost.setPointerCapture?.(e.pointerId);
+  };
+  const moveDrag=(e)=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX;
+    const dy=e.clientY-lastY;
+    group.rotation.y += dx*0.008;
+    group.rotation.x += dy*0.004;
+    group.rotation.x=Math.max(-0.45,Math.min(0.45,group.rotation.x));
+    lastX=e.clientX;
+    lastY=e.clientY;
+  };
+  const endDrag=()=>{dragging=false};
+  host.addEventListener("pointerdown",startDrag,{passive:true});
+  host.addEventListener("pointermove",moveDrag,{passive:true});
+  host.addEventListener("pointerup",endDrag,{passive:true});
+  host.addEventListener("pointercancel",endDrag,{passive:true});
+  host.addEventListener("pointerleave",endDrag,{passive:true});
+
   const textureLoader=new THREE.TextureLoader();
   textureLoader.crossOrigin="anonymous";
   const texture=textureLoader.load(
