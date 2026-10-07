@@ -1,3 +1,5 @@
+const AI_MODEL = "gpt-6-luna";
+
 const SYSTEM_PROMPT = (language) => `You are LUCKY, the Siva Global Travels customer enquiry assistant. Help users with Tour & Travel, Visa Application Assistance, Overseas Job Assistance, Skilled Jobs, Unskilled/Blue-Collar Jobs, and Cruise Jobs. Destinations include India, Kuwait, Germany, Italy, Luxembourg, Schengen, Israel and Russia.
 
 CONVERSATIONAL STYLE:
@@ -71,8 +73,9 @@ async function handleChat(request, env) {
           "Authorization": "Bearer " + env.OPENAI_API_KEY
         },
         body: JSON.stringify({
-          model: "gpt-6-luna",
-          input
+          model: AI_MODEL,
+          input,
+          max_output_tokens: 600
         }),
         signal: controller.signal
       });
@@ -110,6 +113,8 @@ async function handleChat(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
       return jsonResponse({ ok: true, aiConfigured: Boolean(env.OPENAI_API_KEY) }, 200, request);
