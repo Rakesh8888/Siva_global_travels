@@ -2379,3 +2379,41 @@ footer{background:#e7f5fc !important;color:#5f7888 !important}
     border-radius:6px!important;
   }
 }
+
+
+/* 3D TRAVEL VISUALISATION — MOBILE FIRST */
+#heroGlobe3D{
+  touch-action:none;
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+}
+#heroGlobe3D:active{cursor:grabbing}
+@media(max-width:700px){
+  .hero-3d{
+    min-height:980px!important;
+    padding-bottom:40px!important;
+  }
+  .earth-scene{
+    top:600px!important;
+    bottom:auto!important;
+    right:50%!important;
+    width:360px!important;
+    height:360px!important;
+    transform:translateX(50%)!important;
+    z-index:8!important;
+  }
+  .globe-wrap{
+    inset:10%!important;
+  }
+  #heroAirplane3D,#heroCruise3D{
+    pointer-events:none!important;
+  }
+  .flight-visualiser{
+    position:relative;
+    z-index:40;
+  }
+}
+@media(min-width:701px){
+  .earth-scene{z-index:12!important}
+}
