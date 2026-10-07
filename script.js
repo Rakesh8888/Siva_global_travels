@@ -233,7 +233,9 @@ async function askAi(message,options={}){
     if(options.voice) speakLucky(reply);
   }catch(e){
     loading.remove();
-    const msg=e?.name==="AbortError"?"LUCKY is taking too long to respond. Please try again or use WhatsApp.":"LUCKY is temporarily unavailable. Please try again or use WhatsApp.";
+    let msg="LUCKY could not connect to the AI service. Please try again or use WhatsApp.";
+    if(e?.name==="AbortError") msg="LUCKY AI timed out. Please try again.";
+    else if(e?.message) msg="LUCKY AI connection error. Please try again.";
     addAiMessage(msg);
     if(options.voice) speakLucky(msg);
   }finally{
@@ -285,7 +287,7 @@ if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in windo
     }
   };
   aiRecognition.onend=()=>{aiRecognition._running=false;setVoiceUi(false);};
-  aiRecognition.onerror=()=>{aiRecognition._running=false;setVoiceUi(false);if(aiVoiceStatus)aiVoiceStatus.textContent="Voice input unavailable — try again";};
+  aiRecognition.onerror=(event)=>{aiRecognition._running=false;setVoiceUi(false);const code=event?.error;if(code==="not-allowed"||code==="service-not-allowed")aiVoiceStatus.textContent="Microphone permission blocked — allow microphone access.";else if(code==="audio-capture")aiVoiceStatus.textContent="No microphone available.";else if(code==="no-speech")aiVoiceStatus.textContent="No speech detected — tap and speak again.";else if(code==="network")aiVoiceStatus.textContent="Voice recognition needs an internet connection.";else if(code==="language-not-supported")aiVoiceStatus.textContent="Selected voice language is not supported here.";else aiVoiceStatus.textContent="Voice input stopped — tap and try again.";};
 } else if(aiMic){
   aiMic.disabled=true;
   aiMic.title="Voice input is not supported in this browser";
