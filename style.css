@@ -2264,3 +2264,66 @@ footer{background:#e8f6fb;color:#6b8595;border-top:1px solid rgba(18,96,140,.10)
   .hero-3d{background:linear-gradient(180deg,#e9f8ff,#f8fcff 60%,#edf9fd)}
   .earth-scene{filter:drop-shadow(0 20px 35px rgba(20,100,135,.12))}
 }
+
+/* SIVA LIGHT THEME — FINAL OVERRIDE */
+:root{
+  --navy:#f5fbff !important;
+  --blue:#eaf6ff !important;
+  --blue2:#1689c7 !important;
+  --orange:#f28a20 !important;
+  --orange2:#ff6a1a !important;
+  --white:#12324a !important;
+  --muted:#5f7485 !important;
+  --line:rgba(15,91,135,.16) !important;
+}
+html,body{background:#f5fbff !important;color:#12324a !important}
+body.night-mode{background:#f5fbff !important;color:#12324a !important}
+.site-nav{background:rgba(255,255,255,.94) !important;color:#12324a !important;box-shadow:0 4px 24px rgba(21,95,135,.08)}
+.nav-links{color:#234b64 !important}.nav-cta{color:#12324a !important}
+.hero-3d{background:
+  radial-gradient(circle at 76% 40%,rgba(82,196,245,.28) 0%,transparent 34%),
+  linear-gradient(135deg,#ffffff 0%,#eaf7ff 52%,#d9f1ff 100%) !important}
+.hero-grid{opacity:.22 !important;background-image:linear-gradient(rgba(17,116,163,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(17,116,163,.10) 1px,transparent 1px) !important}
+.stars,.stars:before,.stars:after{background-image:radial-gradient(circle,rgba(18,113,160,.35) 1px,transparent 1px),radial-gradient(circle,rgba(18,113,160,.22) 1px,transparent 1px) !important;opacity:.35 !important}
+.logo-text{color:#24536d !important}.hero-copy h1{color:#12324a !important;text-shadow:none !important}
+.hero-lead{color:#587082 !important}.hero-trust{color:#60798a !important}.hero-trust strong{color:#12324a !important}
+.btn-secondary{background:#fff !important;color:#12324a !important;border-color:rgba(15,91,135,.20) !important}
+.globe-3d{box-shadow:inset -25px -18px 45px rgba(22,92,130,.20),0 0 70px rgba(39,176,235,.20) !important}
+.globe-shine{background:linear-gradient(135deg,rgba(255,255,255,.40),transparent 45%,rgba(18,89,125,.10) 80%) !important}
+.globe-shadow{background:rgba(31,91,124,.18) !important}
+.route-label{background:rgba(255,255,255,.92) !important;color:#12324a !important}
+.floating-card{background:rgba(255,255,255,.94) !important;color:#12324a !important;border-color:rgba(15,91,135,.14) !important;box-shadow:0 15px 40px rgba(28,94,126,.12) !important}
+.floating-card small{color:#648092 !important}.floating-card strong{color:#12324a !important}
+.services{background:linear-gradient(180deg,#ffffff 0%,#eef9ff 100%) !important}
+.section-heading p,.service-card p,.trust-panel>p,.contact p{color:#5f7485 !important}
+.service-card,.service-travel,.service-jobs,.service-visa,.service-cruise{
+  background:linear-gradient(145deg,#ffffff 0%,#eef8fd 100%) !important;
+  color:#12324a !important;
+  border-color:rgba(15,91,135,.15) !important;
+  box-shadow:0 20px 50px rgba(26,93,125,.10) !important
+}
+.card-top{color:#668397 !important}.card-number{color:#7793a5 !important}
+.service-card h3{color:#12324a !important}
+.destinations-strip{border-color:rgba(15,91,135,.14) !important}
+.destination-pills span{background:#fff !important;color:#45677b !important;border-color:rgba(15,91,135,.15) !important}
+.trust-enquiry{background:#eef9ff !important}
+.trust-panel,.enquiry-panel{background:#fff !important;color:#12324a !important;border-color:rgba(15,91,135,.14) !important;box-shadow:0 24px 70px rgba(26,93,125,.09) !important}
+.trust-panel h2,.enquiry-panel h3{color:#12324a !important}
+.trust-points>div{border-color:rgba(15,91,135,.12) !important}.trust-points small{color:#688092 !important}
+.enquiry-form label{color:#60798a !important}
+.enquiry-form input,.enquiry-form select,.enquiry-form textarea{background:#f8fcff !important;color:#12324a !important;border-color:rgba(15,91,135,.16) !important}
+.enquiry-form input::placeholder,.enquiry-form textarea::placeholder{color:#78909f !important}
+.enquiry-form select option{background:#fff !important;color:#12324a !important}
+.form-note{color:#718897 !important}
+.contact{background:linear-gradient(180deg,#eaf8ff,#ffffff) !important;color:#12324a !important}
+footer{background:#e7f5fc !important;color:#5f7888 !important}
+.detail-hero{background:linear-gradient(135deg,#ffffff,#e7f7ff) !important;color:#12324a !important}
+.detail-hero h1{color:#12324a !important;text-shadow:none !important}.detail-hero p{color:#5f7485 !important}
+.detail-orb{background:radial-gradient(circle at 35% 30%,#7ed8fa,#2a8fc2 48%,#dff6ff 76%) !important;box-shadow:0 0 90px rgba(38,170,230,.22),inset -20px -20px 40px rgba(18,88,120,.18) !important}
+.detail-content{background:#f1faff !important}.detail-grid article{background:#fff !important;color:#12324a !important;border-color:rgba(15,91,135,.14) !important}
+.destination-panel,.job-role-panel,.modal{background:rgba(245,251,255,.96) !important;color:#12324a !important}
+.destination-panel>* ,.job-role-panel>*{color:#12324a !important}
+.payment-section,.app-download,.faq-section,.about-section,.destination-showcase,.jobs-showcase{background:#f5fbff !important;color:#12324a !important}
+.payment-card,.app-download-card,.faq-item,.about-card,.destination-choice,.jobs-category-choice-card{background:#fff !important;color:#12324a !important;border-color:rgba(15,91,135,.14) !important}
+.night-mode *{color:inherit}
+.night-mode .hero-3d,.night-mode .services,.night-mode .trust-enquiry,.night-mode .contact,.night-mode footer,.night-mode .detail-content,.night-mode .detail-hero{background-color:transparent !important}
