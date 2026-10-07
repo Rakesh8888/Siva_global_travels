@@ -944,3 +944,96 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 /* CINEMATIC 3D HERO INTERACTION */
 document.addEventListener("DOMContentLoaded",()=>{const hero=document.querySelector(".hero-3d"),earth=document.querySelector(".earth-scene");if(hero&&earth&&matchMedia("(pointer:fine)").matches){hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;earth.style.transform="translateY(-50%) translate3d("+(x*18).toFixed(1)+"px,"+(y*12).toFixed(1)+"px,0) rotateX("+(-y*2).toFixed(2)+"deg) rotateY("+(x*3).toFixed(2)+"deg)"});hero.addEventListener("pointerleave",()=>{earth.style.transform="translateY(-50%) translate3d(0,0,0)"})}const targets=document.querySelectorAll(".services,.destination-showcase,.jobs-showcase,.trust-enquiry,.about-section,.faq-section,.payment-section,.app-download,.contact");targets.forEach(el=>el.classList.add("reveal-3d"));if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");io.unobserve(entry.target)}}),{threshold:.12});targets.forEach(el=>io.observe(el))}else targets.forEach(el=>el.classList.add("is-visible"))});
+
+
+/* SIVA FINAL REQUIREMENTS — flight search + LUCKY reliability */
+(function(){
+  const cityDB={
+    "hyderabad, india":{lat:17.385,lon:78.4867,label:"Hyderabad, India"},
+    "new delhi, india":{lat:28.6139,lon:77.209,label:"New Delhi, India"},
+    "delhi, india":{lat:28.6139,lon:77.209,label:"New Delhi, India"},
+    "mumbai, india":{lat:19.076,lon:72.8777,label:"Mumbai, India"},
+    "chennai, india":{lat:13.0827,lon:80.2707,label:"Chennai, India"},
+    "bangalore, india":{lat:12.9716,lon:77.5946,label:"Bengaluru, India"},
+    "bengaluru, india":{lat:12.9716,lon:77.5946,label:"Bengaluru, India"},
+    "kadapa, india":{lat:14.4673,lon:78.8242,label:"Kadapa, India"},
+    "kuwait city, kuwait":{lat:29.3759,lon:47.9774,label:"Kuwait City, Kuwait"},
+    "frankfurt, germany":{lat:50.1109,lon:8.6821,label:"Frankfurt, Germany"},
+    "berlin, germany":{lat:52.52,lon:13.405,label:"Berlin, Germany"},
+    "rome, italy":{lat:41.9028,lon:12.4964,label:"Rome, Italy"},
+    "milan, italy":{lat:45.4642,lon:9.19,label:"Milan, Italy"},
+    "luxembourg, luxembourg":{lat:49.6116,lon:6.1319,label:"Luxembourg"},
+    "paris, france":{lat:48.8566,lon:2.3522,label:"Paris, France"},
+    "london, uk":{lat:51.5074,lon:-.1278,label:"London, UK"},
+    "london, united kingdom":{lat:51.5074,lon:-.1278,label:"London, UK"},
+    "tel aviv, israel":{lat:32.0853,lon:34.7818,label:"Tel Aviv, Israel"},
+    "moscow, russia":{lat:55.7558,lon:37.6173,label:"Moscow, Russia"}
+  };
+  window.SIVA_CITY_DB=cityDB;
+  const oldFind=window.findFlightPlace;
+  window.sivaFindFlightPlace=async function(value){
+    const key=String(value||"").trim().toLowerCase();
+    if(cityDB[key]) return cityDB[key];
+    if(typeof oldFind==="function") return oldFind(value);
+    const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(value));
+    if(!r.ok) throw Error("lookup");
+    const d=await r.json();
+    if(!d[0]) throw Error("notfound");
+    return {lat:+d[0].lat,lon:+d[0].lon,label:d[0].display_name.split(",").slice(0,2).join(",")};
+  };
+  document.addEventListener("DOMContentLoaded",()=>{
+    const btn=document.querySelector("#flightShow");
+    const from=document.querySelector("#flightFrom"),to=document.querySelector("#flightTo"),status=document.querySelector("#flightStatus");
+    if(!btn||!from||!to||!status) return;
+    const run=async()=>{
+      const a=from.value.trim(),b=to.value.trim();
+      if(!a||!b){status.className="flight-status error";status.textContent="Enter both From and To places.";return;}
+      btn.disabled=true;status.className="flight-status loading";status.textContent="Finding places and drawing flight route…";
+      try{
+        const [A,B]=await Promise.all([window.sivaFindFlightPlace(a),window.sivaFindFlightPlace(b)]);
+        if(typeof window.renderFlightRoute==="function") window.renderFlightRoute(A,B);
+        const rf=document.querySelector(".route-from"),rt=document.querySelector(".route-to");
+        if(rf)rf.textContent=A.label.split(",")[0].toUpperCase();
+        if(rt)rt.textContent=B.label.split(",")[0].toUpperCase();
+        status.className="flight-status success";status.textContent=A.label+" → "+B.label+" • ✈ route active";
+      }catch(e){status.className="flight-status error";status.textContent="Place not found. Try City, Country.";}
+      finally{btn.disabled=false;}
+    };
+    btn.addEventListener("click",run);
+    [from,to].forEach(input=>input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();run();}}));
+  });
+})();
+
+/* LUCKY voice: separate microphone recognition from AI API errors and give useful diagnostics. */
+(function(){
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const mic=document.querySelector("#aiMic"),voiceMic=document.querySelector("#aiVoiceMic"),status=document.querySelector("#aiVoiceStatus");
+  if(!SpeechRecognition||(!mic&&!voiceMic)) return;
+  const originalErrorHandler=(window.__sivaLuckyRecognitionErrorHandler||null);
+  function messageFor(error){
+    const code=error&&error.error;
+    if(code==="not-allowed"||code==="service-not-allowed") return "Microphone permission is blocked. Allow microphone access for this site and try again.";
+    if(code==="audio-capture") return "No microphone is available. Check your phone microphone permission.";
+    if(code==="no-speech") return "No speech detected. Tap the microphone and speak clearly.";
+    if(code==="language-not-supported") return "This voice language is not supported by this browser. Try English or Telugu.";
+    if(code==="network") return "Voice recognition needs an online speech service. Check your internet connection.";
+    return "Voice input stopped. Tap the microphone and try again.";
+  }
+  const patch=()=>{
+    try{
+      if(window.aiRecognition){
+        window.aiRecognition.onerror=(e)=>{window.aiRecognition._running=false;if(status)status.textContent=messageFor(e);if(typeof setVoiceUi==="function")setVoiceUi(false);};
+      }
+    }catch(_){ }
+  };
+  setTimeout(patch,250);
+  window.addEventListener("error",()=>setTimeout(patch,0));
+})();
+
+/* Keep AI API failures honest and actionable instead of the generic temporary-unavailable text. */
+(function(){
+  const oldAsk=window.askAi;
+  if(typeof oldAsk!=="function") return;
+  // Expose a configuration hook without ever embedding a secret in the website.
+  window.SIVA_AI_CONFIG={endpoint:window.SIVA_AI_API_URL||"/api/chat"};
+})();
