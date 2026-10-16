@@ -933,3 +933,35 @@ document.addEventListener("DOMContentLoaded",()=>{const hero=document.querySelec
   // Expose a configuration hook without ever embedding a secret in the website.
   window.SIVA_AI_CONFIG={endpoint:window.SIVA_AI_API_URL||"/api/chat"};
 })();
+
+
+/* Newsletter opt-in: WhatsApp confirmation flow; no email is stored by this static form. */
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("newsletterSignup");
+  if (!form) return;
+  const emailInput = document.getElementById("newsletterEmail");
+  const consentInput = document.getElementById("newsletterConsent");
+  const status = document.getElementById("newsletterStatus");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = (emailInput?.value || "").trim();
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValid) {
+      status.textContent = "Please enter a valid email address.";
+      status.className = "newsletter-status is-error";
+      emailInput?.focus();
+      return;
+    }
+    if (!consentInput?.checked) {
+      status.textContent = "Please confirm your consent before subscribing.";
+      status.className = "newsletter-status is-error";
+      consentInput?.focus();
+      return;
+    }
+    const message = "Hello Siva Global Travels, I would like to subscribe to travel newsletters and service updates. My email address is: " + email + ". I consent to receive these updates.";
+    const url = "https://wa.me/9182641172?text=" + encodeURIComponent(message);
+    status.textContent = "Opening WhatsApp so you can send and confirm your subscription request. Your email is not stored on this website.";
+    status.className = "newsletter-status is-success";
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+});
