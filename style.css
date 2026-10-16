@@ -2573,3 +2573,12 @@ footer{background:#e7f5fc !important;color:#5f7888 !important}
 .newsletter-status.is-success{color:#067647;}
 @media(max-width:760px){.newsletter-section{padding:28px 14px}.newsletter-card{grid-template-columns:1fr;gap:24px;border-radius:22px;padding:22px 18px}.newsletter-form{padding:18px}.newsletter-copy h2{font-size:clamp(1.9rem,8vw,2.6rem)}}
 @media(prefers-reduced-motion:reduce){.newsletter-form button{transition:none}.newsletter-form button:hover{transform:none}}
+
+
+/* Interactive globe destination shortcuts */
+.globe-destination-picker{position:absolute;z-index:5;left:50%;bottom:8%;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px;width:min(94%,440px);padding:10px 12px;border:1px solid rgba(255,255,255,.17);border-radius:18px;background:rgba(3,11,24,.78);backdrop-filter:blur(14px);box-shadow:0 12px 34px rgba(0,0,0,.22)}
+.globe-destination-picker>span{flex-basis:100%;text-align:center;color:rgba(255,255,255,.68);font-size:.62rem;font-weight:800;letter-spacing:.16em}
+.globe-destination-picker button{border:1px solid rgba(255,157,46,.42);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;transition:background .18s ease,transform .18s ease}
+.globe-destination-picker button:hover,.globe-destination-picker button:focus-visible{background:rgba(255,157,46,.25);transform:translateY(-1px);outline:2px solid #ffb24b;outline-offset:2px}
+@media(max-width:760px){.globe-destination-picker{bottom:2%;width:min(96%,360px);gap:5px;padding:8px}.globe-destination-picker button{font-size:.7rem;padding:6px 8px}}
+@media(prefers-reduced-motion:reduce){.globe-destination-picker button{transition:none}}
