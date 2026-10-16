@@ -641,8 +641,22 @@ function initHeroCruise3D(){
 document.addEventListener("DOMContentLoaded",initHeroCruise3D);
 
 /* FLIGHT LOCATION SEARCH */
-const FLIGHT_DEFAULTS={"Kadapa, India":{lat:14.4673,lon:78.8242,label:"Kadapa, India"},"Kuwait City, Kuwait":{lat:29.3759,lon:47.9774,label:"Kuwait City, Kuwait"}};
+const FLIGHT_DEFAULTS={"Kadapa, India":{lat:14.4673,lon:78.8242,label:"Kadapa, India"},"Kuwait City, Kuwait":{lat:29.3759,lon:47.9774,label:"Kuwait City, Kuwait"},"Dubai, United Arab Emirates":{lat:25.2048,lon:55.2708,label:"Dubai, United Arab Emirates"},"Frankfurt, Germany":{lat:50.1109,lon:8.6821,label:"Frankfurt, Germany"},"Rome, Italy":{lat:41.9028,lon:12.4964,label:"Rome, Italy"}};
 async function findFlightPlace(value){const key=Object.keys(FLIGHT_DEFAULTS).find(k=>k.toLowerCase()===value.trim().toLowerCase());if(key)return FLIGHT_DEFAULTS[key];const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(value.trim()));if(!r.ok)throw Error("lookup");const d=await r.json();if(!d[0])throw Error("notfound");return{lat:+d[0].lat,lon:+d[0].lon,label:d[0].display_name.split(",").slice(0,2).join(",")};}
+document.addEventListener("DOMContentLoaded",()=>{
+  const picker=document.querySelector("#globeDestinationPicker");
+  const destinationInput=document.querySelector("#flightTo");
+  const showRoute=document.querySelector("#flightShow");
+  if(!picker||!destinationInput||!showRoute)return;
+  picker.querySelectorAll("[data-globe-destination]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      destinationInput.value=button.dataset.globeDestination;
+      showRoute.click();
+      picker.querySelectorAll("button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+    });
+  });
+});
+
 document.addEventListener("DOMContentLoaded",()=>{
  const show=document.querySelector("#flightShow"),swap=document.querySelector("#flightSwap"),from=document.querySelector("#flightFrom"),to=document.querySelector("#flightTo"),status=document.querySelector("#flightStatus");
  if(!show||!from||!to)return;
