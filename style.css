@@ -2552,3 +2552,24 @@ footer{background:#e7f5fc !important;color:#5f7888 !important}
     transform:scale(.68)!important;
   }
 }
+
+
+/* Siva Global Travels — newsletter signup */
+.newsletter-section{position:relative;z-index:1;padding:clamp(28px,5vw,72px) clamp(16px,4vw,48px);background:linear-gradient(135deg,rgba(3,11,24,.98),rgba(11,45,77,.94));}
+.newsletter-card{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(24px,5vw,64px);align-items:center;padding:clamp(24px,4vw,52px);border:1px solid rgba(255,157,46,.38);border-radius:28px;background:rgba(255,255,255,.035);box-shadow:0 22px 65px rgba(0,0,0,.22);}
+.newsletter-copy h2{margin:12px 0 16px;color:#fff;font-size:clamp(2rem,4vw,3.3rem);line-height:1.08;letter-spacing:-.04em;}
+.newsletter-copy h2 em{color:#ffb24b;font-style:normal;}
+.newsletter-copy p{max-width:560px;color:rgba(255,255,255,.78);line-height:1.75;margin:0 0 18px;}
+.newsletter-privacy{display:block;max-width:570px;color:rgba(255,255,255,.58);font-size:.78rem;line-height:1.55;}
+.newsletter-form{display:grid;gap:12px;padding:clamp(18px,3vw,28px);border-radius:20px;background:#fff;color:#122033;box-shadow:0 12px 34px rgba(0,0,0,.15);}
+.newsletter-form>label:not(.newsletter-consent){font-weight:700;font-size:.92rem;}
+.newsletter-form input[type=email]{width:100%;min-width:0;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:12px;padding:14px 15px;font:inherit;color:#142033;background:#fff;outline-offset:3px;}
+.newsletter-consent{display:flex;align-items:flex-start;gap:10px;color:#475569;font-size:.85rem;line-height:1.5;cursor:pointer;}
+.newsletter-consent input{margin-top:4px;accent-color:#0b5c8e;flex:0 0 auto;}
+.newsletter-form button{display:flex;justify-content:center;align-items:center;gap:10px;border:0;border-radius:12px;padding:14px 18px;background:linear-gradient(110deg,#ff9d2e,#ffd078);color:#182033;font:inherit;font-weight:800;cursor:pointer;transition:transform .2s ease,filter .2s ease;}
+.newsletter-form button:hover{transform:translateY(-2px);filter:brightness(1.03);}
+.newsletter-status{margin:0;color:#64748b;font-size:.8rem;line-height:1.5;}
+.newsletter-status.is-error{color:#b42318;}
+.newsletter-status.is-success{color:#067647;}
+@media(max-width:760px){.newsletter-section{padding:28px 14px}.newsletter-card{grid-template-columns:1fr;gap:24px;border-radius:22px;padding:22px 18px}.newsletter-form{padding:18px}.newsletter-copy h2{font-size:clamp(1.9rem,8vw,2.6rem)}}
+@media(prefers-reduced-motion:reduce){.newsletter-form button{transition:none}.newsletter-form button:hover{transform:none}}
