@@ -10,8 +10,8 @@
 @media(max-width:850px){.navlinks{display:none}.menuBtn{display:block}.heroGrid,.contactGrid,.twoCol{grid-template-columns:1fr}.hero{padding:56px 0 42px}.heroVisual{min-height:300px}.orbit{width:min(300px,70vw)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks.mobileNav{display:flex;position:absolute;top:72px;left:0;right:0;background:var(--panel);padding:16px 4vw 22px;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}.navlinks.mobileNav a{padding:8px}.navlinks.mobileNav.show{display:flex}.navtools .mini{padding:8px}}
 @media(max-width:520px){.grid,.fields,.formGrid{grid-template-columns:1fr}.full{grid-column:auto}.heroVisual{min-height:260px}.floatcard{padding:10px 12px;font-size:12px}.fc1{left:-2%}.fc2{right:-2%}section{padding:58px 0}.flightShell{padding:16px}.flightTop h3{font-size:19px}.btn{padding:11px 13px}.topbar .wrap{font-size:10px}}
 
-/* Services section CTA links only: reduce their visual size to 20% of the previous size. */
-#services .textlink{display:inline-block;font-size:2.6px;line-height:1.2;transform:scale(.2);transform-origin:left center;}
+/* Keep service CTA links readable and tap-friendly on mobile. */
+#services .textlink{display:inline-flex;align-items:center;min-height:36px;font-size:13px;line-height:1.4;transform:none;padding:6px 0;transform-origin:initial;}
 </style></head>
 <body>
 <div class="topbar"><div class="wrap"><span>✈ Travel • Visa • Overseas Careers • Cruise Jobs</span><span>📍 Badvel, Andhra Pradesh, India</span></div></div>
