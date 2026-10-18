@@ -139,7 +139,7 @@ async function handleDuffelFlightSearch(request, env) {
     const adults = Number(body?.adults || 1);
     const cabinMap = { "economy": "economy", "premium economy": "premium_economy", "business": "business", "first": "first" };
     const cabinClass = cabinMap[String(body?.cabinClass || "economy").trim().toLowerCase()];
-    const validDate = value => /^\\d{4}-\\d{2}-\\d{2}$/.test(value) &&
+    const validDate = value => /^\d{4}-\d{2}-\d{2}$/.test(value) &&
       !Number.isNaN(Date.parse(value + "T00:00:00Z")) &&
       new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
     if (!/^[A-Z]{3}$/.test(origin) || !/^[A-Z]{3}$/.test(destination) || origin === destination) {
