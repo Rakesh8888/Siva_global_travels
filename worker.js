@@ -181,13 +181,32 @@ async function handleDuffelFlightSearch(request, env) {
     if (!response.ok) {
       console.error("Duffel flight search failed:", response.status);
       return jsonResponse({
-        error: response.status === 401 ? "Duffel rejected the API token. Check the test token in Cloudflare." :
+        error: response.status === 401 ? "Duffel rejected the API token. Check that Cloudflare contains an activated Duffel LIVE access token." :
           response.status === 429 ? "Flight search is temporarily busy. Please try again shortly." :
           "Flight search provider could not complete the request. Please try again."
       }, response.status === 429 ? 429 : 502, request);
     }
+    // Never expose test-mode offers as real fares. Duffel's offer request reports live_mode.
+    const liveMode = result?.data?.live_mode === true;
+    if (!liveMode) {
+      return jsonResponse({
+        error: "Duffel returned test-mode results. No sample prices are displayed. Add an activated LIVE Duffel access token to the DUFFEL_ACCESS_TOKEN secret in Cloudflare.",
+        offers: [], count: 0, liveMode: false
+      }, 409, request);
+    }
     const rawOffers = result?.data?.offers || result?.data?.offer_request?.offers || [];
-    const offers = rawOffers.slice(0, 10).map(offer => ({
+    // Defense in depth: exclude Duffel's explicit test airline and incomplete price records.
+    const verifiedOffers = rawOffers.filter(offer =>
+      offer?.id &&
+      offer?.total_amount !== undefined && offer?.total_amount !== null &&
+      offer?.total_currency &&
+      String(offer?.owner?.name || "").toLowerCase() !== "duffel airways" &&
+      offer?.owner?.iata_code !== "ZZ" &&
+      !(offer?.slices || []).some(slice => (slice?.segments || []).some(segment =>
+        segment?.marketing_carrier?.iata_code === "ZZ" || segment?.operating_carrier?.iata_code === "ZZ"
+      ))
+    );
+    const offers = verifiedOffers.slice(0, 10).map(offer => ({
       id: offer.id,
       totalAmount: offer.total_amount || "",
       totalCurrency: offer.total_currency || "",
@@ -205,7 +224,7 @@ async function handleDuffelFlightSearch(request, env) {
       }))
     }));
     return jsonResponse({
-      offers, count: offers.length, liveMode: Boolean(result?.data?.live_mode),
+      offers, count: offers.length, liveMode: true,
       message: offers.length ? "Prices and availability can change. Recheck the selected offer before any booking." :
         "No offers were returned for this search. Try different dates or airports."
     }, 200, request);
