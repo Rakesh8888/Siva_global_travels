@@ -179,6 +179,24 @@ body.light .flight-night-image{display:block!important;}
  .aiPanel{width:calc(100vw - 16px)!important;right:8px!important;bottom:88px!important;max-height:calc(100vh - 100px)!important;max-height:calc(100dvh - 100px)!important}
 }
 
+
+/* Fix AI launcher clipped off the right edge on narrow/zoomed mobile viewports */
+html,body{max-width:100%;overflow-x:clip}
+.aiFab{
+ position:fixed!important;left:auto!important;right:16px!important;inset-inline-start:auto!important;inset-inline-end:16px!important;
+ margin:0!important;transform:translateX(0)!important;box-sizing:border-box!important;
+ width:66px!important;height:66px!important;min-width:66px!important;max-width:66px!important;
+ z-index:2147483000!important
+}
+.aiPanel{
+ position:fixed!important;left:auto!important;right:8px!important;inset-inline-start:auto!important;inset-inline-end:8px!important;
+ margin:0!important;transform:translateX(0)!important;box-sizing:border-box!important;
+ width:calc(100vw - 16px)!important;max-width:540px!important;
+}
+@media(min-width:541px){
+ .aiPanel{right:16px!important;inset-inline-end:16px!important;width:min(540px,calc(100vw - 32px))!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
