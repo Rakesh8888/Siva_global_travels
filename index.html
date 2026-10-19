@@ -197,6 +197,29 @@ html,body{max-width:100%;overflow-x:clip}
  .aiPanel{right:16px!important;inset-inline-end:16px!important;width:min(540px,calc(100vw - 32px))!important}
 }
 
+
+/* Mobile header fit: keep brand, language, theme and Menu fully inside viewport */
+@media(max-width:520px){
+ .nav,.navin{width:100%;max-width:100%;box-sizing:border-box}
+ .navin{padding-left:12px!important;padding-right:8px!important;gap:8px!important;min-width:0}
+ .brand{flex:0 1 122px;min-width:0;gap:8px}
+ .brandmark{width:48px!important;height:48px!important;flex:0 0 48px}
+ .brand strong{font-size:clamp(14px,3.8vw,18px)!important;line-height:1.18}
+ .navtools{flex:1 1 auto;min-width:0;gap:6px!important;justify-content:flex-end}
+ #pageLanguage{width:clamp(90px,31vw,142px)!important;min-width:0!important;flex:1 1 auto;padding:8px 5px!important;font-size:12px}
+ #themeBtn{width:42px;min-width:42px;padding:8px 5px!important;flex:0 0 42px}
+ .menuBtn{display:block!important;flex:0 0 auto;padding:8px 9px!important;font-size:12px;white-space:nowrap}
+}
+@media(max-width:380px){
+ .navin{padding-left:8px!important;gap:5px!important}
+ .brand{flex-basis:96px;gap:5px}
+ .brandmark{width:40px!important;height:40px!important;flex-basis:40px}
+ .brand strong{font-size:12px!important}
+ #pageLanguage{width:82px!important;font-size:11px}
+ #themeBtn{width:34px;min-width:34px;flex-basis:34px}
+ .menuBtn{padding:7px!important;font-size:11px}
+}
+
 </style>
 <script type="application/ld+json">
 {
