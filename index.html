@@ -209,6 +209,16 @@ button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent }
  .aiHeader #aiClose{width:24px;flex-basis:24px}
 }
 
+
+/* Shorten Voice Message and Live Voice button lengths only; keep height and text size unchanged. */
+@media(max-width:520px){
+ .voiceControls{grid-template-columns: minmax(0,0.82fr) minmax(0,0.82fr);justify-content:center;column-gap:8px}
+ .voiceBtn{height:40px;min-height:40px;font-size:12px}
+}
+@media(min-width:521px){
+ .voiceControls{grid-template-columns:minmax(0,0.82fr) minmax(0,0.82fr);justify-content:center;column-gap:8px}
+}
+
 </style>
 <script type="application/ld+json">
 {
