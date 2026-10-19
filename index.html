@@ -45,29 +45,36 @@ body.light .flight-night-image{display:block!important;}
 .faqActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 @media(max-width:520px){.faqItem summary{padding:15px 42px 15px 14px;font-size:14px}.faqAnswer{padding:0 14px 15px}}
 
-/* Compact language picker and voice controls placed directly above message input. */
+/* Roomier LUCKY AI header and clear rectangular voice buttons. */
 .aiFab{width:60px;height:60px;right:18px;bottom:18px;font-size:18px}
-.aiPanel{right:14px;bottom:88px;width:min(88vw,320px);max-height:min(70vh,520px);border-radius:16px}
-.aiHeader{padding:11px 13px;align-items:flex-start}
-.aiHeaderTitle{display:flex;flex-direction:column;gap:1px}
-.aiHeaderTitle strong{font-size:14px;line-height:1.35}
-.aiOnline{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green);line-height:1.3}
-.aiOnline i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px #45d49a70}
-.aiBody{padding:9px}
-.chatTopTools{display:flex;justify-content:flex-end;margin:0 0 6px}
-#chatLanguage{width:58px;height:36px;font-size:12px;font-weight:700;text-align:center;padding:4px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer}
-.voiceControls{display:flex;gap:6px;margin:7px 0 6px}
-.voiceBtn{flex:1;padding:7px 5px;font-size:11px;border-radius:8px}
-.chat{height:145px;max-height:28vh;padding:7px}
-.msg{padding:7px 8px;margin:5px 0;font-size:12px;line-height:1.35}
-.chatInput{gap:5px}
-.chatInput input{padding:8px;font-size:12px}
-.chatInput button{padding:0 10px;font-size:12px}
-.voiceNote{font-size:10px;margin:3px 0 0}
+.aiPanel{right:14px;bottom:88px;width:min(92vw,350px);max-height:min(74vh,600px);border-radius:17px}
+.aiHeader{padding:15px 16px;min-height:72px;align-items:center}
+.aiHeaderTitle{display:flex;flex-direction:column;gap:4px}
+.aiHeaderTitle strong{font-size:16px;line-height:1.4}
+.aiOnline{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--green);line-height:1.4}
+.aiOnline i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 7px #45d49a70}
+.aiHeader button{font-size:25px;padding:3px 5px}
+.aiBody{padding:11px}
+.chatTopTools{display:flex;justify-content:flex-end;margin:0 0 7px}
+#chatLanguage{width:60px;height:38px;font-size:12px;font-weight:700;text-align:center;padding:4px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer}
+.voiceControls{display:flex;gap:8px;margin:8px 0}
+.voiceBtn{flex:1;min-height:44px;padding:10px 8px;font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:9px;white-space:nowrap}
+.voiceBtn.active{background:var(--orange);color:#102131;border-color:transparent}
+.chat{height:150px;max-height:29vh;padding:8px}
+.msg{padding:8px 9px;margin:5px 0;font-size:12px;line-height:1.4}
+.chatInput{gap:6px}
+.chatInput input{padding:9px;font-size:12px}
+.chatInput button{padding:0 12px;font-size:12px}
+.voiceNote{font-size:10px;margin:4px 0 0}
 @media(max-width:520px){
  .aiFab{width:60px;height:60px;right:18px;bottom:18px}
- .aiPanel{right:10px;bottom:86px;width:min(90vw,300px);max-height:68vh}
- .chat{height:130px;max-height:26vh}
+ .aiPanel{right:10px;bottom:86px;width:min(92vw,330px);max-height:72vh}
+ .aiHeader{padding:14px 15px;min-height:70px}
+ .aiHeaderTitle strong{font-size:16px}
+ .aiBody{padding:10px}
+ .voiceControls{gap:7px}
+ .voiceBtn{min-height:44px;padding:10px 5px;font-size:11px;border-radius:9px}
+ .chat{height:135px;max-height:27vh}
 }
 </style>
 <script type="application/ld+json">
