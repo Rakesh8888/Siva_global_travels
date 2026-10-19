@@ -210,6 +210,82 @@ async function handleChat(request, env) {
   }
 }
 
+
+/**
+ * Optional Council Lite endpoint.
+ * This does not replace the existing /api/chat implementation.
+ * It uses Workers AI only when the AI binding is configured.
+ */
+async function handleCouncil(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(request) });
+  }
+  if (request.method !== "POST") {
+    return jsonResponse({ error: "Method not allowed" }, 405, request);
+  }
+  if (!env.AI || typeof env.AI.run !== "function") {
+    return jsonResponse({
+      error: "Council AI is not configured. Add the Workers AI binding named AI."
+    }, 503, request);
+  }
+
+  try {
+    const body = await request.json();
+    const message = typeof body?.message === "string" ? body.message.trim() : "";
+    if (!message) {
+      return jsonResponse({ error: "Message is required" }, 400, request);
+    }
+    if (message.length > 4000) {
+      return jsonResponse({
+        error: "Please shorten your message to 4,000 characters or less."
+      }, 413, request);
+    }
+
+    const language = normalizeLanguage(message, body?.language);
+    const systemPrompt = SYSTEM_PROMPT(language);
+    const runModel = async (model, prompt) => {
+      const result = await env.AI.run(model, {
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: prompt }
+        ],
+        max_tokens: 350,
+        temperature: 0.3
+      });
+      const text = typeof result?.response === "string" ? result.response.trim() : "";
+      if (!text) throw new Error("Workers AI returned an empty response");
+      return text;
+    };
+
+    // Two independent drafts, then a short synthesis. This is a lightweight
+    // approximation, not the full Karpathy LLM Council implementation.
+    const [draftA, draftB] = await Promise.all([
+      runModel("@cf/meta/llama-3.2-3b-instruct", message),
+      runModel("@cf/meta/llama-3.2-1b-instruct", message)
+    ]);
+
+    const finalReply = await runModel(
+      "@cf/meta/llama-3.2-3b-instruct",
+      "Prepare one accurate, concise final answer in " + language +
+      " using these two independent drafts. Resolve contradictions cautiously. " +
+      "Do not invent facts; state uncertainty when needed.\n\nDraft A:\n" +
+      draftA + "\n\nDraft B:\n" + draftB
+    );
+
+    return jsonResponse({
+      reply: finalReply,
+      language,
+      council: true,
+      mode: "council-lite"
+    }, 200, request);
+  } catch (error) {
+    console.error("LUCKY AI Council error:", error?.name || "Error");
+    return jsonResponse({
+      error: "LUCKY AI Council is temporarily unavailable. Try the regular Lucky AI chat."
+    }, 502, request);
+  }
+}
+
 async function handleDuffelFlightSearch(request, env) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
@@ -333,6 +409,10 @@ export default {
 
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
+    }
+
+    if (url.pathname === "/api/council") {
+      return handleCouncil(request, env);
     }
 
     if (url.pathname === "/api/flights/search") {
