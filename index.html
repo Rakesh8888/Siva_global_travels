@@ -112,6 +112,45 @@ body.light .flight-night-image{display:block!important;}
  .aiHeader #chatLanguage{width:68px!important;min-width:68px!important;max-width:68px!important}
  .aiHeader #aiClose{width:24px!important}
 }
+
+/* LUCKY AI responsive layout: desktop, tablet and phone. Preserve approved visual design. */
+.aiPanel{width:min(440px,calc(100vw - 36px));max-height:calc(100vh - 112px);max-height:calc(100dvh - 112px);overflow-y:auto;overscroll-behavior:contain}
+.aiHeader{display:flex;align-items:center;gap:10px}
+.aiHeaderTitle{flex:1;min-width:0}
+.aiHeader #chatLanguage{width:102px;max-width:34%;height:52px;flex-shrink:0}
+.aiBody{min-width:0}
+.chat{height:clamp(220px,34vh,320px);min-height:180px}
+.chatInput{display:flex;align-items:stretch;gap:7px}
+.chatInput input{min-width:0;flex:1}
+.chatInput button{flex-shrink:0;min-width:64px}
+.voiceControls{display:flex;flex-wrap:nowrap;gap:8px}
+.voiceBtn{flex:1;min-width:0;min-height:44px;white-space:nowrap}
+@media (min-width:521px) and (max-width:900px){
+ .aiPanel{width:min(420px,calc(100vw - 32px));right:16px;bottom:84px}
+ .chat{height:clamp(220px,32vh,300px)}
+}
+@media (max-width:520px){
+ .aiPanel{width:calc(100vw - 20px);right:10px;bottom:82px;max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px);border-radius:18px}
+ .aiHeader{padding:12px;gap:7px}
+ .aiHeaderTitle strong{font-size:15px}
+ .aiHeader #chatLanguage{width:92px;max-width:35%;height:46px;font-size:12px;padding:5px}
+ .aiBody{padding:10px}
+ .chat{height:clamp(190px,30vh,280px);min-height:170px;padding:8px}
+ .voiceControls{gap:7px}
+ .voiceBtn{min-height:42px;padding:8px 5px;font-size:12px}
+ .chatInput input{padding:9px}
+ .chatInput button{min-width:58px;padding:0 10px}
+}
+@media (max-width:380px){
+ .aiHeader{display:flex;grid-template-columns:none!important;gap:5px!important;padding:10px}
+ .aiHeaderTitle strong{font-size:13px!important}
+ .aiHeader #chatLanguage{width:74px!important;min-width:74px!important;max-width:74px!important;height:42px}
+ .aiHeader #aiClose{width:24px!important;padding:2px}
+ .aiBody{padding:8px}
+ .chat{height:190px;min-height:160px}
+ .voiceBtn{font-size:11px;padding:7px 3px}
+}
+
 </style>
 <script type="application/ld+json">
 {
