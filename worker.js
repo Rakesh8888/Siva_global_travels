@@ -30,12 +30,12 @@ function normalizeLanguage(message, requestedLanguage) {
   // Hindi, Arabic, or other selected-language answer.
   if (languageAliases[requested]) return languageAliases[requested];
   const scriptRules = [
-    [/[\\u0C00-\\u0C7F]/, "Telugu"], [/[\\u0900-\\u097F]/, "Hindi"],
-    [/[\\u0B80-\\u0BFF]/, "Tamil"], [/[\\u0C80-\\u0CFF]/, "Kannada"],
-    [/[\\u0D00-\\u0D7F]/, "Malayalam"], [/[\\u0980-\\u09FF]/, "Bengali"],
-    [/[\\u0A00-\\u0A7F]/, "Punjabi"], [/[\\u0600-\\u06FF]/, "Arabic"],
-    [/[\\u4E00-\\u9FFF]/, "Chinese (Simplified)"], [/[\\u3040-\\u30FF]/, "Japanese"],
-    [/[\\uAC00-\\uD7AF]/, "Korean"]
+    [/[\u0C00-\u0C7F]/, "Telugu"], [/[\u0900-\u097F]/, "Hindi"],
+    [/[\u0B80-\u0BFF]/, "Tamil"], [/[\u0C80-\u0CFF]/, "Kannada"],
+    [/[\u0D00-\u0D7F]/, "Malayalam"], [/[\u0980-\u09FF]/, "Bengali"],
+    [/[\u0A00-\u0A7F]/, "Punjabi"], [/[\u0600-\u06FF]/, "Arabic"],
+    [/[\u4E00-\u9FFF]/, "Chinese (Simplified)"], [/[\u3040-\u30FF]/, "Japanese"],
+    [/[\uAC00-\uD7AF]/, "Korean"]
   ];
   for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
   return "English";
