@@ -90,7 +90,7 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY) {
+  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !(env.AI && typeof env.AI.run === "function")) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
@@ -190,6 +190,24 @@ async function handleChat(request, env) {
         console.error("LUCKY AI OpenAI fallback failed:", error?.name || "Network error");
       } finally {
         clearTimeout(timer);
+      }
+    }
+
+    // Use Cloudflare Workers AI when external provider keys are absent or fail.
+    if (!reply && env.AI && typeof env.AI.run === "function") {
+      try {
+        const result = await env.AI.run("@cf/meta/llama-3.2-3b-instruct", {
+          messages: [
+            { role: "system", content: systemPrompt },
+            ...history.map(x => ({ role: x.role, content: x.content })),
+            { role: "user", content: message }
+          ],
+          max_tokens: 500,
+          temperature: 0.3
+        });
+        reply = typeof result?.response === "string" ? result.response.trim() : "";
+      } catch (error) {
+        console.error("LUCKY AI Workers AI fallback failed:", error?.name || "Error");
       }
     }
 
