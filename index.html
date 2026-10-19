@@ -165,6 +165,20 @@ body.light .flight-night-image{display:block!important;}
  .aiPanel{width:calc(100vw - 16px)!important;right:8px!important;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 76px)!important;max-height:calc(100vh - 96px)!important;max-height:calc(100dvh - 96px)!important}
 }
 
+
+/* Final visibility fix: make Lucky AI easy to spot and proportionate at default browser zoom */
+.aiFab{position:fixed!important;display:flex!important;align-items:center!important;justify-content:center!important;right:clamp(14px,2vw,28px)!important;bottom:clamp(14px,2vh,24px)!important;width:clamp(68px,5.2vw,82px)!important;height:clamp(68px,5.2vw,82px)!important;font-size:clamp(20px,1.5vw,24px)!important;z-index:2147483000!important;visibility:visible!important;opacity:1!important;transform:none!important}
+.aiPanel{position:fixed!important;right:clamp(12px,2vw,28px)!important;bottom:calc(clamp(14px,2vh,24px) + clamp(68px,5.2vw,82px) + 14px)!important;width:min(540px,calc(100vw - 24px))!important;max-height:calc(100vh - 130px)!important;max-height:calc(100dvh - 130px)!important;z-index:2147483001!important;transform:none!important}
+.aiPanel.open{display:block!important;visibility:visible!important;opacity:1!important}
+@media(min-width:901px){
+ .aiPanel{width:min(560px,42vw)!important;max-height:calc(100vh - 150px)!important;max-height:calc(100dvh - 150px)!important}
+ .chat{height:clamp(280px,38vh,420px)!important}
+}
+@media(max-width:520px){
+ .aiFab{width:66px!important;height:66px!important;right:14px!important;bottom:14px!important}
+ .aiPanel{width:calc(100vw - 16px)!important;right:8px!important;bottom:88px!important;max-height:calc(100vh - 100px)!important;max-height:calc(100dvh - 100px)!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
