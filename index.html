@@ -56,7 +56,7 @@ body.light .flight-night-image{display:block!important;}
 .aiHeader button{font-size:25px;padding:3px 5px}
 .aiBody{padding:11px}
 .chatTopTools{display:flex;justify-content:flex-end;margin:0 0 7px}
-#chatLanguage{width:118px;max-width:38%;height:38px;min-width:0;font-size:12px;font-weight:600;text-align:left;padding:4px 7px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;flex-shrink:0}
+#chatLanguage{width:102px;max-width:40%;height:64px;min-width:0;font-size:14px;font-weight:700;text-align:center;padding:8px;border-radius:17px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;flex-shrink:0}
 .voiceControls{display:flex;gap:8px;margin:8px 0}
 .voiceBtn{flex:1;min-height:44px;padding:10px 8px;font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:9px;white-space:nowrap}
 .voiceBtn.active{background:var(--orange);color:#102131;border-color:transparent}
@@ -104,7 +104,7 @@ body.light .flight-night-image{display:block!important;}
 .aiHeaderTitle{min-width:0}
 .aiHeader #chatLanguage{grid-column:2;grid-row:1;width:76px!important;min-width:76px!important;max-width:76px!important;height:36px!important;margin:0!important;padding:4px!important;font-size:12px!important;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);text-align:center}
 .aiHeader #aiClose{grid-column:3;grid-row:1;justify-self:end}
-.aiBody>.chatTopTools{display:none!important}
+.aiBody>.chatTopTools{display:flex!important;justify-content:flex-end;margin:0 0 10px}
 @media(max-width:380px){
  .aiHeader{grid-template-columns:minmax(0,1fr) 68px 24px!important;gap:5px!important}
  .aiHeaderTitle strong{font-size:13px!important}
@@ -156,12 +156,14 @@ body.light .flight-night-image{display:block!important;}
 <div class="aiPanel" id="aiPanel">
   <div class="aiHeader">
     <div class="aiHeaderTitle"><strong>LUCKY AI Chatbot</strong><span class="aiOnline"><i></i> Online</span></div>
-    <select id="chatLanguage" aria-label="Choose chat language" title="Change language">
-      <option value="auto">Auto Detect</option><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option><option value="ta">தமிழ்</option><option value="kn">ಕನ್ನಡ</option><option value="ml">മലയാളം</option><option value="ur">اردو</option><option value="ar">العربية</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pt">Português</option><option value="ru">Русский</option><option value="zh-CN">中文</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="pa">ਪੰਜਾਬੀ</option>
-    </select>
     <button id="aiClose" aria-label="Close assistant">×</button>
   </div>
   <div class="aiBody">
+    <div class="chatTopTools">
+    <select id="chatLanguage" aria-label="Choose chat language" title="Change language">
+      <option value="auto">Auto Detect</option><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option><option value="ta">தமிழ்</option><option value="kn">ಕನ್ನಡ</option><option value="ml">മലയാളം</option><option value="ur">اردو</option><option value="ar">العربية</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pt">Português</option><option value="ru">Русский</option><option value="zh-CN">中文</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="pa">ਪੰਜਾਬੀ</option>
+    </select>
+    </div>
     <div class="chat" id="chat" aria-live="polite"><div class="msg bot">Hi! I’m LUCKY AI. How can I help you?</div></div>
     <div class="voiceControls">
       <button type="button" class="voiceBtn" id="voiceMsgBtn">🎙 Voice Message</button>
