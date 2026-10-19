@@ -237,6 +237,28 @@ html,body{max-width:100%;overflow-x:clip}
  .gtranslate_wrapper .gt_float_switcher img{width:19px!important}
 }
 
+
+/* Strong compact sizing for the GTranslate floating language button */
+.gtranslate_wrapper{position:fixed!important;left:6px!important;bottom:6px!important;z-index:2147482000!important;width:128px!important;max-width:128px!important}
+.gtranslate_wrapper .gt_float_switcher,
+.gtranslate_wrapper .gt_float_switcher .gt-selected,
+.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang{
+ width:128px!important;min-width:0!important;max-width:128px!important;box-sizing:border-box!important
+}
+.gtranslate_wrapper .gt_float_switcher{font-size:12px!important;border-radius:8px!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected{height:38px!important;min-height:38px!important;padding:4px 7px!important;display:flex!important;align-items:center!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang{display:flex!important;align-items:center!important;gap:5px!important;padding:0!important;white-space:nowrap!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code{font-size:12px!important;line-height:1!important}
+.gtranslate_wrapper .gt_float_switcher .gt_options{min-width:128px!important;max-width:180px!important;max-height:55vh!important;overflow-y:auto!important;bottom:100%!important;top:auto!important}
+.gtranslate_wrapper .gt_float_switcher img{width:20px!important;max-width:20px!important;height:auto!important}
+@media(max-width:520px){
+ .gtranslate_wrapper,.gtranslate_wrapper .gt_float_switcher,.gtranslate_wrapper .gt_float_switcher .gt-selected,.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang{width:112px!important;max-width:112px!important}
+ .gtranslate_wrapper .gt_float_switcher .gt-selected{height:34px!important;min-height:34px!important;padding:3px 6px!important}
+ .gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code{font-size:11px!important}
+ .gtranslate_wrapper .gt_float_switcher img{width:18px!important;max-width:18px!important}
+ .gtranslate_wrapper .gt_float_switcher .gt_options{min-width:112px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
