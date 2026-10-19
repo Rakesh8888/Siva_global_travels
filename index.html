@@ -403,6 +403,88 @@ html,body{max-width:100%;overflow-x:clip}
 @media(max-width:850px){#services .grid{gap:14px!important}#services .service-card-image,#services .flight-card-visual{height:135px!important;min-height:135px!important}}
 @media(max-width:520px){#services .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}#services .card{padding:10px!important;border-radius:15px!important}#services .service-card-image,#services .flight-card-visual{height:112px!important;min-height:112px!important;border-radius:10px!important;margin-bottom:11px!important}#services .card h3{font-size:15px!important}#services .textlink{font-size:10px!important;padding:7px 8px!important;min-height:32px!important}}
 
+
+/* Site-wide professional polish: consistent typography, spacing, cards and responsive controls */
+:root{--line:#ffffff20;--shadow:0 18px 50px #0003}
+body{font-size:15px;line-height:1.65;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.wrap{width:min(1160px,91vw)}
+.topbar{font-size:12px}
+.navin{min-height:76px}
+.brandmark{width:46px;height:46px;border-radius:14px}
+.brand strong{font-size:16px;line-height:1.12}
+.navlinks{gap:22px}
+.navlinks a{font-size:13px}
+.hero{padding:82px 0 68px}
+.heroGrid{gap:46px}
+.hero .eyebrow,.sectionHead .eyebrow{font-size:11px;letter-spacing:.18em;font-weight:700}
+.hero h1{font-family:'DM Sans',sans-serif!important;font-size:clamp(48px,6vw,74px)!important;line-height:1.04!important;letter-spacing:-.06em!important}
+.hero .lead{font-size:17px;line-height:1.7;max-width:570px}
+.heroActions .btn,.btn{min-height:46px;padding:12px 18px;font-size:13px;border-radius:12px}
+.heroVisual{min-height:370px}
+.orbit{width:min(360px,76vw);border-radius:50%}
+section{padding:76px 0}
+.sectionHead{max-width:760px;margin-bottom:32px}
+.sectionHead h2{font-size:clamp(32px,4.1vw,48px);line-height:1.12;letter-spacing:-.04em}
+.sectionHead p{font-size:15px;line-height:1.7}
+.flightShell,.panel{border-radius:22px;padding:24px}
+.flightTop h3,.panel h3{font-size:23px;line-height:1.2}
+.field label{font-size:12px;margin-bottom:7px}
+.field input,.field select,.field textarea{font-size:14px;min-height:46px;border-radius:11px}
+#services .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:20px!important}
+#services .card{min-width:0;padding:16px!important;border-radius:18px!important}
+#services .service-card-image,#services .flight-card-visual{height:165px!important;min-height:165px!important;border-radius:12px!important;margin-bottom:15px!important}
+#services .card h3{font-size:18px!important;line-height:1.3!important;margin:0 0 10px!important}
+#services .card p{font-size:13px!important;line-height:1.6!important}
+#services .textlink{font-size:11px!important;min-height:36px!important;padding:8px 12px!important}
+#careers .panel,#contact .panel{padding:25px!important}
+.checklist{font-size:14px;line-height:1.9}
+.detail{padding:17px;border-radius:14px}
+.faqItem{border-radius:14px}
+.faqItem summary{font-size:14px;line-height:1.5}
+.faqAnswer{font-size:14px;line-height:1.7}
+.formGrid{gap:14px}
+.footer{padding:30px 0;font-size:12px}
+.aiFab{box-shadow:0 12px 30px #0005}
+@media(max-width:850px){
+ .wrap{width:min(100% - 36px,720px)}
+ .hero{padding:58px 0 46px}
+ .heroGrid{gap:25px}
+ .heroVisual{min-height:310px}
+ section{padding:60px 0}
+ #services .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
+ #services .service-card-image,#services .flight-card-visual{height:145px!important;min-height:145px!important}
+ .flightShell,.panel{padding:20px}
+}
+@media(max-width:520px){
+ .wrap{width:calc(100% - 28px)}
+ .topbar{padding:7px 0}
+ .navin{min-height:66px}
+ .brand{flex-basis:145px!important;gap:8px}
+ .brandmark{width:40px!important;height:40px!important;flex-basis:40px!important}
+ .brand strong{font-size:14px!important}
+ .menuBtn{font-size:11px!important}
+ .hero{padding:46px 0 36px}
+ .hero h1{font-size:clamp(40px,10.5vw,54px)!important;line-height:1.06!important}
+ .hero .lead{font-size:15px;line-height:1.65}
+ .heroVisual{min-height:265px}
+ .orbit{width:min(270px,72vw)}
+ section{padding:48px 0}
+ .sectionHead{margin-bottom:22px}
+ .sectionHead h2{font-size:31px!important}
+ .sectionHead p{font-size:14px}
+ .flightShell,.panel{padding:15px!important;border-radius:17px!important}
+ .flightTop h3,.panel h3{font-size:20px}
+ #services .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}
+ #services .card{padding:9px!important;border-radius:14px!important}
+ #services .service-card-image,#services .flight-card-visual{height:108px!important;min-height:108px!important;border-radius:9px!important;margin-bottom:10px!important}
+ #services .card h3{font-size:14px!important;line-height:1.3!important;margin-bottom:8px!important}
+ #services .card p{font-size:12px!important;line-height:1.5!important}
+ #services .textlink{font-size:10px!important;min-height:32px!important;padding:7px 8px!important;white-space:normal;text-align:center}
+ .formGrid{gap:11px}
+ .faqItem summary{font-size:13px!important}
+ .aiPanel{max-width:calc(100vw - 20px)}
+}
+
 </style>
 <script type="application/ld+json">
 {
