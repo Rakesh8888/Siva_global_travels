@@ -76,6 +76,63 @@ body.light .flight-night-image{display:block!important;}
  .voiceBtn{min-height:44px;padding:10px 5px;font-size:11px;border-radius:9px}
  .chat{height:135px;max-height:27vh}
 }
+
+/* Responsive layout: desktop, tablet, and phone */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+img,video,canvas,svg{max-width:100%}
+input,select,textarea,button{max-width:100%}
+button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent }
+.aiFab{position:fixed;z-index:1000;touch-action:none;user-select:none;-webkit-user-select:none;box-sizing:border-box;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));}
+.aiPanel{z-index:999;box-sizing:border-box;width:min(370px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);padding:0;display:none;overflow:hidden;overscroll-behavior:contain;}
+.aiPanel.open{display:flex;flex-direction:column}
+.aiHeader{flex:0 0 auto}
+.aiBody{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.chat{height:clamp(130px,28vh,280px);max-height:none;overflow-y:auto;overscroll-behavior:contain}
+.chatInput{display:flex;align-items:stretch}
+.chatInput input{min-width:0;width:100%}
+.voiceControls{display:flex;flex-wrap:wrap}
+.voiceBtn{flex:1 1 130px;white-space:normal;line-height:1.25;touch-action:manipulation}
+#chatLanguage{min-height:40px}
+@media(min-width:851px){
+ .aiPanel{width:min(390px,calc(100vw - 32px));max-height:min(720px,calc(100dvh - 36px))}
+ .aiFab{width:62px;height:62px}
+ .chat{height:clamp(180px,30vh,320px)}
+}
+@media(min-width:521px) and (max-width:850px){
+ .wrap{width:min(100% - 36px,760px)}
+ .heroGrid{gap:24px}
+ .heroVisual{min-height:280px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .aiPanel{width:min(370px,calc(100vw - 28px));max-height:calc(100dvh - 28px)}
+ .chat{height:clamp(150px,25vh,230px)}
+}
+@media(max-width:520px){
+ .wrap{width:calc(100% - 28px)}
+ .navin{gap:8px}
+ .brand strong{font-size:14px}
+ .heroGrid{grid-template-columns:minmax(0,1fr)}
+ .grid,.fields,.formGrid{grid-template-columns:minmax(0,1fr)}
+ .flightShell,.panel{min-width:0}
+ .aiFab{width:56px;height:56px;font-size:16px}
+ .aiPanel{width:calc(100vw - 20px);max-width:calc(100vw - 20px);max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px);border-radius:16px}
+ .aiHeader{min-height:62px;padding:12px 14px}
+ .aiBody{padding:10px}
+ .chat{height:clamp(120px,22vh,190px);padding:8px}
+ .voiceBtn{min-height:44px;flex:1 1 calc(50% - 8px);font-size:12px;padding:10px 8px}
+ .chatInput input{font-size:16px;min-height:44px}
+ .chatInput button{min-height:44px}
+}
+@media(max-width:360px){
+ .wrap{width:calc(100% - 22px)}
+ .aiFab{width:52px;height:52px}
+ .aiHeaderTitle strong{font-size:14px}
+ .voiceBtn{flex-basis:100%}
+ .chat{height:120px}
+}
+@media(hover:none) and (pointer:coarse){
+ .aiFab{cursor:grab}
+ .btn,.mini,.voiceBtn,.chatInput button{min-height:44px}
+}
 </style>
 <script type="application/ld+json">
 {
