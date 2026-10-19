@@ -282,6 +282,32 @@ html,body{max-width:100%;overflow-x:clip}
  .hero h1{font-size:clamp(42px,11vw,56px)!important;line-height:1.04!important;letter-spacing:-.055em!important}
 }
 
+
+/* Realistic rotating Earth globe with visible continent texture */
+.orbit{
+ background-color:#061a2a!important;
+ background-image:
+   radial-gradient(ellipse at 28% 22%,#ffffff38 0%,#ffffff08 22%,transparent 48%),
+   linear-gradient(90deg,#020914 0%,#06182a05 38%,#020914a8 100%),
+   url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')!important;
+ background-repeat:no-repeat!important;
+ background-size:100% 100%,100% 100%,200% 100%!important;
+ background-position:0 0,0 0,0% center!important;
+ animation:earthMapSpin 32s linear infinite!important;
+ box-shadow:inset -28px -16px 48px #000b,inset 10px 8px 24px #b8eaff16,0 0 0 1px #7edfff80,0 0 36px #22b9f454!important;
+ border:1px solid #80dfff80!important;
+}
+.orbitGrid{
+ opacity:.16!important;
+ background:repeating-linear-gradient(0deg,transparent 0 34px,#b9edff35 35px 36px),repeating-linear-gradient(90deg,transparent 0 34px,#b9edff35 35px 36px)!important;
+}
+.orbit:before,.orbit:after{border-color:#b9edff25!important}
+@keyframes earthMapSpin{
+ from{background-position:0 0,0 0,0% center}
+ to{background-position:0 0,0 0,100% center}
+}
+@media(prefers-reduced-motion:reduce){.orbit{animation:none!important}}
+
 </style>
 <script type="application/ld+json">
 {
