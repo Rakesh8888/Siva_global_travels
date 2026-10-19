@@ -4,59 +4,42 @@ function normalizeLanguage(message, requestedLanguage) {
   const text = String(message || "");
   const requested = String(requestedLanguage || "").trim().toLowerCase();
   const languageAliases = {
-    "en": "English", "english": "English", "en-in": "Indian English",
-    "te": "Telugu", "telugu": "Telugu", "te-in": "Telugu",
-    "hi": "Hindi", "hindi": "Hindi", "hi-in": "Hindi",
-    "ta": "Tamil", "tamil": "Tamil", "ta-in": "Tamil",
-    "kn": "Kannada", "kannada": "Kannada", "kn-in": "Kannada",
-    "ml": "Malayalam", "malayalam": "Malayalam", "ml-in": "Malayalam",
-    "ur": "Indian Urdu", "urdu": "Indian Urdu", "ur-in": "Indian Urdu",
-    "ar": "Arabic", "arabic": "Arabic", "ar-sa": "Arabic", "ar-kw": "Arabic",
-    "fr": "French", "french": "French", "fr-fr": "French", "fr-ca": "French",
-    "de": "German", "german": "German", "de-de": "German", "de-ch": "German", "de-at": "German",
-    "it": "Italian", "italian": "Italian", "it-it": "Italian", "it-ch": "Italian",
-    "es": "Spanish", "spanish": "Spanish", "es-es": "Spanish",
-    "pt": "Portuguese", "portuguese": "Portuguese", "pt-pt": "Portuguese",
-    "ru": "Russian", "russian": "Russian", "ru-ru": "Russian",
-    "zh-cn": "Chinese (Simplified)", "zh": "Chinese (Simplified)", "chinese": "Chinese (Simplified)",
-    "ja": "Japanese", "japanese": "Japanese", "ja-jp": "Japanese",
-    "ko": "Korean", "korean": "Korean", "ko-kr": "Korean",
-    "nl": "Dutch", "dutch": "Dutch", "nl-nl": "Dutch",
-    "tr": "Turkish", "turkish": "Turkish", "tr-tr": "Turkish",
-    "id": "Indonesian", "indonesian": "Indonesian", "id-id": "Indonesian",
-    "th": "Thai", "thai": "Thai", "th-th": "Thai",
-    "vi": "Vietnamese", "vietnamese": "Vietnamese", "vi-vn": "Vietnamese",
-    "bn": "Bengali", "bengali": "Bengali", "bn-in": "Bengali",
-    "mr": "Marathi", "marathi": "Marathi", "mr-in": "Marathi",
-    "pa": "Punjabi", "punjabi": "Punjabi", "pa-in": "Punjabi",
-    "fa": "Persian", "persian": "Persian", "fa-ir": "Persian",
-    "he": "Hebrew", "hebrew": "Hebrew", "he-il": "Hebrew"
+    "en":"English","english":"English","en-in":"English",
+    "te":"Telugu","telugu":"Telugu","te-in":"Telugu",
+    "hi":"Hindi","hindi":"Hindi","hi-in":"Hindi",
+    "ta":"Tamil","tamil":"Tamil","ta-in":"Tamil",
+    "kn":"Kannada","kannada":"Kannada","kn-in":"Kannada",
+    "ml":"Malayalam","malayalam":"Malayalam","ml-in":"Malayalam",
+    "ur":"Urdu","urdu":"Urdu","ur-in":"Urdu",
+    "ar":"Arabic","arabic":"Arabic","ar-sa":"Arabic","ar-kw":"Arabic",
+    "fr":"French","french":"French","fr-fr":"French","fr-ca":"French",
+    "de":"German","german":"German","de-de":"German","de-ch":"German","de-at":"German",
+    "es":"Spanish","spanish":"Spanish","es-es":"Spanish",
+    "pt":"Portuguese","portuguese":"Portuguese","pt-pt":"Portuguese",
+    "ru":"Russian","russian":"Russian","ru-ru":"Russian",
+    "zh-cn":"Chinese (Simplified)","zh":"Chinese (Simplified)","chinese":"Chinese (Simplified)",
+    "ja":"Japanese","japanese":"Japanese","ja-jp":"Japanese",
+    "ko":"Korean","korean":"Korean","ko-kr":"Korean",
+    "id":"Indonesian","indonesian":"Indonesian","id-id":"Indonesian",
+    "bn":"Bengali","bengali":"Bengali","bn-in":"Bengali",
+    "mr":"Marathi","marathi":"Marathi","mr-in":"Marathi",
+    "pa":"Punjabi","punjabi":"Punjabi","pa-in":"Punjabi"
   };
-
-  // Detect the language from its script first, so a Telugu/Hindi/etc. message
-  // is answered in the same language even if the browser sends a locale code.
+  // Respect the language explicitly selected in the LUCKY AI dropdown.
+  // This is important for English questions when the user wants a French,
+  // Hindi, Arabic, or other selected-language answer.
+  if (languageAliases[requested]) return languageAliases[requested];
   const scriptRules = [
-    [/[\u0C00-\u0C7F]/, "Telugu"],
-    [/[\u0900-\u097F]/, "Hindi"],
-    [/[\u0B80-\u0BFF]/, "Tamil"],
-    [/[\u0C80-\u0CFF]/, "Kannada"],
-    [/[\u0D00-\u0D7F]/, "Malayalam"],
-    [/[\u0980-\u09FF]/, "Bengali"],
-    [/[\u0A00-\u0A7F]/, "Punjabi"],
-    [/[\u0B00-\u0B7F]/, "Odia"],
-    [/[\u0600-\u06FF]/, requested.startsWith("fa") ? "Persian" : requested.startsWith("ur") ? "Indian Urdu" : "Arabic"],
-    [/[\u0590-\u05FF]/, "Hebrew"],
-    [/[\u4E00-\u9FFF]/, "Chinese (Simplified)"],
-    [/[\u3040-\u30FF]/, "Japanese"],
-    [/[\uAC00-\uD7AF]/, "Korean"],
-    [/[\u0E00-\u0E7F]/, "Thai"]
+    [/[\\u0C00-\\u0C7F]/, "Telugu"], [/[\\u0900-\\u097F]/, "Hindi"],
+    [/[\\u0B80-\\u0BFF]/, "Tamil"], [/[\\u0C80-\\u0CFF]/, "Kannada"],
+    [/[\\u0D00-\\u0D7F]/, "Malayalam"], [/[\\u0980-\\u09FF]/, "Bengali"],
+    [/[\\u0A00-\\u0A7F]/, "Punjabi"], [/[\\u0600-\\u06FF]/, "Arabic"],
+    [/[\\u4E00-\\u9FFF]/, "Chinese (Simplified)"], [/[\\u3040-\\u30FF]/, "Japanese"],
+    [/[\\uAC00-\\uD7AF]/, "Korean"]
   ];
-  for (const [pattern, name] of scriptRules) {
-    if (new RegExp(pattern.source).test(text)) return name;
-  }
-  return languageAliases[requested] || "English";
+  for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
+  return "English";
 }
-
 const SYSTEM_PROMPT = (language) => `You are LUCKY AI, the virtual customer-enquiry assistant for Siva Global Travels.
 
 LANGUAGE:
