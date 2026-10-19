@@ -323,6 +323,20 @@ html,body{max-width:100%;overflow-x:clip}
  border:1px solid #78b9d866!important;
 }
 
+
+/* Final natural Earth palette override: blue oceans and realistic land, no purple tint */
+.orbit{
+ background-color:#164b68!important;
+ background-image:
+  radial-gradient(ellipse at 30% 22%,#fff7df22 0%,transparent 46%),
+  linear-gradient(90deg,#07152212 0%,transparent 42%,#02091470 100%),
+  url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')!important;
+ background-blend-mode:normal!important;
+ filter:none!important;
+}
+.orbitGrid{opacity:.08!important}
+.orbit:before,.orbit:after{border-color:#c4e6d922!important}
+
 </style>
 <script type="application/ld+json">
 {
