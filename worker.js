@@ -36,20 +36,20 @@ function normalizeLanguage(message, requestedLanguage) {
   // Detect the language from its script first, so a Telugu/Hindi/etc. message
   // is answered in the same language even if the browser sends a locale code.
   const scriptRules = [
-    [/\\u0C00-\\u0C7F/, "Telugu"],
-    [/\\u0900-\\u097F/, "Hindi"],
-    [/\\u0B80-\\u0BFF/, "Tamil"],
-    [/\\u0C80-\\u0CFF/, "Kannada"],
-    [/\\u0D00-\\u0D7F/, "Malayalam"],
-    [/\\u0980-\\u09FF/, "Bengali"],
-    [/\\u0A00-\\u0A7F/, "Punjabi"],
-    [/\\u0B00-\\u0B7F/, "Odia"],
-    [/\\u0600-\\u06FF/, requested.startsWith("fa") ? "Persian" : requested.startsWith("ur") ? "Indian Urdu" : "Arabic"],
-    [/\\u0590-\\u05FF/, "Hebrew"],
-    [/\\u4E00-\\u9FFF/, "Chinese (Simplified)"],
-    [/\\u3040-\\u30FF/, "Japanese"],
-    [/\\uAC00-\\uD7AF/, "Korean"],
-    [/\\u0E00-\\u0E7F/, "Thai"]
+    [/[\u0C00-\u0C7F]/, "Telugu"],
+    [/[\u0900-\u097F]/, "Hindi"],
+    [/[\u0B80-\u0BFF]/, "Tamil"],
+    [/[\u0C80-\u0CFF]/, "Kannada"],
+    [/[\u0D00-\u0D7F]/, "Malayalam"],
+    [/[\u0980-\u09FF]/, "Bengali"],
+    [/[\u0A00-\u0A7F]/, "Punjabi"],
+    [/[\u0B00-\u0B7F]/, "Odia"],
+    [/[\u0600-\u06FF]/, requested.startsWith("fa") ? "Persian" : requested.startsWith("ur") ? "Indian Urdu" : "Arabic"],
+    [/[\u0590-\u05FF]/, "Hebrew"],
+    [/[\u4E00-\u9FFF]/, "Chinese (Simplified)"],
+    [/[\u3040-\u30FF]/, "Japanese"],
+    [/[\uAC00-\uD7AF]/, "Korean"],
+    [/[\u0E00-\u0E7F]/, "Thai"]
   ];
   for (const [pattern, name] of scriptRules) {
     if (new RegExp(pattern.source).test(text)) return name;
