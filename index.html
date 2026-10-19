@@ -354,6 +354,29 @@ html,body{max-width:100%;overflow-x:clip}
 }
 @media(prefers-reduced-motion:reduce){.orbit{animation:none!important}}
 
+
+/* Final hero globe fix: remove floating labels and visibly rotate the map left-to-right */
+.heroVisual .floatcard{display:none!important}
+.heroVisual .orbit{
+ position:relative!important;
+ overflow:hidden!important;
+ background-color:#164b68!important;
+ background-image:
+  radial-gradient(ellipse at 28% 22%,#fff7df22 0%,transparent 44%),
+  linear-gradient(90deg,#02091420 0%,transparent 36%,#02091490 100%),
+  url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')!important;
+ background-repeat:no-repeat!important;
+ background-size:100% 100%,100% 100%,200% 100%!important;
+ background-position:0 0,0 0,0% center!important;
+ animation:earthMapSpinLeftToRight 24s linear infinite!important;
+}
+.heroVisual .orbitGrid{animation:none!important;opacity:.07!important}
+@keyframes earthMapSpinLeftToRight{
+ from{background-position:0 0,0 0,0% center}
+ to{background-position:0 0,0 0,100% center}
+}
+@media(prefers-reduced-motion:reduce){.heroVisual .orbit{animation:none!important}}
+
 </style>
 <script type="application/ld+json">
 {
