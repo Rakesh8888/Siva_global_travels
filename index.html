@@ -98,6 +98,19 @@ body.light .flight-night-image{display:block!important;}
   .aiBody .chatInput button,
   .aiBody .voiceBtn{width:64px!important;min-width:64px!important;max-width:64px!important}
 }
+
+/* Put language selector in the Lucky AI header, not beside the message area. */
+.aiHeader{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(72px,auto) 28px!important;align-items:center!important;gap:8px!important}
+.aiHeaderTitle{min-width:0}
+.aiHeader #chatLanguage{grid-column:2;grid-row:1;width:76px!important;min-width:76px!important;max-width:76px!important;height:36px!important;margin:0!important;padding:4px!important;font-size:12px!important;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);text-align:center}
+.aiHeader #aiClose{grid-column:3;grid-row:1;justify-self:end}
+.aiBody>.chatTopTools{display:none!important}
+@media(max-width:380px){
+ .aiHeader{grid-template-columns:minmax(0,1fr) 68px 24px!important;gap:5px!important}
+ .aiHeaderTitle strong{font-size:13px!important}
+ .aiHeader #chatLanguage{width:68px!important;min-width:68px!important;max-width:68px!important}
+ .aiHeader #aiClose{width:24px!important}
+}
 </style>
 <script type="application/ld+json">
 {
@@ -143,14 +156,11 @@ body.light .flight-night-image{display:block!important;}
 <div class="aiPanel" id="aiPanel">
   <div class="aiHeader">
     <div class="aiHeaderTitle"><strong>LUCKY AI Chatbot</strong><span class="aiOnline"><i></i> Online</span></div>
+    <select id="chatLanguage" aria-label="Choose chat language" title="Tap to change chat language">
+        <option value="en">EN</option><option value="te">తె</option><option value="hi">हि</option><option value="ta">த</option><option value="kn">ಕ</option><option value="ml">മ</option><option value="ur">ارد</option><option value="ar">عر</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option><option value="pt">PT</option><option value="ru">RU</option><option value="zh-CN">中</option><option value="ja">日</option><option value="ko">한</option><option value="id">ID</option><option value="bn">বা</option><option value="mr">म</option><option value="pa">ਪੰ</option>
     <button id="aiClose" aria-label="Close assistant">×</button>
   </div>
   <div class="aiBody">
-    <div class="chatTopTools">
-      <select id="chatLanguage" aria-label="Choose chat language" title="Tap to change chat language">
-        <option value="en">EN</option><option value="te">తె</option><option value="hi">हि</option><option value="ta">த</option><option value="kn">ಕ</option><option value="ml">മ</option><option value="ur">ارد</option><option value="ar">عر</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option><option value="pt">PT</option><option value="ru">RU</option><option value="zh-CN">中</option><option value="ja">日</option><option value="ko">한</option><option value="id">ID</option><option value="bn">বা</option><option value="mr">म</option><option value="pa">ਪੰ</option>
-      </select>
-    </div>
     <div class="chat" id="chat" aria-live="polite"><div class="msg bot">Hi! I’m LUCKY AI. How can I help you?</div></div>
     <div class="voiceControls">
       <button type="button" class="voiceBtn" id="voiceMsgBtn">🎙 Voice Message</button>
