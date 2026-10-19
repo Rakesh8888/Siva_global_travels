@@ -220,22 +220,22 @@ button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent }
 }
 
 
-/* URGENT FINAL OVERRIDES: keep language selector in header and shorten voice button widths. */
+/* FINAL BUTTON SIZE MATCH: Voice and Live use the same compact dimensions as Send. */
 .aiHeader{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(105px,135px) 28px!important;align-items:center!important;gap:6px!important}
 .aiHeader #chatLanguage{grid-column:2!important;grid-row:1!important;display:block!important;width:100%!important;min-width:0!important;max-width:100%!important}
 .aiHeader #aiClose{grid-column:3!important;grid-row:1!important}
 .aiBody>.chatTopTools{display:none!important}
-.aiBody .voiceControls{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;gap:8px!important}
-.aiBody .voiceBtn{flex:0 0 100px!important;width:100px!important;max-width:100px!important;min-width:0!important;box-sizing:border-box!important}
+.aiBody .chatInput button{height:40px!important;min-height:40px!important;padding:0 13px!important;box-sizing:border-box!important}
+.aiBody .voiceControls{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;gap:7px!important}
+.aiBody .voiceBtn{flex:0 0 64px!important;width:64px!important;max-width:64px!important;min-width:64px!important;height:40px!important;min-height:40px!important;padding:0 2px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:nowrap!important;box-sizing:border-box!important;font-size:10px!important;line-height:1!important}
 @media(max-width:520px){
  .aiHeader{grid-template-columns:minmax(0,1fr) minmax(100px,125px) 26px!important;gap:5px!important}
- .aiBody .voiceControls{gap:6px!important}
- .aiBody .voiceBtn{flex-basis:88px!important;width:88px!important;max-width:88px!important}
+ .aiBody .voiceControls{gap:7px!important}
+ .aiBody .voiceBtn{flex-basis:64px!important;width:64px!important;max-width:64px!important;min-width:64px!important}
 }
 @media(max-width:340px){
- .aiBody .voiceBtn{flex-basis:78px!important;width:78px!important;max-width:78px!important}
+ .aiBody .voiceBtn{flex-basis:64px!important;width:64px!important;max-width:64px!important;min-width:64px!important}
 }
-
 </style>
 <script type="application/ld+json">
 {
