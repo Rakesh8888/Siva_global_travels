@@ -44,6 +44,32 @@ body.light .flight-night-image{display:block!important;}
 .faqAnswer p:last-child{margin-bottom:0}
 .faqActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 @media(max-width:520px){.faqItem summary{padding:15px 42px 15px 14px;font-size:14px}.faqAnswer{padding:0 14px 15px}}
+
+/* Compact language selector and LUCKY AI launcher/panel. */
+.navtools #pageLanguage{width:112px!important;max-width:112px!important;min-width:0;padding:6px 7px!important;font-size:11px;min-height:32px;border-radius:9px}
+.aiFab{width:46px;height:46px;right:14px;bottom:14px;font-size:13px;box-shadow:0 7px 20px #0005}
+.aiPanel{right:14px;bottom:70px;width:min(88vw,320px);max-height:min(72vh,540px);border-radius:16px}
+.aiBody{padding:10px}
+.aiHeader{padding:10px 12px}
+.aiHeader strong{font-size:14px}
+.aiHeader button{font-size:20px}
+#chatLanguage{font-size:12px!important;padding:7px!important;margin-bottom:8px!important}
+.chat{height:170px;max-height:34vh;padding:8px}
+.msg{padding:7px 9px;margin:6px 0;font-size:12px;line-height:1.4}
+.quick{gap:5px;margin:7px 0}
+.quick button{padding:5px 7px;font-size:11px}
+.voiceControls{gap:5px;margin:6px 0}
+.voiceBtn{padding:6px 8px;font-size:11px}
+.chatInput input{padding:8px;font-size:12px}
+.chatInput button{padding:0 10px;font-size:12px}
+.voiceNote,.aiBody .note{font-size:10px;line-height:1.35}
+@media(max-width:520px){
+ .navtools #pageLanguage{width:96px!important;max-width:96px!important;padding:5px!important;font-size:10px}
+ .aiFab{width:42px;height:42px;right:12px;bottom:12px}
+ .aiPanel{right:10px;bottom:62px;width:min(90vw,300px);max-height:70vh}
+ .chat{height:155px;max-height:30vh}
+}
+
 </style>
 <script type="application/ld+json">
 {
