@@ -337,6 +337,23 @@ html,body{max-width:100%;overflow-x:clip}
 .orbitGrid{opacity:.08!important}
 .orbit:before,.orbit:after{border-color:#c4e6d922!important}
 
+
+/* Final globe cleanup: keep rotation, use an unlabelled Earth texture, no map names or watermark text */
+.orbit{
+ background-image:
+  radial-gradient(ellipse at 30% 22%,#fff7df18 0%,transparent 46%),
+  linear-gradient(90deg,#07152210 0%,transparent 42%,#02091465 100%),
+  url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')!important;
+ background-size:100% 100%,100% 100%,200% 100%!important;
+ background-position:0 0,0 0,0% center!important;
+ animation:earthMapSpin 32s linear infinite!important;
+}
+@keyframes earthMapSpin{
+ from{background-position:0 0,0 0,0% center}
+ to{background-position:0 0,0 0,100% center}
+}
+@media(prefers-reduced-motion:reduce){.orbit{animation:none!important}}
+
 </style>
 <script type="application/ld+json">
 {
