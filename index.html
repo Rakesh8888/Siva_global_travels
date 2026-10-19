@@ -308,6 +308,21 @@ html,body{max-width:100%;overflow-x:clip}
 }
 @media(prefers-reduced-motion:reduce){.orbit{animation:none!important}}
 
+
+/* Natural Earth colours: deep ocean blue, realistic land tones, no violet glow */
+.orbit{
+ background-color:#123d59!important;
+ background-image:
+   radial-gradient(ellipse at 30% 22%,#fff5d633 0%,#fff5d60a 24%,transparent 49%),
+   linear-gradient(90deg,#03101c18 0%,#061a2a00 42%,#03101c88 100%),
+   url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')!important;
+ background-repeat:no-repeat!important;
+ background-size:100% 100%,100% 100%,200% 100%!important;
+ background-position:0 0,0 0,0% center!important;
+ box-shadow:inset -30px -18px 48px #00101bb8,inset 10px 8px 22px #e5f5ff12,0 0 0 1px #79c7e566,0 0 28px #247aa633!important;
+ border:1px solid #78b9d866!important;
+}
+
 </style>
 <script type="application/ld+json">
 {
