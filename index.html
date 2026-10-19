@@ -220,6 +220,23 @@ html,body{max-width:100%;overflow-x:clip}
  .menuBtn{padding:7px!important;font-size:11px}
 }
 
+
+/* Compact bottom language switcher: tap to open language options */
+.gtranslate_wrapper{position:fixed!important;left:8px!important;bottom:8px!important;z-index:9998!important;width:auto!important;max-width:150px!important}
+.gtranslate_wrapper .gt_float_switcher{width:auto!important;min-width:0!important;max-width:150px!important;font-size:12px!important;box-shadow:0 4px 16px #0003!important;border-radius:8px!important;overflow:visible!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected{padding:5px 8px!important;min-height:38px!important;line-height:1.2!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang{padding:0!important;display:flex!important;align-items:center!important;gap:6px!important}
+.gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code{font-size:13px!important;font-weight:700!important}
+.gtranslate_wrapper .gt_float_switcher .gt_options{max-height:55vh!important;overflow-y:auto!important;min-width:140px!important}
+.gtranslate_wrapper .gt_float_switcher img{width:22px!important;height:auto!important}
+@media(max-width:520px){
+ .gtranslate_wrapper{left:6px!important;bottom:6px!important;max-width:126px!important}
+ .gtranslate_wrapper .gt_float_switcher{max-width:126px!important;font-size:11px!important}
+ .gtranslate_wrapper .gt_float_switcher .gt-selected{padding:4px 6px!important;min-height:34px!important}
+ .gtranslate_wrapper .gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code{font-size:12px!important}
+ .gtranslate_wrapper .gt_float_switcher img{width:19px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
