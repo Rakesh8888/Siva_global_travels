@@ -219,6 +219,23 @@ button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent }
  .voiceControls{grid-template-columns:minmax(0,0.82fr) minmax(0,0.82fr);justify-content:center;column-gap:8px}
 }
 
+
+/* URGENT FINAL OVERRIDES: keep language selector in header and shorten voice button widths. */
+.aiHeader{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(105px,135px) 28px!important;align-items:center!important;gap:6px!important}
+.aiHeader #chatLanguage{grid-column:2!important;grid-row:1!important;display:block!important;width:100%!important;min-width:0!important;max-width:100%!important}
+.aiHeader #aiClose{grid-column:3!important;grid-row:1!important}
+.aiBody>.chatTopTools{display:none!important}
+.aiBody .voiceControls{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;gap:8px!important}
+.aiBody .voiceBtn{flex:0 0 100px!important;width:100px!important;max-width:100px!important;min-width:0!important;box-sizing:border-box!important}
+@media(max-width:520px){
+ .aiHeader{grid-template-columns:minmax(0,1fr) minmax(100px,125px) 26px!important;gap:5px!important}
+ .aiBody .voiceControls{gap:6px!important}
+ .aiBody .voiceBtn{flex-basis:88px!important;width:88px!important;max-width:88px!important}
+}
+@media(max-width:340px){
+ .aiBody .voiceBtn{flex-basis:78px!important;width:78px!important;max-width:78px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
