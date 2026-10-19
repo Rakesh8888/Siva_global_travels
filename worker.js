@@ -88,26 +88,62 @@ async function handleChat(request, env) {
 
     const data = await response.json().catch(() => ({}));
 
-    if (!response.ok) {
-      console.error("LUCKY AI Gemini provider error:", response.status, data);
-      const providerError = data?.error || {};
-      return jsonResponse(
-        {
-          error: "Gemini request failed.",
-          providerStatus: response.status,
-          providerMessage: typeof providerError.message === "string"
-            ? providerError.message.slice(0, 250)
-            : "Gemini rejected the request."
-        },
-        response.status >= 500 ? 502 : response.status,
-        request
-      );
-    }
+    let reply = "";
 
-    const reply = data?.candidates?.[0]?.content?.parts
-      ?.map(part => typeof part.text === "string" ? part.text : "")
-      .join("")
-      .trim() || "";
+    if (response.ok) {
+      reply = data?.candidates?.[0]?.content?.parts
+        ?.map(part => typeof part.text === "string" ? part.text : "")
+        .join("")
+        .trim() || "";
+    } else {
+      const providerError = data?.error || {};
+      console.error("LUCKY AI Gemini provider error:", response.status, providerError.message || "Unknown provider error");
+
+      // If Gemini is unavailable for this account or region, try the configured OpenAI key.
+      if (env.OPENAI_API_KEY) {
+        const openAiMessages = [
+          { role: "system", content: SYSTEM_PROMPT(language) },
+          ...contents.map(item => ({
+            role: item.role === "model" ? "assistant" : "user",
+            content: (item.parts || []).map(part => typeof part.text === "string" ? part.text : "").join("")
+          }))
+        ];
+        const fallbackController = new AbortController();
+        const fallbackTimer = setTimeout(() => fallbackController.abort(), 25000);
+        let fallbackResponse;
+        try {
+          fallbackResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + env.OPENAI_API_KEY
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages: openAiMessages,
+              max_tokens: 600,
+              temperature: 0.7
+            }),
+            signal: fallbackController.signal
+          });
+        } finally {
+          clearTimeout(fallbackTimer);
+        }
+        const fallbackData = await fallbackResponse.json().catch(() => ({}));
+        if (fallbackResponse.ok) {
+          reply = fallbackData?.choices?.[0]?.message?.content?.trim() || "";
+        } else {
+          console.error("LUCKY AI OpenAI fallback error:", fallbackResponse.status, fallbackData?.error?.message || "Unknown provider error");
+          return jsonResponse({
+            error: "AI service is temporarily unavailable. Please try again or contact us on WhatsApp."
+          }, 502, request);
+        }
+      } else {
+        return jsonResponse({
+          error: "AI service is temporarily unavailable. Please try again or contact us on WhatsApp."
+        }, 502, request);
+      }
+    }
 
     return jsonResponse(
       { reply: reply || "I could not generate a reply. Please try again." },
