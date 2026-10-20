@@ -834,6 +834,17 @@ body{font-size:16px}
  .chatInput input,.chatInput button{font-size:14px!important}
 }
 
+
+/* Compact Paid Calling card only; preserve payment and call actions. */
+#contact .contactDetails > .detail.contact-mini:first-child{padding:12px;max-width:330px}
+#contact .contactDetails > .detail.contact-mini:first-child>b{font-size:14px;margin-bottom:2px}
+#contact .contactDetails > .detail.contact-mini:first-child>span{font-size:12px}
+#contact .contactDetails > .detail.contact-mini:first-child>.note{font-size:11px;line-height:1.35;margin:6px 0}
+#contact .contactDetails > .detail.contact-mini:first-child #paidPaymentQR{max-width:112px!important}
+#contact .contactDetails > .detail.contact-mini:first-child div:has(>#paidPaymentQR){max-width:122px!important;margin:6px auto!important;padding:4px!important}
+#contact .contactDetails > .detail.contact-mini:first-child .paid-call-btn{padding:6px 9px;font-size:10px;min-height:27px;margin-top:5px}
+@media(max-width:850px){#contact .contactDetails > .detail.contact-mini:first-child{max-width:100%}}
+
 </style>
 <script type="application/ld+json">
 {
