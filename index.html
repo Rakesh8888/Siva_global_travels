@@ -1156,6 +1156,23 @@ body.light .aiBody .chatComposer .composerSend{
   .aiPanel .aiHeaderTitle .aiOnline{font-size:9px!important}
   .aiPanel .aiHeader #aiClose{flex-basis:24px!important;width:24px!important;height:24px!important;min-width:24px!important;font-size:21px!important}
 }
+
+/* Legal policy area */
+.legalPolicies{padding:44px 0 56px;background:var(--surface,transparent);scroll-margin-top:90px}
+.legalPolicies .sectionHead{margin-bottom:22px}
+.legalCard{margin:12px 0;padding:16px 18px;border:1px solid var(--line,rgba(120,140,160,.28));border-radius:14px;background:var(--card,rgba(255,255,255,.035));color:var(--text,inherit)}
+.legalCard summary{cursor:pointer;font-weight:750;line-height:1.45}
+.legalCopy{padding-top:12px;line-height:1.7;font-size:14px}
+.legalCopy p{margin:10px 0}
+.legalCopy a,.legalOfficialLinks a{overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}
+.legalOfficialLinks h3{margin:0 0 12px;font-size:18px}
+.legalOfficialLinks ul{padding-left:20px;line-height:1.85}
+.legalSmall{font-size:12px;opacity:.78;line-height:1.6}
+.footerin{flex-wrap:wrap;gap:12px}
+.legalFooterLinks{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;width:100%}
+.legalFooterLinks a{font-size:12px;text-decoration:underline;text-underline-offset:3px;opacity:.9}
+@media(max-width:600px){.legalPolicies{padding:30px 0 40px}.legalCard{padding:13px}.legalCopy{font-size:13px}}
+
 </style>
 <script type="application/ld+json">
 {
@@ -1196,7 +1213,94 @@ body.light .aiBody .chatComposer .composerSend{
 <div class="faqActions"><a class="btn primary" href="https://wa.me/919182641172?text=Hello%2C%20I%20have%20a%20question%20about%20Siva%20Global%20Travels." target="_blank" rel="noopener">Ask on WhatsApp →</a><a class="btn secondary" href="#contact">Send an enquiry</a></div>
 </div></section>
 <section id="contact"><div class="wrap"><div class="sectionHead"><div class="eyebrow">CONTACT US</div><h2>Plan your <span>next move.</span></h2><p>Tell us what you need, then continue to WhatsApp to send your enquiry.</p></div><div class="contactGrid"><div class="contactDetails"><div class="detail contact-mini"><b>📱 Paid Calling</b><span>30-minute consultation</span><p class="note">Book a paid consultation call in advance. Scan the QR code using PhonePe or another supported UPI app. Confirm the recipient name and amount in your payment app before paying.</p><div style="margin:8px auto;text-align:center;padding:6px;background:#fff;border-radius:10px;max-width:150px;color:#10283b"><img id="paidPaymentQR" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi%3A%2F%2Fpay%3Fpa%3Dthotti.1172%40waicici%26pn%3DTHOTTI%2520SIVA%2520KRISHNA%26am%3D300%26cu%3DINR%26tn%3DPaid%2520Calling%252030%2520minutes" alt="UPI QR code for paid calling" width="140" height="140" loading="lazy" style="display:block;width:100%;max-width:140px;height:auto;margin:auto"></div><p class="note">Payment recipient: THOTTI SIVA KRISHNA. Your phone number is not printed here.</p><a class="btn primary paid-call-btn" href="tel:+919182641172">Call now for paid session</a><p class="note">After payment, tap “Call now for paid session” to place a regular mobile-network call. Keep your payment confirmation ready.</p></div><div class="detail"><b>📍 Location</b><span>Badvel, Y.S.R. District, Andhra Pradesh, India</span></div><div class="detail contact-mini"><b>✉ Email</b><span>info@sivaglobaltravels.com</span><p style="font-size:12px;color:var(--muted)">Please verify this email is configured before publishing it publicly.</p></div></div><div class="panel"><form id="contactForm" class="formGrid"><div class="field"><label for="name">Your name</label><input id="name" required placeholder="Enter your name"></div><div class="field"><label for="phone">Phone / WhatsApp</label><input id="phone" required inputmode="tel" placeholder="Your number"></div><div class="field full"><label for="service">What do you need?</label><select id="service"><option>Flight enquiry</option><option>Visa assistance</option><option>India tour package</option><option>Europe / Gulf package</option><option>Overseas job assistance</option><option>Cruise job assistance</option><option>Other enquiry</option></select></div><div class="field full"><label for="message">Details</label><textarea id="message" placeholder="Destination, dates, skills or questions..."></textarea></div><div class="full"><button class="btn primary" type="submit">Continue on WhatsApp →</button></div></form></div></div></div></section>
-</main><footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> Siva Global Travels. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span></div></footer>
+</main>
+<section id="legal-policies" class="legalPolicies">
+  <div class="wrap">
+    <div class="sectionHead">
+      <div class="eyebrow">POLICIES & IMPORTANT INFORMATION</div>
+      <h2>Clear information. <span>Safer decisions.</span></h2>
+      <p>Please read the policies relevant to your enquiry before confirming a paid service or travel booking. These pages provide general information and do not replace advice from a qualified Indian lawyer.</p>
+    </div>
+
+    <details class="legalCard" id="terms-of-use">
+      <summary>Website Terms of Use</summary>
+      <div class="legalCopy">
+        <p><strong>Service identity:</strong> Siva Global Travels is the trade name displayed on this website. The current website provides travel enquiries, general travel and visa-application guidance, and limited career-assistance information. The operator's exact registered legal name and business-registration details must be confirmed and published where legally required.</p>
+        <p><strong>Enquiries and bookings:</strong> Sending an enquiry does not itself create a confirmed booking, ticket, visa application, tour reservation, job application, or service contract. A booking is confirmed only after the relevant service, provider, itinerary, total price, inclusions, exclusions, payment terms and cancellation conditions have been communicated and accepted in writing.</p>
+        <p><strong>Third-party providers:</strong> Airlines, hotels, tour operators, cruise companies, visa authorities and other providers set their own eligibility, availability, fares, terms and decisions. Provider-specific conditions apply where a customer purchases a provider's service. Siva Global Travels must not claim to represent or be authorised by a provider unless that relationship is confirmed in writing.</p>
+        <p><strong>Information accuracy:</strong> Travel fares, schedules, availability, visa requirements, entry rules and job vacancies can change. Verify current information with the airline, supplier, embassy/consulate, government authority or employer before paying, travelling or applying.</p>
+        <p><strong>Fair terms:</strong> Nothing in these terms removes consumer rights that cannot legally be excluded or limits liability where applicable law does not permit such limitation.</p>
+      </div>
+    </details>
+
+    <details class="legalCard" id="privacy-policy">
+      <summary>Privacy Notice</summary>
+      <div class="legalCopy">
+        <p><strong>Information you choose to provide:</strong> The website enquiry form asks for your name, phone/WhatsApp number, service type and message. When you continue to WhatsApp, the information you choose to send is handled by WhatsApp under its own terms and privacy policy. Do not send passwords, OTPs, full payment-card details or unnecessary identity documents through a general enquiry.</p>
+        <p><strong>Purpose:</strong> Enquiry details are used to respond to your request, discuss the service you selected and provide requested guidance. Do not submit information about another person without appropriate permission.</p>
+        <p><strong>Third-party services:</strong> WhatsApp, external airline/provider sites, payment apps, and embedded external resources operate under their own terms and privacy notices. Their handling of data is not controlled by this website.</p>
+        <p><strong>Retention and requests:</strong> Keep only information needed for the enquiry, service, accounting or legal obligations, and securely delete it when no longer needed. To request access, correction or deletion of information held by Siva Global Travels, contact the support channel listed below. Applicable privacy law and its phased commencement dates govern the precise rights and duties.</p>
+        <p><strong>Before collecting more data:</strong> A separate, clear privacy notice and affirmative consent must be added before introducing accounts, analytics, advertising trackers, mailing lists, stored application documents or other additional personal-data processing.</p>
+      </div>
+    </details>
+
+    <details class="legalCard" id="cancellation-refund-policy">
+      <summary>Cancellation, Refunds and Service Fees</summary>
+      <div class="legalCopy">
+        <p><strong>Before payment:</strong> The exact service, total fee, any taxes, delivery time, what is included, what is excluded, cancellation terms and refund eligibility must be explained and accepted before payment. Do not pay until the recipient name and amount shown in your payment app are verified.</p>
+        <p><strong>Travel bookings:</strong> Airline, hotel, cruise, transport and tour cancellations, changes, no-show penalties and refunds depend on the confirmed provider's fare rules and booking terms. Any applicable provider cancellation fee and Siva Global Travels service fee must be disclosed separately before confirmation.</p>
+        <p><strong>Assistance services:</strong> CV/resume preparation, interview preparation and help navigating or filling an official application form are separate optional services. The applicable fee and scope must be agreed before work starts. No fee amount is published by this policy. No service guarantees a job, interview, visa, salary or selection.</p>
+        <p><strong>Refund requests:</strong> Send your request and payment reference through the official support channel. Each request will be reviewed against the agreed service scope, work already performed, provider rules and applicable law. No blanket “no refunds in all cases” rule is intended; statutory consumer rights remain unaffected.</p>
+        <p><strong>Current limitation:</strong> This website currently collects enquiries and redirects users to WhatsApp; it does not itself confirm flight bookings or process airline ticket payments. Do not describe an enquiry as a confirmed booking.</p>
+      </div>
+    </details>
+
+    <details class="legalCard" id="travel-visa-disclaimer">
+      <summary>Travel, Visa and External Website Disclaimer</summary>
+      <div class="legalCopy">
+        <p>Siva Global Travels provides general travel information and enquiry/assistance services. Visa decisions are made only by the relevant government or authorised authority. Guidance does not guarantee visa approval, entry, immigration clearance, ticket availability or travel outcomes.</p>
+        <p>External links are provided for convenience. Siva Global Travels does not control external websites, their content, security, prices, availability or decisions. Confirm the domain and information independently before providing documents or payment.</p>
+        <p>Trip details, fares, taxes, baggage, accommodation, transfers, inclusions, exclusions, cancellation conditions and total payable amounts should be confirmed in writing before a booking is accepted.</p>
+      </div>
+    </details>
+
+    <details class="legalCard" id="cruise-career-disclaimer">
+      <summary>Cruise and Overseas Career Assistance Disclaimer</summary>
+      <div class="legalCopy">
+        <p>Siva Global Travels provides general career information and optional assistance limited to (1) help navigating/filling an official job application form, (2) CV/resume preparation and (3) interview preparation. Each is a separate service; any applicable fee must be disclosed and agreed before work starts.</p>
+        <p>Customers must verify the employer, vacancy, eligibility, salary, recruitment channel and contract. Applications and hiring decisions are handled by the cruise company/employer or a hiring partner it has explicitly authorised. Siva Global Travels is not affiliated with or endorsed by listed companies unless that relationship is independently verified and explicitly confirmed.</p>
+        <p>This limited assistance does not include maritime/STCW, deck/engine or other courses/certificates, medical examinations, visa issuance, job placement or recruitment on behalf of an employer. No job, interview, interview success, visa or employment offer is guaranteed. For overseas recruitment in India, check the applicable rules and official channels before sharing documents or making payments.</p>
+      </div>
+    </details>
+
+    <details class="legalCard" id="complaints-grievance">
+      <summary>Customer Support and Complaints</summary>
+      <div class="legalCopy">
+        <p><strong>Support contact:</strong> Siva Global Travels, Badvel, Y.S.R. District, Andhra Pradesh, India. WhatsApp/phone: <a href="https://wa.me/919182641172" target="_blank" rel="noopener noreferrer">+91 91826 41172</a>.</p>
+        <p>Please include your name, enquiry/service, date and payment reference (if applicable). Do not include passwords, OTPs or full card details. We aim to acknowledge complaints promptly and work toward resolution under applicable law.</p>
+        <p><strong>Important setup item:</strong> A working business email, the operator's exact legal name and full business address, and a designated grievance contact must be verified and published before accepting online orders/payments or where required by law. The site currently lists info@sivaglobaltravels.com but its operation has not been verified in this update; do not rely on it until tested.</p>
+      </div>
+    </details>
+
+    <div class="legalCard legalOfficialLinks">
+      <h3>Official Government and Consumer Resources</h3>
+      <ul>
+        <li><a href="https://consumeraffairs.gov.in/pages/consumer-protection-acts" target="_blank" rel="noopener noreferrer">Department of Consumer Affairs: Consumer Protection Act and E-Commerce Rules</a></li>
+        <li><a href="https://consumerhelpline.gov.in/" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></li>
+        <li><a href="https://www.meity.gov.in/digital-personal-data-protection-rules" target="_blank" rel="noopener noreferrer">MeitY: Digital Personal Data Protection Rules</a></li>
+        <li><a href="https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf" target="_blank" rel="noopener noreferrer">Digital Personal Data Protection Rules, 2025 (official Gazette)</a></li>
+        <li><a href="https://etraveltradeapproval.nic.in/Guidlines/TravelAgents.aspx" target="_blank" rel="noopener noreferrer">Ministry of Tourism: Travel Agent Recognition Guidelines</a></li>
+        <li><a href="https://www.tourism.gov.in/" target="_blank" rel="noopener noreferrer">Ministry of Tourism, Government of India</a></li>
+        <li><a href="https://www.mea.gov.in/oe-faq.htm" target="_blank" rel="noopener noreferrer">Ministry of External Affairs: Overseas Employment FAQs</a></li>
+        <li><a href="https://www.mea.gov.in/faq-recruitment-from-india.htm" target="_blank" rel="noopener noreferrer">MEA: Recruitment from India, Recruiting Agents and Foreign Employers</a></li>
+        <li><a href="https://emigrate.gov.in/" target="_blank" rel="noopener noreferrer">eMigrate Portal</a></li>
+        <li><a href="https://cbic-gst.gov.in/" target="_blank" rel="noopener noreferrer">CBIC GST official portal</a></li>
+      </ul>
+      <p class="legalSmall">Government links are provided for reference. Their content and applicability can change; check the current official guidance for your situation.</p>
+    </div>
+  </div>
+</section>
+<footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> Siva Global Travels. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span><nav class="legalFooterLinks" aria-label="Legal and policy links"><a href="#terms-of-use">Terms of Use</a><a href="#privacy-policy">Privacy Notice</a><a href="#cancellation-refund-policy">Cancellation & Refunds</a><a href="#travel-visa-disclaimer">Travel & Visa Disclaimer</a><a href="#cruise-career-disclaimer">Career Assistance Disclaimer</a><a href="#complaints-grievance">Complaints & Support</a><a href="#legal-policies">Official Resources</a></nav></div></footer><div class="wrap footerin"><span>© <span id="year"></span> Siva Global Travels. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span></div></footer>
 <!-- LUCKY AI UI: Language options control removed from the visible interface; language follows the website selector. -->
 <button class="aiFab" id="aiFab" aria-label="Open LUCKY AI">AI</button>
 <div class="aiPanel" id="aiPanel">
