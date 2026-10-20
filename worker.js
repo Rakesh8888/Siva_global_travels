@@ -100,7 +100,7 @@ async function callOpenRouter(env, model, messages, maxTokens = 500) {
       signal: controller.signal
     });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error("OpenRouter request failed (" + response.status + ")");
+    if (!response.ok) throw new Error("OpenRouter request failed (" + response.status + "): " + String(data?.error?.message || data?.message || "Unknown provider error").slice(0, 220));
     const text = data?.choices?.[0]?.message?.content;
     if (typeof text !== "string" || !text.trim()) throw new Error("Model returned an empty response");
     return text.trim();
@@ -110,7 +110,7 @@ async function callOpenRouter(env, model, messages, maxTokens = 500) {
 }
 
 async function runLlmCouncil(message, history, language, env) {
-  const defaults = ["openai/gpt-4o-mini", "google/gemini-2.5-flash", "anthropic/claude-3.5-sonnet"];
+  const defaults = ["google/gemini-2.5-flash", "openai/gpt-4o-mini", "deepseek/deepseek-chat"];
   const models = String(env.COUNCIL_MODELS || defaults.join(",")).split(",").map(x => x.trim()).filter(Boolean).slice(0, 3);
   if (models.length < 2) throw new Error("Council requires at least two models");
   const system = SYSTEM_PROMPT(language) + "\\n\\nYou are one member of a multi-model council. Give a careful, useful answer. Do not invent current facts, prices, vacancies, or guarantees.";
