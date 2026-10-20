@@ -109,9 +109,21 @@ async function callOpenRouter(env, model, messages, maxTokens = 500) {
   }
 }
 
+function normalizeCouncilModel(value) {
+  const raw = String(value || "").trim().replace(/^models\//i, "");
+  const aliases = {
+    "gemini-2.5-flash": "google/gemini-2.5-flash",
+    "gemini-3.8-flash": "google/gemini-2.5-flash",
+    "google/gemini-3.8-flash": "google/gemini-2.5-flash",
+    "gpt-4o-mini": "openai/gpt-4o-mini",
+    "deepseek-chat": "deepseek/deepseek-chat"
+  };
+  return aliases[raw.toLowerCase()] || raw;
+}
+
 async function runLlmCouncil(message, history, language, env) {
   const defaults = ["google/gemini-2.5-flash", "openai/gpt-4o-mini", "deepseek/deepseek-chat"];
-  const models = String(env.COUNCIL_MODELS || defaults.join(",")).split(",").map(x => x.trim()).filter(Boolean).slice(0, 3);
+  const models = String(env.COUNCIL_MODELS || defaults.join(",")).split(",").map(normalizeCouncilModel).filter(Boolean).slice(0, 3);
   if (models.length < 2) throw new Error("Council requires at least two models");
   const system = SYSTEM_PROMPT(language) + "\\n\\nYou are one member of a multi-model council. Give a careful, useful answer. Do not invent current facts, prices, vacancies, or guarantees.";
   const context = history.map(x => ({ role: x.role, content: x.content })).slice(-4);
@@ -178,7 +190,7 @@ async function handleChat(request, env) {
     // before the existing Gemini/OpenAI providers. This also makes provider failures easier to recover from.
     if (!reply && env.OPENROUTER_API_KEY) {
       try {
-        const fallbackModel = String(env.COUNCIL_MODELS || "openai/gpt-4o-mini").split(",").map(x => x.trim()).filter(Boolean)[0] || "openai/gpt-4o-mini";
+        const fallbackModel = String(env.COUNCIL_MODELS || "openai/gpt-4o-mini").split(",").map(normalizeCouncilModel).filter(Boolean)[0] || "openai/gpt-4o-mini";
         reply = await callOpenRouter(env, fallbackModel, [
           { role: "system", content: systemPrompt },
           ...history.map(x => ({ role: x.role, content: x.content })),
