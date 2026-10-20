@@ -83,7 +83,58 @@ function jsonResponse(data, status, request) {
   });
 }
 
-async function handleChat(request, env) {
+
+async function callOpenRouter(env, model, messages, maxTokens = 500) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 22000);
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + env.OPENROUTER_API_KEY,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://siva-global-travels.sivaramtotti.workers.dev",
+        "X-Title": "Siva Global Travels LLM Council"
+      },
+      body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: 0.2 }),
+      signal: controller.signal
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error("OpenRouter request failed (" + response.status + ")");
+    const text = data?.choices?.[0]?.message?.content;
+    if (typeof text !== "string" || !text.trim()) throw new Error("Model returned an empty response");
+    return text.trim();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function runLlmCouncil(message, history, language, env) {
+  const defaults = ["openai/gpt-4o-mini", "google/gemini-2.5-flash", "anthropic/claude-3.5-sonnet"];
+  const models = String(env.COUNCIL_MODELS || defaults.join(",")).split(",").map(x => x.trim()).filter(Boolean).slice(0, 3);
+  if (models.length < 2) throw new Error("Council requires at least two models");
+  const system = SYSTEM_PROMPT(language) + "\\n\\nYou are one member of a multi-model council. Give a careful, useful answer. Do not invent current facts, prices, vacancies, or guarantees.";
+  const context = history.map(x => ({ role: x.role, content: x.content })).slice(-4);
+  const first = await Promise.allSettled(models.map(model =>
+    callOpenRouter(env, model, [{ role: "system", content: system }, ...context, { role: "user", content: message }], 450)
+  ));
+  const answers = first.map((r, i) => ({ label: "Response " + String.fromCharCode(65+i), model: models[i], text: r.status === "fulfilled" ? r.value : "" })).filter(x => x.text);
+  if (answers.length < 2) throw new Error("Not enough council models responded");
+  const anonymized = answers.map(a => a.label + ":\\n" + a.text).join("\\n\\n---\\n\\n");
+  const reviews = await Promise.allSettled(models.map(model =>
+    callOpenRouter(env, model, [
+      { role: "system", content: "You are an impartial reviewer. Review the anonymized answers for correctness, usefulness, missing caveats, and unsupported claims. Rank them best to worst and briefly explain. Do not assume any answer is correct merely because it sounds confident. Respond in " + language + "." },
+      { role: "user", content: "Question:\\n" + message + "\\n\\nAnonymous answers:\\n" + anonymized }
+    ], 300)
+  ));
+  const reviewText = reviews.map((r, i) => r.status === "fulfilled" ? ("Reviewer " + (i+1) + ":\\n" + r.value) : "").filter(Boolean).join("\\n\\n");
+  const final = await callOpenRouter(env, models[0], [
+    { role: "system", content: SYSTEM_PROMPT(language) + "\\n\\nYou are the Council Chairman. Synthesize the strongest parts of the candidate answers and peer reviews into one clear answer. Resolve contradictions cautiously, do not invent facts, and state uncertainty where needed. Never mention internal model names." },
+    { role: "user", content: "User question:\\n" + message + "\\n\\nCandidate answers:\\n" + anonymized + "\\n\\nPeer reviews:\\n" + (reviewText || "Peer review unavailable") + "\\n\\nWrite the final answer in " + language + "." }
+  ], 650);
+  return { reply: final, council: { enabled: true, modelsUsed: answers.length, reviewsReceived: reviews.filter(x => x.status === "fulfilled").length } };
+}
+\nasync function handleChat(request, env) {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
   }
@@ -107,6 +158,17 @@ async function handleChat(request, env) {
       .filter(x => x && (x.role === "user" || x.role === "assistant") && typeof x.content === "string")
       .slice(-6)
       .map(x => ({ role: x.role, content: x.content.slice(-1200) })) : [];
+
+    // Optional Karpathy-style council. Enable only after adding OPENROUTER_API_KEY
+    // and setting COUNCIL_ENABLED=true in Cloudflare Worker secrets/vars.
+    if (env.OPENROUTER_API_KEY && String(env.COUNCIL_ENABLED || "").toLowerCase() === "true") {
+      try {
+        const council = await runLlmCouncil(message, history, language, env);
+        return jsonResponse(council, 200, request);
+      } catch (error) {
+        console.error("LUCKY AI Council unavailable; using configured single-model fallback:", String(error?.message || error).slice(0, 160));
+      }
+    }
     const geminiContents = [
       ...history.map(x => ({
         role: x.role === "assistant" ? "model" : "user",
