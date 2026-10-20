@@ -189,16 +189,23 @@ async function handleChat(request, env) {
     // If the full council is disabled or unavailable, try OpenRouter's single-model path
     // before the existing Gemini/OpenAI providers. This also makes provider failures easier to recover from.
     if (!reply && env.OPENROUTER_API_KEY) {
-      try {
-        const fallbackModel = String(env.COUNCIL_MODELS || "openai/gpt-4o-mini").split(",").map(normalizeCouncilModel).filter(Boolean)[0] || "openai/gpt-4o-mini";
-        reply = await callOpenRouter(env, fallbackModel, [
-          { role: "system", content: systemPrompt },
-          ...history.map(x => ({ role: x.role, content: x.content })),
-          { role: "user", content: message }
-        ], 500);
-      } catch (error) {
-        openRouterProblem = String(error?.message || error).slice(0, 220);
-        console.error("LUCKY AI OpenRouter fallback error:", openRouterProblem);
+      const fallbackModels = [
+        "openai/gpt-4o-mini",
+        "google/gemini-2.5-flash",
+        "deepseek/deepseek-chat"
+      ];
+      for (const fallbackModel of fallbackModels) {
+        try {
+          reply = await callOpenRouter(env, fallbackModel, [
+            { role: "system", content: systemPrompt },
+            ...history.map(x => ({ role: x.role, content: x.content })),
+            { role: "user", content: message }
+          ], 500);
+          if (reply) break;
+        } catch (error) {
+          openRouterProblem = String(error?.message || error).slice(0, 220);
+          console.error("LUCKY AI OpenRouter fallback error (" + fallbackModel + "):", openRouterProblem);
+        }
       }
     }
 
