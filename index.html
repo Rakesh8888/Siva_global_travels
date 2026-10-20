@@ -752,6 +752,50 @@ body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
  .aiBody .chatComposer #chatText{font-size:13px!important}
 }
 
+
+/* Warm night mode: softened charcoal surfaces with light yellow-cream text and gold accents. */
+body:not(.light){
+  --bg:#24231f;
+  --panel:#302e27;
+  --panel2:#3a372e;
+  --line:#f5e9c526;
+  --text:#fff5df;
+  --muted:#d3c9b0;
+  --orange:#f0d18a;
+  --blue:#e4d3a2;
+  --green:#9ad7b5;
+  --shadow:0 20px 58px rgba(0,0,0,.28);
+  background:var(--bg)!important;
+  color:var(--text)!important;
+}
+body:not(.light) .hero{
+  background:radial-gradient(ellipse at 78% 40%,#665638 0,transparent 45%),radial-gradient(ellipse at 20% 0,#3c382d 0,transparent 54%)!important;
+}
+body:not(.light) .hero:after{border-color:#f0dca52e!important;box-shadow:0 0 0 35px #f0dca50a,0 0 0 75px #f0dca507,0 0 110px #e4bd5e12!important}
+body:not(.light) .eyebrow,body:not(.light) .textlink{color:#f0d18a!important}
+body:not(.light) h1 span,body:not(.light) h2 span{color:#f0d18a!important}
+body:not(.light) .orbit{
+  background:radial-gradient(circle at 35% 28%,#81714d,#4b4636 48%,#29271f 76%)!important;
+  border-color:#f0dca54a!important;box-shadow:inset -18px -18px 48px #0005,0 0 48px #e4bd5e12!important;
+}
+body:not(.light) .orbit:before,body:not(.light) .orbit:after{border-color:#f0dca54a!important}
+body:not(.light) .orbitGrid{background:repeating-linear-gradient(0deg,transparent 0 24px,#f0dca518 25px 26px),repeating-linear-gradient(90deg,transparent 0 24px,#f0dca518 25px 26px)!important}
+body:not(.light) .primary,body:not(.light) .aiFab{background:#f0d18a!important;color:#28251d!important}
+body:not(.light) .tripTypes button.active{background:#e4d3a2!important;color:#24231f!important}
+body:not(.light) .aiBody .chat{background:#1f201d!important;border-color:#f5e9c526!important}
+body:not(.light) .aiBody .msg.bot{background:#39372e!important;color:#fff5df!important;border-color:#f5e9c51c!important}
+body:not(.light) .aiBody .msg.user{background:#514632!important;color:#fff5df!important;border-color:#bba56b!important}
+body:not(.light) .aiBody .chatComposer{background:#fff9eb!important;border-color:#e5d8b8!important}
+body:not(.light) .aiBody .chatComposer #chatText{color:#29271f!important}
+body:not(.light) .aiBody .chatComposer #chatPlus,body:not(.light) .aiBody .chatComposer #voiceMsgBtn{color:#29271f!important}
+body:not(.light) .aiBody .chatComposer #liveVoiceBtn{background:#e98272!important;color:#fff!important}
+body:not(.light) .aiBody .chatComposer .composerSend{background:#29271f!important;color:#fff5df!important}
+body:not(.light) .aiBody .voiceControls .voiceBtn{background:#4b4636!important;color:#fff5df!important;border-color:#b8a574!important}
+body:not(.light) .aiBody .voiceControls .voiceBtn.active{background:#f0d18a!important;color:#28251d!important}
+body:not(.light) .field input,body:not(.light) .field select,body:not(.light) .field textarea,
+body:not(.light) .chatInput input{background:#302e27!important;color:#fff5df!important;border-color:#f5e9c538!important}
+body:not(.light) .card,body:not(.light) .panel,body:not(.light) .detail,body:not(.light) .flightShell{border-color:#f5e9c526!important}
+
 </style>
 <script type="application/ld+json">
 {
