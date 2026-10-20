@@ -395,6 +395,50 @@ async function handleChat(request, env) {
   }
 }
 
+
+async function handleCartesiaTTS(request, env) {
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
+  if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
+  if (!env.CARTESIA_API_KEY || !env.CARTESIA_VOICE_ID) {
+    return jsonResponse({ error: "Cartesia voice is not configured. Add CARTESIA_API_KEY and CARTESIA_VOICE_ID as Cloudflare Worker secrets/variables." }, 503, request);
+  }
+  try {
+    const body = await request.json();
+    const transcript = String(body.transcript || "").trim();
+    if (!transcript) return jsonResponse({ error: "Transcript is required" }, 400, request);
+    if (transcript.length > 1800) return jsonResponse({ error: "Please shorten the voice reply to 1,800 characters or less." }, 413, request);
+    const allowedLanguages = new Set(["en", "te", "hi", "ta", "kn", "ml", "ur", "ar", "fr", "de", "it", "es", "pt", "ru", "zh-CN", "ja", "ko", "nl", "tr", "id", "th", "vi", "bn", "mr", "pa", "fa"]);
+    const requestedLanguage = String(body.language || "en").trim();
+    const language = allowedLanguages.has(requestedLanguage) ? requestedLanguage : "en";
+    const upstream = await fetch("https://api.cartesia.ai/tts/bytes", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + env.CARTESIA_API_KEY,
+        "Cartesia-Version": "2026-08-14",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model_id: "sonic-3.6",
+        transcript,
+        voice: env.CARTESIA_VOICE_ID,
+        output_format: { container: "mp3", encoding: "mp3", sample_rate: 44100 },
+        language,
+        normalization: "auto"
+      })
+    });
+    if (!upstream.ok) {
+      const detail = await upstream.text().catch(() => "");
+      return jsonResponse({ error: upstream.status === 402 || upstream.status === 429 ? "Cartesia free credits or rate limit may have been reached." : "Cartesia speech generation failed.", providerStatus: upstream.status, providerMessage: detail.slice(0, 300) }, upstream.status === 429 ? 429 : 502, request);
+    }
+    const headers = corsHeaders(request);
+    headers.set("Content-Type", upstream.headers.get("Content-Type") || "audio/mpeg");
+    headers.set("Cache-Control", "no-store");
+    return new Response(upstream.body, { status: 200, headers });
+  } catch (error) {
+    return jsonResponse({ error: "Unable to generate Cartesia speech.", detail: String(error && error.message || "").slice(0, 180) }, 500, request);
+  }
+}
+
 async function handleDuffelFlightSearch(request, env) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
@@ -513,9 +557,10 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY), councilConfigured: false, duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
+    if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
     }
