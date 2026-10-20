@@ -68,9 +68,11 @@ STYLE AND COST:
 `;
 
 function corsHeaders(request) {
+  const requestOrigin = new URL(request.url).origin;
   const origin = request.headers.get("Origin");
+  // The frontend calls this API on the same site. Do not reflect arbitrary third-party origins.
   return {
-    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Origin": origin === requestOrigin ? requestOrigin : requestOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin"
@@ -136,14 +138,14 @@ async function runLlmCouncil(message, history, language, env) {
   const anonymized = answers.map(a => a.label + ":\\n" + a.text).join("\\n\\n---\\n\\n");
   const reviews = await Promise.allSettled(models.map(model =>
     callOpenRouter(env, model, [
-      { role: "system", content: "You are an impartial reviewer. Review the anonymized answers for correctness, usefulness, missing caveats, and unsupported claims. Rank them best to worst and briefly explain. Do not assume any answer is correct merely because it sounds confident. Respond in " + language + "." },
+      { role: "system", content: "You are an impartial reviewer. Review the anonymized answers for correctness, usefulness, missing caveats, and unsupported claims. Rank them best to worst and briefly explain. Do not assume any answer is correct merely because it sounds confident. Respond in " + (language === "Auto Detect" ? "the same language as the user’s latest message; detect Telugu, Hindi, or English even when written in Latin letters" : language) + "." },
       { role: "user", content: "Question:\\n" + message + "\\n\\nAnonymous answers:\\n" + anonymized }
     ], 300)
   ));
   const reviewText = reviews.map((r, i) => r.status === "fulfilled" ? ("Reviewer " + (i+1) + ":\\n" + r.value) : "").filter(Boolean).join("\\n\\n");
   const final = await callOpenRouter(env, models[0], [
     { role: "system", content: SYSTEM_PROMPT(language) + "\\n\\nYou are the Council Chairman. Synthesize the strongest parts of the candidate answers and peer reviews into one clear answer. Resolve contradictions cautiously, do not invent facts, and state uncertainty where needed. Never mention internal model names." },
-    { role: "user", content: "User question:\\n" + message + "\\n\\nCandidate answers:\\n" + anonymized + "\\n\\nPeer reviews:\\n" + (reviewText || "Peer review unavailable") + "\\n\\nWrite the final answer in " + language + "." }
+    { role: "user", content: "User question:\\n" + message + "\\n\\nCandidate answers:\\n" + anonymized + "\\n\\nPeer reviews:\\n" + (reviewText || "Peer review unavailable") + "\\n\\nWrite the final answer in " + (language === "Auto Detect" ? "the same language as the user’s latest message; detect Telugu, Hindi, or English even when written in Latin letters" : language) + "." }
   ], 650);
   return { reply: final, council: { enabled: true, modelsUsed: answers.length, reviewsReceived: reviews.filter(x => x.status === "fulfilled").length } };
 }
@@ -199,7 +201,7 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !(env.OPENROUTER_API_KEY && String(env.COUNCIL_ENABLED || "").toLowerCase() === "true")) {
+  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !env.OPENROUTER_API_KEY) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
