@@ -574,6 +574,21 @@ section{padding:76px 0}
  #chatQuickPrompts{gap:5px!important;margin:7px 2px!important}
  #chatQuickPrompts button{min-height:28px!important;padding:5px 8px!important;font-size:10px!important}
 }
+
+/* Refined send button shape: soft rounded-square instead of a hard black circle */
+.chatComposer .composerSend{
+ width:34px!important;min-width:34px!important;height:34px!important;
+ border-radius:12px!important;background:#17212d!important;color:#fff!important;
+ box-shadow:0 2px 5px #0002!important;transform:none!important;
+}
+.chatComposer .composerSend:hover{background:#26384a!important}
+.chatComposer .composerSend:active{transform:scale(.96)!important}
+@media(max-width:520px){
+ .chatComposer .composerSend{
+  width:30px!important;min-width:30px!important;height:30px!important;
+  border-radius:10px!important;font-size:14px!important;
+ }
+}
 </style>
 <script type="application/ld+json">
 {
