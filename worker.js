@@ -134,7 +134,8 @@ async function runLlmCouncil(message, history, language, env) {
   ], 650);
   return { reply: final, council: { enabled: true, modelsUsed: answers.length, reviewsReceived: reviews.filter(x => x.status === "fulfilled").length } };
 }
-\nasync function handleChat(request, env) {
+
+async function handleChat(request, env) {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
   }
