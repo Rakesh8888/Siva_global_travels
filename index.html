@@ -856,12 +856,12 @@ body{font-size:16px}
   overflow:visible!important;
 }
 .aiBody .chatComposer #liveVoiceBtn .cloudRefreshIcon{
-  display:block!important;width:23px!important;height:23px!important;overflow:visible!important;
+  display:block!important;width:25px!important;height:25px!important;overflow:visible!important;
   color:#f0d18a!important;flex:none!important;
 }
 .aiBody .chatComposer #liveVoiceBtn .refreshOrbit{
   transform-origin:16px 16px;
-  animation:cloudRefreshSpin 4s linear infinite;
+  animation:cloudRefreshSpin 3s linear infinite;
 }
 .aiBody .chatComposer #liveVoiceBtn.active{
   background:linear-gradient(145deg,#d9a441,#f0d18a)!important;
@@ -936,7 +936,7 @@ body{font-size:16px}
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
       <input id="chatText" placeholder="Reply to LUCKY AI" autocomplete="off" aria-label="Reply to LUCKY AI">
       <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Speak a message" title="Voice input">♩</button>
-      <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="cloudRefreshIcon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path class="cloudShape" d="M8.2 22.1h14.1a5.1 5.1 0 0 0 .2-10.2 7.1 7.1 0 0 0-13.6-1.2 5.7 5.7 0 0 0-.7 11.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g class="refreshOrbit" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.1 10.2A11.7 11.7 0 0 1 25.4 8"/><path d="M25.1 3.9 25.7 8.3 21.3 8.6"/><path d="M25.9 21.8A11.7 11.7 0 0 1 6.6 24"/><path d="M6.9 28.1 6.3 23.7 10.7 23.4"/></g></svg></button>
+      <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="cloudRefreshIcon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path class="refreshOrbit" d="M16 1.7 18.2 11.2 25 4.8 22.1 14 31 12.2 23.5 18.1 31 23.1 21.7 22.5 24.7 31 17 24.5 12.8 32 12.2 22.6 3.6 27 8.9 19.4 0 17.1 9.2 13.8 3 6.5 12.3 10.1Z" fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width=".6"/></svg></button>
       <button type="submit" class="composerSend" aria-label="Send message" title="Send">➤</button>
     </form>
     <p class="voiceNote" id="voiceStatus" aria-live="polite"></p>
