@@ -1170,3 +1170,24 @@ function toggleAI(){$('aiPanel').classList.toggle('open')}$('aiFab').addEventLis
 </script><div class="gtranslate_wrapper"></div>
 <script>window.gtranslateSettings={default_language:"en",languages:["en","te","hi","ta","kn","ml","ur","ar","fr","de","es","pt","ru","zh-CN","ja","ko","id","bn","mr","pa"],wrapper_selector:".gtranslate_wrapper",switcher_horizontal_position:"inline",switcher_vertical_position:"top",float_switcher_open_direction:"bottom",alt_flags:{en:"usa"}};</script><script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 </body></html>
+
+
+/* LUCKY AI header refinement: compact sky-blue globe badge, less wasted space. */
+.aiPanel .aiHeader{gap:10px!important;padding:10px 14px!important;min-height:0!important}
+.aiPanel .aiHeaderTitle{gap:10px!important;flex:1 1 auto!important;min-width:0!important}
+.aiPanel .aiBrandMark{
+  flex:0 0 46px!important;width:46px!important;height:46px!important;
+  border-radius:13px!important;background:#87CEEB!important;color:#123B56!important;
+}
+.aiPanel .aiBrandMark svg{width:29px!important;height:29px!important}
+.aiPanel .aiBrandText{gap:2px!important}
+.aiPanel .aiHeaderTitle strong{font-size:clamp(19px,4.5vw,25px)!important;line-height:1.12!important;color:#f7fafc!important}
+.aiPanel .aiHeaderTitle .aiOnline{font-size:12px!important;line-height:1.2!important;white-space:nowrap!important}
+.aiPanel .aiHeader #aiClose{flex:0 0 30px!important;width:30px!important;height:30px!important;min-width:30px!important;padding:0!important;font-size:26px!important}
+@media(max-width:520px){
+  .aiPanel .aiHeader{padding:9px 11px!important;gap:8px!important}
+  .aiPanel .aiHeaderTitle{gap:8px!important}
+  .aiPanel .aiBrandMark{flex-basis:42px!important;width:42px!important;height:42px!important;border-radius:12px!important}
+  .aiPanel .aiBrandMark svg{width:26px!important;height:26px!important}
+  .aiPanel .aiHeaderTitle strong{font-size:19px!important}
+}
