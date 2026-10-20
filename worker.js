@@ -141,7 +141,7 @@ async function runLlmCouncil(message, history, language, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY) {
+  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !(env.OPENROUTER_API_KEY && String(env.COUNCIL_ENABLED || "").toLowerCase() === "true")) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
