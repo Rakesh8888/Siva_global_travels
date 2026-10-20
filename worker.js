@@ -225,7 +225,7 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !env.OPENROUTER_API_KEY) {
+  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !env.OPENROUTER_API_KEY && !env.GROQ_API_KEY) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
@@ -243,6 +243,39 @@ async function handleChat(request, env) {
       .slice(-6)
       .map(x => ({ role: x.role, content: x.content.slice(-1200) })) : [];
     const systemPrompt = SYSTEM_PROMPT(language);
+    // Explicit Groq mode: do not silently switch providers when the user has turned Groq on.
+    if (String(body?.provider || "").toLowerCase() === "groq") {
+      if (!env.GROQ_API_KEY) {
+        return jsonResponse({ error: "Groq is not configured yet. Add the GROQ_API_KEY secret in Cloudflare Workers, then try again." }, 503, request);
+      }
+      const messages = [
+        { role: "system", content: systemPrompt },
+        ...history.map(x => ({ role: x.role, content: x.content })),
+        { role: "user", content: message }
+      ];
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 22000);
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages, max_tokens: 700, temperature: 0.3 }),
+          signal: controller.signal
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          console.error("LUCKY AI Groq error:", response.status, String(data?.error?.message || "Provider error").slice(0, 180));
+          return jsonResponse({ error: response.status === 401 ? "Groq API key was rejected. Check the GROQ_API_KEY secret." : response.status === 429 ? "Groq rate limit or quota reached. Try again later." : "Groq could not answer this request. Check the Groq API key and model access." }, response.status === 429 ? 429 : 502, request);
+        }
+        const reply = data?.choices?.[0]?.message?.content?.trim();
+        if (!reply) return jsonResponse({ error: "Groq returned an empty answer. Please try again." }, 502, request);
+        return jsonResponse({ reply, language, provider: "groq" }, 200, request);
+      } catch (error) {
+        return jsonResponse({ error: error?.name === "AbortError" ? "Groq timed out. Please try again." : "Could not connect to Groq. Check your internet connection and API status." }, error?.name === "AbortError" ? 504 : 502, request);
+      } finally {
+        clearTimeout(timer);
+      }
+    }
     let reply = "";
     let openRouterProblem = "OpenRouter not attempted";
 
@@ -557,7 +590,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
     if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
