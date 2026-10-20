@@ -175,9 +175,10 @@ async function handleChat(request, env) {
     let reply = "";
     let openRouterProblem = "OpenRouter not attempted";
 
-    // Optional Karpathy-style council. Enable only after adding OPENROUTER_API_KEY
-    // and setting COUNCIL_ENABLED=true in Cloudflare Worker secrets/vars.
-    if (env.OPENROUTER_API_KEY && String(env.COUNCIL_ENABLED || "").toLowerCase() === "true") {
+    // Automatically use the Karpathy-style council whenever the OpenRouter key exists.
+    // COUNCIL_ENABLED=false can explicitly disable it; no extra variable is required.
+    const councilDisabled = String(env.COUNCIL_ENABLED || "").toLowerCase() === "false";
+    if (env.OPENROUTER_API_KEY && !councilDisabled) {
       try {
         const council = await runLlmCouncil(message, history, language, env);
         return jsonResponse(council, 200, request);
