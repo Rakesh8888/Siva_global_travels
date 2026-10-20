@@ -430,7 +430,7 @@ async function handleCartesiaTTS(request, env) {
       const detail = await upstream.text().catch(() => "");
       return jsonResponse({ error: upstream.status === 402 || upstream.status === 429 ? "Cartesia free credits or rate limit may have been reached." : "Cartesia speech generation failed.", providerStatus: upstream.status, providerMessage: detail.slice(0, 300) }, upstream.status === 429 ? 429 : 502, request);
     }
-    const headers = corsHeaders(request);
+    const headers = new Headers(corsHeaders(request));
     headers.set("Content-Type", upstream.headers.get("Content-Type") || "audio/mpeg");
     headers.set("Cache-Control", "no-store");
     return new Response(upstream.body, { status: 200, headers });
