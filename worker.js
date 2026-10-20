@@ -232,10 +232,10 @@ async function handleChat(request, env) {
       }
     }
 
-    // Automatically use the Karpathy-style council whenever the OpenRouter key exists.
-    // COUNCIL_ENABLED=false can explicitly disable it; no extra variable is required.
-    const councilDisabled = String(env.COUNCIL_ENABLED || "").toLowerCase() === "false";
-    if (env.OPENROUTER_API_KEY && !councilDisabled) {
+    // Fast default: use one model for normal chats. Enable the multi-model council only
+    // when COUNCIL_ENABLED=true; it intentionally adds several sequential network calls.
+    const councilEnabled = String(env.COUNCIL_ENABLED || "").toLowerCase() === "true";
+    if (env.OPENROUTER_API_KEY && councilEnabled) {
       try {
         const council = await runLlmCouncil(message, history, language, env);
         return jsonResponse(council, 200, request);
