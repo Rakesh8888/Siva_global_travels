@@ -159,6 +159,8 @@ async function handleChat(request, env) {
       .filter(x => x && (x.role === "user" || x.role === "assistant") && typeof x.content === "string")
       .slice(-6)
       .map(x => ({ role: x.role, content: x.content.slice(-1200) })) : [];
+    const systemPrompt = SYSTEM_PROMPT(language);
+    let reply = "";
 
     // Optional Karpathy-style council. Enable only after adding OPENROUTER_API_KEY
     // and setting COUNCIL_ENABLED=true in Cloudflare Worker secrets/vars.
@@ -192,8 +194,6 @@ async function handleChat(request, env) {
       })),
       { role: "user", parts: [{ text: message }] }
     ];
-    const systemPrompt = SYSTEM_PROMPT(language);
-    let reply = "";
     let geminiProblem = "Gemini unavailable";
 
     // Try Gemini first. If it errors, times out, or returns an empty answer, try OpenAI.
