@@ -1191,3 +1191,22 @@ function toggleAI(){$('aiPanel').classList.toggle('open')}$('aiFab').addEventLis
   .aiPanel .aiBrandMark svg{width:26px!important;height:26px!important}
   .aiPanel .aiHeaderTitle strong{font-size:19px!important}
 }
+
+
+/* LUCKY AI compact header sizing adjustment */
+.aiPanel .aiHeader{padding:7px 10px!important;gap:7px!important;min-height:0!important}
+.aiPanel .aiHeaderTitle{gap:7px!important}
+.aiPanel .aiBrandMark{flex-basis:36px!important;width:36px!important;height:36px!important;border-radius:10px!important}
+.aiPanel .aiBrandMark svg{width:22px!important;height:22px!important}
+.aiPanel .aiHeaderTitle strong{font-size:17px!important;line-height:1.1!important}
+.aiPanel .aiHeaderTitle .aiOnline{font-size:10px!important;line-height:1.15!important}
+.aiPanel .aiHeader #aiClose{flex-basis:26px!important;width:26px!important;height:26px!important;min-width:26px!important;font-size:23px!important}
+@media(max-width:520px){
+ .aiPanel .aiHeader{padding:6px 9px!important;gap:6px!important}
+ .aiPanel .aiHeaderTitle{gap:6px!important}
+ .aiPanel .aiBrandMark{flex-basis:33px!important;width:33px!important;height:33px!important;border-radius:9px!important}
+ .aiPanel .aiBrandMark svg{width:20px!important;height:20px!important}
+ .aiPanel .aiHeaderTitle strong{font-size:16px!important}
+ .aiPanel .aiHeaderTitle .aiOnline{font-size:9px!important}
+ .aiPanel .aiHeader #aiClose{flex-basis:24px!important;width:24px!important;height:24px!important;min-width:24px!important;font-size:21px!important}
+}
