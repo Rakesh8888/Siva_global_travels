@@ -161,6 +161,7 @@ async function handleChat(request, env) {
       .map(x => ({ role: x.role, content: x.content.slice(-1200) })) : [];
     const systemPrompt = SYSTEM_PROMPT(language);
     let reply = "";
+    let openRouterProblem = "OpenRouter not attempted";
 
     // Optional Karpathy-style council. Enable only after adding OPENROUTER_API_KEY
     // and setting COUNCIL_ENABLED=true in Cloudflare Worker secrets/vars.
@@ -169,7 +170,8 @@ async function handleChat(request, env) {
         const council = await runLlmCouncil(message, history, language, env);
         return jsonResponse(council, 200, request);
       } catch (error) {
-        console.error("LUCKY AI Council unavailable; using configured single-model fallback:", String(error?.message || error).slice(0, 160));
+        openRouterProblem = String(error?.message || error).slice(0, 220);
+        console.error("LUCKY AI Council unavailable; using configured single-model fallback:", openRouterProblem);
       }
     }
     // If the full council is disabled or unavailable, try OpenRouter's single-model path
@@ -183,7 +185,8 @@ async function handleChat(request, env) {
           { role: "user", content: message }
         ], 500);
       } catch (error) {
-        console.error("LUCKY AI OpenRouter fallback error:", String(error?.message || error).slice(0, 180));
+        openRouterProblem = String(error?.message || error).slice(0, 220);
+        console.error("LUCKY AI OpenRouter fallback error:", openRouterProblem);
       }
     }
 
@@ -273,7 +276,8 @@ async function handleChat(request, env) {
 
     if (!reply) {
       return jsonResponse({
-        error: "LUCKY AI is temporarily unavailable. Please try again shortly or contact Siva Global Travels."
+        error: "LUCKY AI is temporarily unavailable. Please try again shortly or contact Siva Global Travels.",
+        providerMessage: String(openRouterProblem + "; " + geminiProblem).slice(0, 400)
       }, 502, request);
     }
 
