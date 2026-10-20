@@ -148,6 +148,50 @@ async function runLlmCouncil(message, history, language, env) {
   return { reply: final, council: { enabled: true, modelsUsed: answers.length, reviewsReceived: reviews.filter(x => x.status === "fulfilled").length } };
 }
 
+
+function needsCurrentResearch(message) {
+  return /\\b(latest|today|current|currently|now|recent|news|price|prices|fare|fares|flight status|weather|visa rules|visa requirement|job vacancy|vacancies|available jobs|deadline|official update|exchange rate)\\b/i.test(message)
+    || /ఇప్పటి|ప్రస్తుత|ఈరోజు|తాజా|ధరలు|విమాన ధర|వీసా నియమాలు|ఉద్యోగ ఖాళీ|నేటి వార్తలు/.test(message);
+}
+
+async function answerWithGroundedSearch(message, history, language, env) {
+  if (!env.GEMINI_API_KEY) return null;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 18000);
+  try {
+    const contents = [
+      ...history.map(x => ({ role: x.role === "assistant" ? "model" : "user", parts: [{ text: x.content }] })),
+      { role: "user", parts: [{ text: message }] }
+    ];
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT(language) + "\\n\\nFor current-information questions, use Google Search grounding. State dates clearly, distinguish official sources from other sources, and do not invent a price, vacancy, visa rule, or availability. If search results do not confirm something, say so." }] },
+          contents,
+          tools: [{ google_search: {} }],
+          generationConfig: { maxOutputTokens: 700, temperature: 0.2 }
+        }),
+        signal: controller.signal
+      }
+    );
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data?.error?.message || ("Gemini grounded search HTTP " + response.status));
+    const candidate = data?.candidates?.[0];
+    const reply = candidate?.content?.parts?.map(part => typeof part.text === "string" ? part.text : "").join("").trim();
+    if (!reply) return null;
+    const grounding = candidate?.groundingMetadata;
+    const sources = Array.isArray(grounding?.groundingChunks)
+      ? grounding.groundingChunks.map(chunk => chunk?.web).filter(web => web?.uri && web?.title).slice(0, 5)
+      : [];
+    return { reply, language, research: true, sources };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function handleChat(request, env) {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -175,6 +219,16 @@ async function handleChat(request, env) {
     const systemPrompt = SYSTEM_PROMPT(language);
     let reply = "";
     let openRouterProblem = "OpenRouter not attempted";
+
+    // For questions that depend on changing facts, prefer grounded Google Search results.
+    if (needsCurrentResearch(message) && env.GEMINI_API_KEY) {
+      try {
+        const grounded = await answerWithGroundedSearch(message, history, language, env);
+        if (grounded) return jsonResponse(grounded, 200, request);
+      } catch (error) {
+        console.error("LUCKY AI grounded search unavailable; falling back to configured models:", String(error?.message || error).slice(0, 180));
+      }
+    }
 
     // Automatically use the Karpathy-style council whenever the OpenRouter key exists.
     // COUNCIL_ENABLED=false can explicitly disable it; no extra variable is required.
