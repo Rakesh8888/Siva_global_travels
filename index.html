@@ -705,6 +705,53 @@ body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
  .aiBody .chatComposer{gap:4px!important}
 }
 
+
+/* Screenshot-matched mobile LUCKY AI polish: hide selector in all responsive rules and use a clean pill composer. */
+.aiHeader #chatLanguage,
+#chatLanguage,
+.aiHeader select[aria-label="Choose chat language"]{display:none!important;visibility:hidden!important;width:0!important;min-width:0!important;max-width:0!important;padding:0!important;border:0!important}
+.aiHeader{display:flex!important;justify-content:space-between!important;align-items:center!important;grid-template-columns:none!important}
+.aiHeaderTitle{flex:1 1 auto!important}
+.aiPanel{width:min(440px,calc(100vw - 24px))!important;max-height:calc(100dvh - 110px)!important;border-radius:22px!important}
+.aiBody{padding:12px!important}
+.aiBody .chat{height:clamp(190px,28dvh,280px)!important;min-height:170px!important;border-radius:22px!important}
+.aiBody .chatComposer{
+ display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:7px!important;
+ padding:7px 9px!important;min-height:58px!important;border-radius:999px!important;
+ background:#fff!important;border:1px solid #d9e1e8!important;
+ box-shadow:0 3px 12px rgba(17,40,59,.08)!important;
+}
+.aiBody .chatComposer #chatPlus,
+.aiBody .chatComposer #voiceMsgBtn,
+.aiBody .chatComposer #liveVoiceBtn,
+.aiBody .chatComposer .composerSend{
+ flex:0 0 34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;
+ height:34px!important;min-height:34px!important;max-height:34px!important;
+ padding:0!important;border-radius:50%!important;display:inline-flex!important;
+ align-items:center!important;justify-content:center!important;line-height:1!important;
+}
+.aiBody .chatComposer #chatPlus{background:transparent!important;color:#142d40!important;border:0!important;font-size:25px!important}
+.aiBody .chatComposer #voiceMsgBtn{background:transparent!important;color:#142d40!important;border:0!important;font-size:21px!important}
+.aiBody .chatComposer #liveVoiceBtn{background:#f47e70!important;color:#fff!important;border:0!important}
+.aiBody .chatComposer .composerSend{background:#142d40!important;color:#fff!important;border:0!important;font-size:19px!important}
+.aiBody .chatComposer #chatText{
+ flex:1 1 auto!important;width:0!important;min-width:0!important;height:38px!important;
+ padding:6px 3px!important;border:0!important;outline:none!important;box-shadow:none!important;
+ background:transparent!important;color:#183047!important;font-size:14px!important;
+}
+.aiBody .chatComposer #liveVoiceBtn.active{background:#b42318!important}
+@media(max-width:520px){
+ .aiPanel{width:calc(100vw - 20px)!important;right:10px!important;bottom:calc(env(safe-area-inset-bottom,0px) + 78px)!important;max-height:calc(100dvh - 98px)!important}
+ .aiHeader{min-height:66px!important;padding:13px 15px!important}
+ .aiBody{padding:10px!important}
+ .aiBody .chat{height:clamp(180px,27dvh,260px)!important;min-height:160px!important}
+ .aiBody .chatComposer{gap:4px!important;padding:6px 7px!important;min-height:54px!important}
+ .aiBody .chatComposer #chatPlus,.aiBody .chatComposer #voiceMsgBtn,.aiBody .chatComposer #liveVoiceBtn,.aiBody .chatComposer .composerSend{
+  flex-basis:30px!important;width:30px!important;min-width:30px!important;max-width:30px!important;height:30px!important;min-height:30px!important;max-height:30px!important
+ }
+ .aiBody .chatComposer #chatText{font-size:13px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
