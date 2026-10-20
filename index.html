@@ -919,6 +919,30 @@ body{font-size:16px}
  .aiBody .chatComposer #liveVoiceBtn .cloudRefreshIcon{width:30px!important;height:30px!important}
 }
 
+
+/* Voice message button fix: replace music note with a larger, accessible microphone control. */
+.aiBody .chatComposer #voiceMsgBtn{
+  flex:0 0 50px!important;
+  width:50px!important;min-width:50px!important;max-width:50px!important;
+  height:50px!important;min-height:50px!important;max-height:50px!important;
+  padding:0!important;border-radius:50%!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  background:#fff!important;color:#183047!important;border:1px solid #d7e1e9!important;
+  box-shadow:0 2px 7px #10283b12!important;overflow:visible!important;
+}
+.aiBody .chatComposer #voiceMsgBtn .voiceMessageMicIcon{
+  display:block!important;width:25px!important;height:25px!important;flex:none!important;
+}
+.aiBody .chatComposer #voiceMsgBtn.active{
+  background:#e9a23b!important;color:#172a3a!important;border-color:#e9a23b!important;
+  box-shadow:0 0 0 3px #e9a23b35!important;
+}
+@media(max-width:380px){
+ .aiBody .chatComposer #voiceMsgBtn{
+  flex-basis:46px!important;width:46px!important;min-width:46px!important;max-width:46px!important;
+  height:46px!important;min-height:46px!important;max-height:46px!important;
+ }
+}
 </style>
 <script type="application/ld+json">
 {
@@ -979,7 +1003,7 @@ body{font-size:16px}
     <form class="chatInput chatComposer" id="chatForm">
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
       <input id="chatText" placeholder="Reply to LUCKY AI" autocomplete="off" aria-label="Reply to LUCKY AI">
-      <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Speak a message" title="Voice input">♩</button>
+      <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Record voice message" title="Voice message"><svg class="voiceMessageMicIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="cloudRefreshIcon globeVoiceIcon" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><g class="refreshOrbit" fill="none" stroke="#E47C50" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"><path d="M60 8 L68 39 L91 18 L80 46 L111 39 L88 59 L116 72 L84 72 L99 101 L73 82 L61 114 L53 83 L27 103 L39 76 L7 80 L32 59 L10 37 L42 45 L39 13 L59 38 Z"/></g></svg></button>
       <button type="submit" class="composerSend" aria-label="Send message" title="Send">➤</button>
     </form>
