@@ -623,6 +623,30 @@ body.light .quick button{background:#fff;color:#183047;border-color:#c6d4e0}
 body.light .flightShell,body.light .card,body.light .panel,body.light .detail,body.light .faqItem{box-shadow:0 8px 24px #17324b0b}
 body.light .field input,body.light .field select,body.light .field textarea{background:#fff;color:#183047;border-color:#c4d2df}
 body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
+
+/* Compact four-action LUCKY AI composer: quick actions, voice message, live voice, send. */
+.aiBody .chatInput.chatComposer{display:flex!important;align-items:center!important;gap:5px!important;flex-wrap:nowrap!important}
+.aiBody .chatComposer #chatPlus,
+.aiBody .chatComposer #voiceMsgBtn,
+.aiBody .chatComposer #liveVoiceBtn,
+.aiBody .chatComposer #chatFormSend,
+.aiBody .chatComposer .composerSend{
+  flex:0 0 34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;
+  height:34px!important;min-height:34px!important;max-height:34px!important;
+  padding:0!important;border-radius:9px!important;display:inline-flex!important;
+  align-items:center!important;justify-content:center!important;font-size:14px!important;
+  line-height:1!important;box-sizing:border-box!important;
+}
+.aiBody .chatComposer #chatText{flex:1 1 auto!important;width:0!important;min-width:0!important;height:36px!important;padding:7px 8px!important;font-size:12px!important}
+.aiBody .chatComposer .composerMic,.aiBody .chatComposer .composerLive{background:#176b9a!important;color:#fff!important;border:1px solid #176b9a!important}
+.aiBody .chatComposer .composerSend{background:#e9a23b!important;color:#172a3a!important;border:1px solid #e9a23b!important}
+.aiBody .chatComposer .composerIcon{background:#fff!important;color:#183047!important;border:1px solid #c4d2df!important}
+.aiBody .chatComposer #liveVoiceBtn.active{background:#b42318!important;border-color:#b42318!important;color:#fff!important}
+@media(max-width:380px){
+ .aiBody .chatInput.chatComposer{gap:4px!important}
+ .aiBody .chatComposer #chatPlus,.aiBody .chatComposer #voiceMsgBtn,.aiBody .chatComposer #liveVoiceBtn,.aiBody .chatComposer .composerSend{flex-basis:30px!important;width:30px!important;min-width:30px!important;max-width:30px!important;height:30px!important;min-height:30px!important;max-height:30px!important}
+ .aiBody .chatComposer #chatText{height:32px!important;padding:6px!important}
+}
 </style>
 <script type="application/ld+json">
 {
