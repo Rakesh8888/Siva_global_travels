@@ -549,6 +549,31 @@ section{padding:76px 0}
  .chatComposer .composerSend{width:32px!important;min-width:32px!important;height:32px!important;font-size:16px!important}
  .voiceNote{font-size:10px}
 }
+
+/* Final button sizing pass — compact, aligned and icon-only on mobile */
+.aiHeader button,.aiHeader select{min-height:34px!important;height:34px!important;border-radius:11px!important;font-size:12px!important}
+.aiHeader button{width:34px!important;min-width:34px!important;padding:0!important;display:grid;place-items:center}
+.chatComposer{grid-template-columns:30px minmax(0,1fr) 30px 38px 32px!important;gap:4px!important;min-height:54px!important;padding:5px 7px!important}
+.chatComposer .composerIcon{width:30px!important;min-width:30px!important;height:32px!important;font-size:20px!important}
+.chatComposer #chatPlus{font-size:22px!important}
+.chatComposer #liveVoiceBtn{width:38px!important;min-width:38px!important;height:38px!important}
+.chatComposer .composerSend{width:32px!important;min-width:32px!important;height:32px!important;font-size:15px!important}
+.chatComposer #chatText{font-size:14px!important;line-height:1.35!important}
+#chatQuickPrompts button{min-height:30px!important;padding:6px 9px!important;font-size:11px!important;border-radius:10px!important}
+@media(max-width:520px){
+ .aiHeader{grid-template-columns:minmax(0,1fr) auto 30px!important;gap:6px!important;padding:10px 11px!important}
+ .aiHeaderTitle strong{font-size:14px!important}
+ .aiHeader select{max-width:105px!important;height:32px!important;min-height:32px!important;padding:5px 7px!important;font-size:11px!important}
+ .aiHeader button{width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important}
+ .chatComposer{grid-template-columns:27px minmax(0,1fr) 27px 34px 30px!important;gap:3px!important;min-height:48px!important;padding:4px 6px!important;margin-top:9px!important}
+ .chatComposer .composerIcon{width:27px!important;min-width:27px!important;height:29px!important;font-size:18px!important}
+ .chatComposer #chatPlus{font-size:20px!important}
+ .chatComposer #liveVoiceBtn{width:34px!important;min-width:34px!important;height:34px!important}
+ .chatComposer .composerSend{width:30px!important;min-width:30px!important;height:30px!important;font-size:14px!important}
+ .chatComposer #chatText{font-size:13px!important;padding:6px 0!important}
+ #chatQuickPrompts{gap:5px!important;margin:7px 2px!important}
+ #chatQuickPrompts button{min-height:28px!important;padding:5px 8px!important;font-size:10px!important}
+}
 </style>
 <script type="application/ld+json">
 {
