@@ -279,12 +279,13 @@ async function handleChat(request, env) {
 
     return jsonResponse({ reply, language }, 200, request);
   } catch (error) {
-    console.error("LUCKY AI request error:", error?.name || "Error");
+    console.error("LUCKY AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
     return jsonResponse({
       error: error?.name === "AbortError"
         ? "LUCKY AI timed out. Please try again."
-        : "Could not process your message. Please try again."
-    }, error?.name === "AbortError" ? 504 : 400, request);
+        : "Could not process your message. Please try again.",
+      requestId: crypto.randomUUID()
+    }, error?.name === "AbortError" ? 504 : 500, request);
   }
 }
 
