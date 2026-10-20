@@ -997,6 +997,94 @@ body.light .aiBody .chatComposer .composerSend{
     gap:8px!important;
   }
 }
+
+/* LUCKY AI reference-match composer and header: navy, gold globe, orange live waveform, green upward send arrow. */
+.aiPanel .aiHeader{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:14px!important;padding:18px 20px!important;background:#102b3e!important;
+  border-bottom:3px solid #dda83f!important;min-height:112px!important;
+}
+.aiPanel .aiHeaderTitle{
+  display:flex!important;align-items:center!important;gap:18px!important;min-width:0!important;flex:1 1 auto!important;
+}
+.aiPanel .aiBrandMark{
+  display:grid!important;place-items:center!important;flex:0 0 72px!important;width:72px!important;height:72px!important;
+  border-radius:22px!important;background:#dda83f!important;color:#102b3e!important;
+}
+.aiPanel .aiBrandMark svg{display:block;width:42px!important;height:42px!important}
+.aiPanel .aiBrandText{display:flex!important;flex-direction:column!important;gap:3px!important;min-width:0!important}
+.aiPanel .aiHeaderTitle strong{font-size:clamp(22px,5vw,34px)!important;line-height:1.12!important;letter-spacing:.005em!important;color:#f7fafc!important}
+.aiPanel .aiHeaderTitle .aiOnline{font-size:clamp(13px,3.3vw,20px)!important;line-height:1.35!important;color:#bcebdc!important;white-space:normal!important}
+.aiPanel .aiHeaderTitle .aiOnline i{background:#a9ead6!important}
+.aiPanel .aiHeader #aiClose{
+  flex:0 0 42px!important;width:42px!important;height:42px!important;min-width:42px!important;
+  border:0!important;border-radius:50%!important;background:transparent!important;color:#fff!important;
+  font-size:36px!important;line-height:1!important;padding:0!important;
+}
+.aiPanel .aiBody{background:#f4f8fc!important;padding:18px!important}
+.aiPanel .chat{background:#e5eef5!important;color:#132c3e!important;border:0!important;border-radius:24px!important}
+.aiPanel .msg.bot{background:#e2edf4!important;color:#132c3e!important;border-radius:24px!important}
+.aiPanel .chatComposer{
+  display:grid!important;grid-template-columns:36px minmax(70px,1fr) 38px 46px 38px!important;
+  align-items:center!important;column-gap:clamp(8px,2.2vw,18px)!important;row-gap:0!important;
+  width:100%!important;min-width:0!important;min-height:78px!important;margin-top:16px!important;
+  padding:8px 15px!important;border:2px solid #d9e1e8!important;border-radius:999px!important;
+  background:#fff!important;box-shadow:0 2px 7px #102b3e0d!important;
+}
+.aiPanel .chatComposer #chatPlus{grid-column:1!important;grid-row:1!important}
+.aiPanel .chatComposer #chatText{
+  grid-column:2!important;grid-row:1!important;width:100%!important;min-width:0!important;
+  height:auto!important;padding:8px 0!important;border:0!important;outline:0!important;
+  background:transparent!important;color:#152e40!important;font-size:clamp(14px,3.7vw,21px)!important;
+}
+.aiPanel .chatComposer #chatText::placeholder{color:#7b8796!important;opacity:1!important}
+.aiPanel .chatComposer .composerIcon{
+  display:grid!important;place-items:center!important;width:38px!important;min-width:38px!important;
+  height:42px!important;padding:0!important;background:transparent!important;border:0!important;
+  color:#142d40!important;border-radius:50%!important;
+}
+.aiPanel .chatComposer #voiceMsgBtn{grid-column:3!important;grid-row:1!important;color:#142d40!important}
+.aiPanel .chatComposer #voiceMsgBtn svg{width:34px!important;height:34px!important;display:block!important}
+.aiPanel .chatComposer #liveVoiceBtn{
+  grid-column:4!important;grid-row:1!important;display:grid!important;place-items:center!important;
+  width:46px!important;min-width:46px!important;height:46px!important;min-height:46px!important;
+  padding:0!important;border:0!important;border-radius:50%!important;background:transparent!important;
+  color:#e47c50!important;box-shadow:none!important;overflow:visible!important;
+}
+.aiPanel .chatComposer #liveVoiceBtn .voiceWaveIcon{display:block!important;width:42px!important;height:42px!important}
+.aiPanel .chatComposer #liveVoiceBtn.active{background:#fff2e9!important;color:#d96536!important;box-shadow:0 0 0 2px #e47c5055!important}
+.aiPanel .chatComposer .composerSend{
+  grid-column:5!important;grid-row:1!important;display:grid!important;place-items:center!important;
+  width:38px!important;min-width:38px!important;height:42px!important;min-height:42px!important;
+  padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;
+  color:#28b765!important;box-shadow:none!important;font-size:0!important;
+}
+.aiPanel .chatComposer .composerSend svg{display:block!important;width:42px!important;height:42px!important}
+.aiPanel .chatComposer .composerSend:hover,.aiPanel .chatComposer .composerSend:focus-visible{
+  background:transparent!important;color:#15994b!important;box-shadow:none!important;
+}
+.aiPanel .voiceNote{color:#607584!important;text-align:center!important;font-size:12px!important}
+@media(max-width:520px){
+ .aiPanel .aiHeader{padding:14px 15px!important;gap:8px!important;min-height:96px!important}
+ .aiPanel .aiHeaderTitle{gap:12px!important}
+ .aiPanel .aiBrandMark{flex-basis:58px!important;width:58px!important;height:58px!important;border-radius:17px!important}
+ .aiPanel .aiBrandMark svg{width:35px!important;height:35px!important}
+ .aiPanel .aiHeaderTitle strong{font-size:clamp(20px,5.4vw,27px)!important}
+ .aiPanel .aiHeaderTitle .aiOnline{font-size:clamp(11px,3vw,15px)!important}
+ .aiPanel .aiHeader #aiClose{flex-basis:34px!important;width:34px!important;height:34px!important;min-width:34px!important;font-size:30px!important}
+ .aiPanel .aiBody{padding:12px!important}
+ .aiPanel .chatComposer{
+   grid-template-columns:30px minmax(0,1fr) 32px 38px 32px!important;
+   column-gap:clamp(5px,1.7vw,10px)!important;min-height:64px!important;padding:6px 10px!important;
+ }
+ .aiPanel .chatComposer .composerIcon{width:32px!important;min-width:32px!important;height:36px!important}
+ .aiPanel .chatComposer #voiceMsgBtn svg{width:30px!important;height:30px!important}
+ .aiPanel .chatComposer #liveVoiceBtn{width:38px!important;min-width:38px!important;height:40px!important;min-height:40px!important}
+ .aiPanel .chatComposer #liveVoiceBtn .voiceWaveIcon{width:36px!important;height:36px!important}
+ .aiPanel .chatComposer .composerSend{width:32px!important;min-width:32px!important;height:36px!important;min-height:36px!important}
+ .aiPanel .chatComposer .composerSend svg{width:36px!important;height:36px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
@@ -1042,7 +1130,7 @@ body.light .aiBody .chatComposer .composerSend{
 <button class="aiFab" id="aiFab" aria-label="Open LUCKY AI">AI</button>
 <div class="aiPanel" id="aiPanel">
     <div class="aiHeader">
-    <div class="aiHeaderTitle"><strong>LUCKY AI</strong><span class="aiOnline"><i></i> Online</span></div>
+    <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>LUCKY AI</strong><span class="aiOnline"><i></i> Online · Siva Global Travels</span></span></div>
     <input type="hidden" id="chatLanguage" value="auto" aria-hidden="true">
     <button id="aiClose" aria-label="Close assistant">×</button>
   </div>
@@ -1058,8 +1146,8 @@ body.light .aiBody .chatComposer .composerSend{
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
       <input id="chatText" placeholder="Reply to LUCKY AI" autocomplete="off" aria-label="Reply to LUCKY AI">
       <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Record voice message" title="Voice message"><svg class="voiceMessageMicIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-      <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="cloudRefreshIcon globeVoiceIcon" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><g class="refreshOrbit" fill="none" stroke="#E47C50" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"><path d="M60 8 L68 39 L91 18 L80 46 L111 39 L88 59 L116 72 L84 72 L99 101 L73 82 L61 114 L53 83 L27 103 L39 76 L7 80 L32 59 L10 37 L42 45 L39 13 L59 38 Z"/></g></svg></button>
-      <button type="submit" class="composerSend" aria-label="Send message" title="Send">➤</button>
+      <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="voiceWaveIcon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 20v8M11 13v22M18 7v34M25 15v18M32 11v26M39 19v10M45 22v4" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></button>
+      <button type="submit" class="composerSend" aria-label="Send message" title="Send"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4M5.5 10.5 12 4l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </form>
     <p class="voiceNote" id="voiceStatus" aria-live="polite"></p>
   </div>
