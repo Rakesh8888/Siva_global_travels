@@ -232,10 +232,11 @@ async function handleChat(request, env) {
       }
     }
 
-    // Automatically use the Karpathy-style council whenever the OpenRouter key exists.
-    // COUNCIL_ENABLED=false can explicitly disable it; no extra variable is required.
-    const councilDisabled = String(env.COUNCIL_ENABLED || "").toLowerCase() === "false";
-    if (env.OPENROUTER_API_KEY && !councilDisabled) {
+    // Fast chat mode: bypass the multi-model Tree/LLM Council for interactive replies.
+    // Council runs multiple model and review calls, which makes the website chat noticeably slower.
+    // Keep the council helper available for future explicit API use, but never invoke it from /api/chat.
+    const councilEnabled = false;
+    if (env.OPENROUTER_API_KEY && councilEnabled) {
       try {
         const council = await runLlmCouncil(message, history, language, env);
         return jsonResponse(council, 200, request);
@@ -488,7 +489,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY), councilConfigured: Boolean(env.OPENROUTER_API_KEY) && String(env.COUNCIL_ENABLED || "true").toLowerCase() !== "false", duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY), councilConfigured: false, duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
     if (url.pathname === "/api/chat") {
