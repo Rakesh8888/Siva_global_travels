@@ -889,6 +889,32 @@ body{font-size:16px}
  .aiBody .chatComposer #liveVoiceBtn .refreshOrbit{animation:none!important}
 }
 
+
+/* Final exact live-voice icon styling: orange rotating burst, no button background. */
+.aiBody .chatComposer #liveVoiceBtn,
+.aiBody .chatComposer #liveVoiceBtn:hover,
+.aiBody .chatComposer #liveVoiceBtn.active{
+  background:transparent!important;
+  background-color:transparent!important;
+  color:#e47c50!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+}
+.aiBody .chatComposer #liveVoiceBtn .cloudRefreshIcon{
+  display:block!important;
+  width:32px!important;height:32px!important;
+  color:#e47c50!important;
+  overflow:visible!important;
+}
+.aiBody .chatComposer #liveVoiceBtn .refreshOrbit{
+  transform-origin:60px 60px;
+  animation:cloudRefreshSpin 2.8s linear infinite;
+}
+@media(max-width:520px){
+ .aiBody .chatComposer #liveVoiceBtn .cloudRefreshIcon{width:30px!important;height:30px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
