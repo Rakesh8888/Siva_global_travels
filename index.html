@@ -978,6 +978,25 @@ body.light .aiBody .chatComposer .composerSend{
 /* Slightly enlarge the LUCKY AI header title for better mobile readability. */
 .aiHeaderTitle strong{font-size:20px!important;letter-spacing:.045em!important}
 @media(max-width:380px){.aiHeaderTitle strong{font-size:19px!important}}
+
+/* Final spacing fix: keep the voice message, live voice, and send controls evenly separated. */
+.aiBody .chatComposer{
+  column-gap:8px!important;
+  gap:8px!important;
+}
+.aiBody .chatComposer #voiceMsgBtn,
+.aiBody .chatComposer #liveVoiceBtn,
+.aiBody .chatComposer .composerSend{
+  margin:0!important;
+  align-self:center!important;
+  vertical-align:middle!important;
+}
+@media(max-width:520px){
+  .aiBody .chatComposer{
+    column-gap:8px!important;
+    gap:8px!important;
+  }
+}
 </style>
 <script type="application/ld+json">
 {
