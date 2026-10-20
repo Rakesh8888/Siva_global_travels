@@ -225,7 +225,7 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.OPENAI_API_KEY && !env.OPENROUTER_API_KEY && !env.GROQ_API_KEY) {
+  if (!env.GEMINI_API_KEY && !env.GROQ_API_KEY) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
@@ -277,7 +277,6 @@ async function handleChat(request, env) {
       }
     }
     let reply = "";
-    let openRouterProblem = "OpenRouter not attempted";
 
     // For questions that depend on changing facts, prefer grounded Google Search results.
     if (needsCurrentResearch(message) && env.GEMINI_API_KEY) {
@@ -285,7 +284,7 @@ async function handleChat(request, env) {
         const grounded = await answerWithGroundedSearch(message, history, language, env);
         if (grounded) return jsonResponse(grounded, 200, request);
       } catch (error) {
-        console.error("LUCKY AI grounded search unavailable; falling back to configured models:", String(error?.message || error).slice(0, 180));
+        console.error("LUCKY AI grounded search unavailable; continuing with the configured Gemini free-tier request only:", String(error?.message || error).slice(0, 180));
       }
     }
 
@@ -302,29 +301,8 @@ async function handleChat(request, env) {
         console.error("LUCKY AI Council unavailable; using configured single-model fallback:", openRouterProblem);
       }
     }
-    // If the full council is disabled or unavailable, try OpenRouter's single-model path
-    // before the existing Gemini/OpenAI providers. This also makes provider failures easier to recover from.
-    if (!reply && env.OPENROUTER_API_KEY) {
-      const fallbackModels = [
-        "openai/gpt-4o-mini",
-        "google/gemini-2.5-flash",
-        "deepseek/deepseek-chat"
-      ];
-      for (const fallbackModel of fallbackModels) {
-        try {
-          reply = await callOpenRouter(env, fallbackModel, [
-            { role: "system", content: systemPrompt },
-            ...history.map(x => ({ role: x.role, content: x.content })),
-            { role: "user", content: message }
-          ], 500);
-          if (reply) break;
-        } catch (error) {
-          openRouterProblem = String(error?.message || error).slice(0, 220);
-          console.error("LUCKY AI OpenRouter fallback error (" + fallbackModel + "):", openRouterProblem);
-        }
-      }
-    }
-
+    // FREE-ONLY SAFETY: never call OpenRouter or other potentially paid providers from the default chat path.
+    // If Gemini free quota is exhausted, return an error instead of switching to a paid provider.
     const geminiContents = [
       ...history.map(x => ({
         role: x.role === "assistant" ? "model" : "user",
@@ -333,6 +311,7 @@ async function handleChat(request, env) {
       { role: "user", parts: [{ text: message }] }
     ];
     let geminiProblem = "Gemini unavailable";
+    let geminiQuotaReached = false;
 
     // Try Gemini first. If it errors, times out, or returns an empty answer, try OpenAI.
     if (env.GEMINI_API_KEY) {
@@ -363,6 +342,7 @@ async function handleChat(request, env) {
           if (!reply) geminiProblem = "Gemini returned an empty answer";
         } else {
           geminiProblem = data?.error?.message || ("Gemini HTTP " + response.status);
+          geminiQuotaReached = response.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
           console.error("LUCKY AI Gemini error:", response.status, geminiProblem.slice(0, 180));
         }
       } catch (error) {
@@ -373,47 +353,15 @@ async function handleChat(request, env) {
       }
     }
 
-    if (!reply && env.OPENAI_API_KEY) {
-      const messages = [
-        { role: "system", content: systemPrompt },
-        ...history.map(x => ({ role: x.role, content: x.content })),
-        { role: "user", content: message }
-      ];
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 18000);
-      try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + env.OPENAI_API_KEY
-          },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages,
-            max_tokens: 500,
-            temperature: 0.3
-          }),
-          signal: controller.signal
-        });
-        const data = await response.json().catch(() => ({}));
-        if (response.ok) {
-          reply = data?.choices?.[0]?.message?.content?.trim() || "";
-        } else {
-          console.error("LUCKY AI OpenAI fallback error:", response.status, data?.error?.message || "Unknown provider error");
-        }
-      } catch (error) {
-        console.error("LUCKY AI OpenAI fallback failed:", error?.name || "Network error");
-      } finally {
-        clearTimeout(timer);
-      }
-    }
+    // FREE-ONLY SAFETY: intentionally do not fall back to OpenAI when Gemini fails.
 
     if (!reply) {
       return jsonResponse({
-        error: "LUCKY AI is temporarily unavailable. Please try again shortly or contact Siva Global Travels.",
-        providerMessage: String(openRouterProblem + "; " + geminiProblem).slice(0, 400)
-      }, 502, request);
+        error: geminiQuotaReached
+          ? "Gemini free-tier limit may have been reached. No paid-provider fallback was used. Please wait for quota reset or choose Groq manually if it is configured."
+          : "LUCKY AI is temporarily unavailable. No paid-provider fallback was used. Please try again later.",
+        providerMessage: String(geminiProblem).slice(0, 400)
+      }, geminiQuotaReached ? 429 : 502, request);
     }
 
     return jsonResponse({ reply, language }, 200, request);
