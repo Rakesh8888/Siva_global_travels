@@ -485,6 +485,27 @@ section{padding:76px 0}
  .aiPanel{max-width:calc(100vw - 20px)}
 }
 
+
+/* Final mobile readability fixes; preserve the existing LUCKY AI design */
+@media(max-width:600px){
+  .nav{position:relative!important;top:auto!important}
+  .hero{padding-top:48px!important}
+  .hero h1{overflow-wrap:anywhere;word-break:normal}
+  .aiPanel{display:none;position:fixed!important;inset:auto 8px max(84px,calc(env(safe-area-inset-bottom) + 76px)) 8px!important;width:auto!important;max-width:none!important;max-height:calc(100dvh - 170px)!important;overflow:hidden!important}
+  .aiPanel.open{display:flex!important;flex-direction:column!important}
+  .aiHeader{flex:0 0 auto}
+  .aiBody{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;padding:10px!important}
+  .chat{height:auto!important;min-height:120px!important;max-height:none!important;flex:1 1 auto!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+  .msg{font-size:14px!important;line-height:1.65!important;overflow-wrap:anywhere;word-break:normal}
+  .voiceControls,.chatInput{flex:0 0 auto}
+}
+@media(min-width:601px){
+  .aiPanel.open{display:flex!important;flex-direction:column!important}
+  .aiBody{display:flex!important;flex-direction:column!important;min-height:0!important}
+  .chat{min-height:200px;overflow-y:auto!important}
+  .msg{font-size:14px;line-height:1.65;overflow-wrap:anywhere}
+}
+
 </style>
 <script type="application/ld+json">
 {
