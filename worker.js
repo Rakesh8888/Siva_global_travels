@@ -25,26 +25,27 @@ function normalizeLanguage(message, requestedLanguage) {
     "mr":"Marathi","marathi":"Marathi","mr-in":"Marathi",
     "pa":"Punjabi","punjabi":"Punjabi","pa-in":"Punjabi"
   };
-  // Respect the language explicitly selected in the LUCKY AI dropdown.
-  // This is important for English questions when the user wants a French,
-  // Hindi, Arabic, or other selected-language answer.
-  if (languageAliases[requested]) return languageAliases[requested];
   const scriptRules = [
-    [/[\u0C00-\u0C7F]/, "Telugu"], [/[\u0900-\u097F]/, "Hindi"],
-    [/[\u0B80-\u0BFF]/, "Tamil"], [/[\u0C80-\u0CFF]/, "Kannada"],
-    [/[\u0D00-\u0D7F]/, "Malayalam"], [/[\u0980-\u09FF]/, "Bengali"],
-    [/[\u0A00-\u0A7F]/, "Punjabi"], [/[\u0600-\u06FF]/, "Arabic"],
-    [/[\u4E00-\u9FFF]/, "Chinese (Simplified)"], [/[\u3040-\u30FF]/, "Japanese"],
-    [/[\uAC00-\uD7AF]/, "Korean"]
+    [/[ఀ-౿]/, "Telugu"], [/[ऀ-ॿ]/, "Hindi"],
+    [/[஀-௿]/, "Tamil"], [/[ಀ-೿]/, "Kannada"],
+    [/[ഀ-ൿ]/, "Malayalam"], [/[ঀ-৿]/, "Bengali"],
+    [/[਀-੿]/, "Punjabi"], [/[؀-ۿ]/, "Arabic"],
+    [/[一-鿿]/, "Chinese (Simplified)"], [/[぀-ヿ]/, "Japanese"],
+    [/[가-힯]/, "Korean"]
   ];
+  if (requested === "auto" || requested === "auto detect" || requested === "") {
+    for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
+    return "Auto Detect";
+  }
+  if (languageAliases[requested]) return languageAliases[requested];
   for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
   return "English";
 }
 const SYSTEM_PROMPT = (language) => `You are LUCKY AI, the virtual customer-enquiry assistant for Siva Global Travels.
 
 LANGUAGE:
-- Reply in ${language} only, using its normal writing system. Telugu means natural Telugu script, not transliterated Telugu.
-- Follow the language of the user's latest message. If it is Telugu, answer in Telugu; if English, answer in English. If mixed, use the dominant language. Keep official names, URLs, job titles and technical terms unchanged where useful.
+- Reply in ${language === "Auto Detect" ? "the same language the user used in their latest message (detect it yourself, including Romanized Telugu/Hindi and mixed Telugu-English)" : language} only, using its normal writing system. Telugu means natural Telugu script, not transliterated Telugu.
+- Always identify the language of the latest user message yourself. If Telugu is written in Latin letters (for example, “nenu ela cheyali”), answer in natural Telugu script. If Hindi is written in Latin letters, answer in Hindi script. If mixed, use the dominant language. Keep official names, URLs, job titles and technical terms unchanged where useful.
 - Do not begin in one language and switch to another unless the user asks.
 
 ROLE:
