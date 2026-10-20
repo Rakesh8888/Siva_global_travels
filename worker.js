@@ -170,6 +170,21 @@ async function handleChat(request, env) {
         console.error("LUCKY AI Council unavailable; using configured single-model fallback:", String(error?.message || error).slice(0, 160));
       }
     }
+    // If the full council is disabled or unavailable, try OpenRouter's single-model path
+    // before the existing Gemini/OpenAI providers. This also makes provider failures easier to recover from.
+    if (!reply && env.OPENROUTER_API_KEY) {
+      try {
+        const fallbackModel = String(env.COUNCIL_MODELS || "openai/gpt-4o-mini").split(",").map(x => x.trim()).filter(Boolean)[0] || "openai/gpt-4o-mini";
+        reply = await callOpenRouter(env, fallbackModel, [
+          { role: "system", content: systemPrompt },
+          ...history.map(x => ({ role: x.role, content: x.content })),
+          { role: "user", content: message }
+        ], 500);
+      } catch (error) {
+        console.error("LUCKY AI OpenRouter fallback error:", String(error?.message || error).slice(0, 180));
+      }
+    }
+
     const geminiContents = [
       ...history.map(x => ({
         role: x.role === "assistant" ? "model" : "user",
