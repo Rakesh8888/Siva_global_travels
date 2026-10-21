@@ -1196,6 +1196,84 @@ body.light .aiBody .chatComposer .composerSend{
  .aiPanel .chatComposer #chatText{font-size:16px!important}
  .aiPanel #cartesiaModeBtn,.aiPanel #groqModeBtn{width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important}
 }
+
+/* Lucky AI compact layout adjustment: preserve the existing color theme and behavior. */
+.aiHeader{
+  min-height:0!important;
+  padding:8px 10px!important;
+  gap:7px!important;
+}
+.aiHeaderTitle{gap:1px!important}
+.aiHeaderTitle strong{font-size:13px!important;line-height:1.2!important}
+.aiOnline{font-size:10px!important;line-height:1.2!important}
+.aiHeader #chatLanguage{
+  height:30px!important;
+  min-height:30px!important;
+  width:70px!important;
+  min-width:70px!important;
+  max-width:70px!important;
+  padding:2px 4px!important;
+  font-size:11px!important;
+  border-radius:50px!important;
+  align-self:center!important;
+}
+.aiHeader #aiClose{font-size:20px!important;padding:0 3px!important}
+.aiBody{padding:8px!important}
+.aiBody .chatTopTools{margin:0 0 5px!important}
+.aiBody .voiceControls{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin:5px 0!important;
+}
+.aiBody .voiceBtn{
+  flex:0 1 40px!important;
+  width:40px!important;
+  min-width:40px!important;
+  max-width:40px!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:0!important;
+  border-radius:50%!important;
+  font-size:10px!important;
+  line-height:1!important;
+}
+.aiBody .chatInput{align-items:center!important;gap:6px!important}
+.aiBody .chatInput input{
+  height:36px!important;
+  min-height:36px!important;
+  padding:6px 9px!important;
+  font-size:13px!important;
+  border-radius:9px!important;
+}
+.aiBody .chatInput button{
+  height:36px!important;
+  min-height:36px!important;
+  width:52px!important;
+  min-width:52px!important;
+  max-width:52px!important;
+  padding:0 5px!important;
+  font-size:11px!important;
+  border-radius:9px!important;
+}
+.aiBody .chat{
+  height:clamp(150px,24vh,230px)!important;
+  min-height:120px!important;
+  max-height:25vh!important;
+}
+.aiBody .msg{font-size:14px!important;line-height:1.5!important}
+.aiBody .voiceNote{font-size:10px!important;margin:3px 0 0!important}
+@media(max-width:380px){
+  .aiHeader{padding:7px 8px!important;gap:4px!important}
+  .aiHeaderTitle strong{font-size:12px!important}
+  .aiHeader #chatLanguage{width:62px!important;min-width:62px!important;max-width:62px!important}
+  .aiBody .voiceControls{gap:5px!important}
+  .aiBody .voiceBtn{flex-basis:36px!important;width:36px!important;min-width:36px!important;max-width:36px!important}
+  .aiBody .chatInput input{font-size:12px!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
