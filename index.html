@@ -1274,6 +1274,10 @@ body.light .aiBody .chatComposer .composerSend{
   .aiBody .chatInput input{font-size:12px!important}
 }
 
+
+/* Lucky AI conversation area height only: show more customer messages and answers. */
+.aiBody .chat{height:clamp(240px,42vh,360px)!important;min-height:220px!important;max-height:42vh!important}
+@media(max-width:520px){.aiBody .chat{height:clamp(220px,38vh,320px)!important;min-height:200px!important;max-height:38vh!important}}
 </style>
 <script type="application/ld+json">
 {
