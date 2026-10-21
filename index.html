@@ -1173,6 +1173,29 @@ body.light .aiBody .chatComposer .composerSend{
 .legalFooterLinks a{font-size:12px;text-decoration:underline;text-underline-offset:3px;opacity:.9}
 @media(max-width:600px){.legalPolicies{padding:30px 0 40px}.legalCard{padding:13px}.legalCopy{font-size:13px}}
 
+
+/* LUCKY AI compact controls and more readable chat text */
+.aiPanel .chat{font-size:15px!important;line-height:1.6!important}
+.aiPanel .msg{font-size:15px!important;line-height:1.6!important;padding:10px 12px!important}
+.aiPanel .chatComposer{min-height:60px!important;padding:5px 10px!important;margin-top:10px!important}
+.aiPanel .chatComposer #chatText{font-size:16px!important;line-height:1.4!important}
+.aiPanel .chatComposer #chatText::placeholder{font-size:14px!important}
+.aiPanel #cartesiaModeBtn,.aiPanel #groqModeBtn{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:38px!important;min-width:38px!important;height:38px!important;min-height:38px!important;
+ margin:7px 4px 0!important;padding:0!important;border-radius:50%!important;
+ font-size:0!important;line-height:1!important;vertical-align:middle!important;
+}
+.aiPanel #cartesiaModeBtn::after{content:"C";font-size:15px!important;font-weight:800!important}
+.aiPanel #groqModeBtn::after{content:"G";font-size:15px!important;font-weight:800!important}
+.aiPanel .voiceNote{font-size:12px!important;line-height:1.5!important;margin:6px 0!important}
+@media(max-width:520px){
+ .aiPanel .chat{font-size:15px!important}
+ .aiPanel .msg{font-size:15px!important;padding:9px 11px!important}
+ .aiPanel .chatComposer{min-height:54px!important;padding:4px 8px!important;margin-top:8px!important}
+ .aiPanel .chatComposer #chatText{font-size:16px!important}
+ .aiPanel #cartesiaModeBtn,.aiPanel #groqModeBtn{width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important}
+}
 </style>
 <script type="application/ld+json">
 {
