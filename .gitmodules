@@ -1,0 +1,3 @@
+[submodule "tools/replica-skill"]
+	path = tools/replica-skill
+	url = https://github.com/Jakeschincariol/replica-skill.git
