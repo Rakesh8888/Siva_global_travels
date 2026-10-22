@@ -1297,7 +1297,34 @@ body.light .aiBody .chatComposer .composerSend{
     {"@type":"Question","name":"Can I ask questions in Telugu?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can send your enquiry in Telugu or English. Include the details relevant to your travel or job question so the team can guide you."}}
   ]
 }
-</script></head>
+</script>
+<style id="siva-3d-enhancement">
+/* Subtle 3D motion enhancement, preserving the existing Siva Global Travels layout. */
+@media (prefers-reduced-motion: no-preference) {
+  .heroVisual .orbit { animation: siva-orbit-float 7s ease-in-out infinite; transform-style: preserve-3d; }
+  .heroVisual .plane { animation: siva-plane-float 5s ease-in-out infinite; }
+  #services .card, .grid .card, .flightShell, .panel, .detail {
+    transform-style: preserve-3d;
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  }
+  #services .card:hover, .grid .card:hover {
+    transform: perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(-5px);
+    box-shadow: 0 18px 38px #0003;
+  }
+  .btn:hover { transform: perspective(700px) translateY(-2px) rotateX(2deg); }
+  .hero .floatcard { animation: siva-card-float 6s ease-in-out infinite; }
+  .hero .fc2 { animation-delay: -2.5s; }
+}
+@keyframes siva-orbit-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes siva-plane-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+@keyframes siva-card-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+@media (prefers-reduced-motion: reduce) {
+  .heroVisual .orbit, .heroVisual .plane, .hero .floatcard { animation: none !important; }
+  #services .card, .grid .card, .btn { transition: none !important; }
+}
+</style>
+
+</head>
 <body class="light">
 <div class="topbar"><div class="wrap"><span>✈ Travel • Visa • Overseas Careers • Cruise Jobs</span><span>📍 Badvel, Andhra Pradesh, India</span></div></div>
 <header class="nav"><div class="wrap navin"><a class="brand" href="#home"><span class="brandmark">SG</span><span><strong>SIVA GLOBAL<br>TRAVELS</strong></span></a><nav class="navlinks" id="navLinks"><a href="#flights">Flights</a><a href="#services">Services</a><a href="#careers">Careers</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><div class="navtools"><button class="mini" id="themeBtn" aria-label="Toggle light mode">☼</button><button class="menuBtn" id="menuBtn">☰ Menu</button></div></div></header>
