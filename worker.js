@@ -240,9 +240,9 @@ async function handleChat(request, env) {
     const language = normalizeLanguage(message, body?.language);
     const history = Array.isArray(body?.history) ? body.history
       .filter(x => x && (x.role === "user" || x.role === "assistant") && typeof x.content === "string")
-      .slice(-6)
-      .map(x => ({ role: x.role, content: x.content.slice(-1200) })) : [];
-    const systemPrompt = SYSTEM_PROMPT(language);
+      .slice(-4)
+      .map(x => ({ role: x.role, content: x.content.slice(-900) })) : [];
+    const systemPrompt = SYSTEM_PROMPT(language) + (body?.spoken === true ? "\n\nVOICE RESPONSE SPEED: This is a spoken conversation. Answer immediately and briefly in 1–3 short sentences, usually under 45 words. Put the direct answer first. Avoid long lists, headings, markdown symbols, and unnecessary introductions. Ask at most one short follow-up question." : "");
     // Explicit Groq mode: do not silently switch providers when the user has turned Groq on.
     if (String(body?.provider || "").toLowerCase() === "groq") {
       if (!env.GROQ_API_KEY) {
@@ -259,7 +259,7 @@ async function handleChat(request, env) {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
           headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
-          body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages, max_tokens: 700, temperature: 0.3 }),
+          body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages, max_tokens: body?.spoken === true ? 300 : 700, temperature: 0.3 }),
           signal: controller.signal
         });
         const data = await response.json().catch(() => ({}));
@@ -329,7 +329,7 @@ async function handleChat(request, env) {
             body: JSON.stringify({
               systemInstruction: { parts: [{ text: systemPrompt }] },
               contents: geminiContents,
-              generationConfig: { maxOutputTokens: 500, temperature: 0.3 }
+              generationConfig: { maxOutputTokens: body?.spoken === true ? 280 : 500, temperature: 0.3 }
             }),
             signal: controller.signal
           }
