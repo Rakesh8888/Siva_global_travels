@@ -643,7 +643,8 @@ export default {
       return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
-    if (url.pathname === "/api/chat-file") return handleChatFile(request, env);\n    if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
+    if (url.pathname === "/api/chat-file") return handleChatFile(request, env);
+    if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
     }
