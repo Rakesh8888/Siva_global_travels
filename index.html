@@ -1554,12 +1554,6 @@ body { overflow-wrap: anywhere; }
   </div>
   <div class="aiBody">
     <div class="chat" id="chat" aria-live="polite"><div class="msg bot">Hi! I’m LUCKY AI. How can I help you?</div></div>
-    <div class="quick" id="chatQuickPrompts" hidden>
-      <button type="button" data-q="Help me book a flight">✈️ Flight booking</button>
-      <button type="button" data-q="Help me with a visa">🛂 Visa assistance</button>
-      <button type="button" data-q="Show me tour package options">🌍 Tour packages</button>
-      <button type="button" data-q="Help me find overseas jobs">💼 Overseas jobs</button>
-    </div>
     <form class="chatInput chatComposer" id="chatForm">
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
       <input id="chatText" placeholder="Reply to LUCKY AI" autocomplete="off" aria-label="Reply to LUCKY AI">
@@ -1567,7 +1561,9 @@ body { overflow-wrap: anywhere; }
       <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="voiceWaveIcon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 20v8M11 13v22M18 7v34M25 15v18M32 11v26M39 19v10M45 22v4" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></button>
       <button type="submit" class="composerSend" aria-label="Send message" title="Send"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4M5.5 10.5 12 4l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </form>
-    <input id="luckyFileInput" type="file" accept="image/*,application/pdf" hidden aria-label="Choose a photo or PDF">\n    <p id="luckyFileName" hidden style="font-size:12px;overflow-wrap:anywhere;margin:4px 0"></p>\n    <div class="aiModeButtons" role="group" aria-label="AI and voice modes">
+    <input id="luckyFileInput" type="file" accept="image/*,application/pdf" hidden aria-label="Choose a photo or PDF">
+    <p id="luckyFileName" hidden style="font-size:12px;overflow-wrap:anywhere;margin:4px 0"></p>
+    <div class="aiModeButtons" role="group" aria-label="AI and voice modes">
       <button type="button" id="cartesiaModeBtn" aria-pressed="false" aria-label="Cartesia Voice Off" title="Cartesia Voice: Off" style="display:inline-flex;margin:0;padding:0;border:2px solid #dc2626;border-radius:50%;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;cursor:pointer">C</button>
       <button type="button" id="groqModeBtn" aria-pressed="false" aria-label="Groq AI Off" title="Groq AI: Off" style="display:inline-flex;margin:0;padding:0;border:2px solid #dc2626;border-radius:50%;background:#fee2e2;color:#991b1b;font-size:12px;font-weight:700;cursor:pointer">G</button>
     </div><p class="voiceNote" id="voiceStatus" aria-live="polite"></p>
