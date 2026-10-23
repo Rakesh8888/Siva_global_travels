@@ -1589,4 +1589,11 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(start);else st
 root.querySelector('.flowstate-form').addEventListener('submit',e=>{e.preventDefault();root.querySelector('.flowstate-formnote').textContent='Thanks — your waitlist request is noted in this demo.'});
 })();
 </script>
+<style id="lucky-ai-mode-button-label-fix">
+#cartesiaModeBtn,#groqModeBtn{position:relative!important;font-size:0!important;color:transparent!important;overflow:visible!important}
+#cartesiaModeBtn::before{content:"C"!important;position:absolute!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:14px!important;font-weight:900!important;line-height:1!important;color:#166534!important;visibility:visible!important;opacity:1!important}
+#groqModeBtn::before{content:"G"!important;position:absolute!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:14px!important;font-weight:900!important;line-height:1!important;color:#991b1b!important;visibility:visible!important;opacity:1!important}
+#cartesiaModeBtn[aria-pressed="true"]::before{color:#166534!important}
+#groqModeBtn[aria-pressed="true"]::before{color:#166534!important}
+</style>
 </body></html>
