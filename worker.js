@@ -1,4 +1,4 @@
-const GEMINI_MODEL = "gemini-2.5-flash";
+const GEMINI_MODEL = "gemini-2.5-flash-lite";
 
 function normalizeLanguage(message, requestedLanguage) {
   const text = String(message || "");
