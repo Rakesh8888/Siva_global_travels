@@ -1343,6 +1343,80 @@ body.light .aiBody .chatComposer .composerSend{
 @media(max-width:520px){.siva-hero-earth{min-height:290px!important}.siva-earth-svg{width:min(82vw,320px)}.siva-globe-label{padding:8px 9px;gap:7px;border-radius:11px;max-width:180px}.siva-globe-label>span{width:25px;height:25px;flex-basis:25px;font-size:14px}.siva-globe-label b{font-size:8px}.siva-globe-label small{font-size:9px}.siva-label-one{top:3%;left:-2%}.siva-label-two{bottom:1%;right:-2%}}
 @media(prefers-reduced-motion:reduce){.siva-earth-svg,.siva-continent-drift,.siva-flight-plane{animation:none!important}}
 </style>
+
+<style id="siva-three-colour-responsive-theme">
+:root {
+  color-scheme: light;
+  --siva-light-grey: #E7E7E7;
+  --siva-silver: #C0C0C0;
+  --siva-light-cream-brown: #F3E5D0;
+  --siva-text: #3F3A34;
+}
+html, body {
+  background: var(--siva-light-grey) !important;
+  color: var(--siva-text);
+}
+body, main, section, .page, .container, .content, .flowstate-hero,
+.hero, .chat, .chatPanel, .chat-panel, .aiPanel, .ai-panel {
+  background-color: var(--siva-light-grey);
+}
+.card, .service-card, .resultCard, .legalCard, .flight-support-card,
+.service-card-image, .panel, .tile {
+  background-color: var(--siva-silver) !important;
+  border-color: #B5B5B5 !important;
+  color: var(--siva-text) !important;
+}
+button, .btn, .button, .primary-btn, .cta, input[type="submit"],
+.chat button, .chatInput button, .chatComposer button {
+  background-color: var(--siva-light-cream-brown);
+  border-color: #C8B69D;
+  color: var(--siva-text);
+}
+input, textarea, select, .chatInput, .chatComposer {
+  background-color: #F3E5D0;
+  color: var(--siva-text);
+  border-color: #C0C0C0;
+}
+a { color: #65513D; }
+header, .header, .site-header, .aiHeader {
+  background-color: var(--siva-light-grey) !important;
+  color: var(--siva-text);
+}
+img, svg, video, canvas { max-width: 100%; }
+* { box-sizing: border-box; }
+body { overflow-wrap: anywhere; }
+@media (max-width: 768px) {
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  main, section, .container, .content, .chat, .chatPanel, .chat-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+  .card, .service-card, .resultCard, .legalCard {
+    min-width: 0;
+    width: 100%;
+  }
+  button, .btn, .button, input, textarea, select {
+    max-width: 100%;
+  }
+  .aiHeader { padding-top: 6px !important; padding-bottom: 6px !important; }
+}
+@media (prefers-color-scheme: dark) {
+  html, body, header, .header, .site-header, .aiHeader {
+    background-color: var(--siva-light-grey) !important;
+    color: var(--siva-text) !important;
+  }
+  .card, .service-card, .resultCard, .legalCard, .flight-support-card,
+  .service-card-image, .panel, .tile {
+    background-color: var(--siva-silver) !important;
+    color: var(--siva-text) !important;
+  }
+  button, .btn, .button, .primary-btn, .cta {
+    background-color: var(--siva-light-cream-brown) !important;
+    color: var(--siva-text) !important;
+  }
+}
+</style>
+
 </head>
 <body class="light">
 <div class="topbar"><div class="wrap"><span>✈ Travel • Visa • Overseas Careers • Cruise Jobs</span><span>📍 Badvel, Andhra Pradesh, India</span></div></div>
