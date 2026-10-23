@@ -447,6 +447,38 @@ async function handleChat(request, env) {
 }
 
 
+async function handleChatFile(request, env) {
+  if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
+  if (!env.GEMINI_API_KEY) return jsonResponse({ error: "File analysis needs GEMINI_API_KEY configured in Cloudflare." }, 503, request);
+  try {
+    const body = await request.json();
+    const message = typeof body?.message === "string" ? body.message.trim() : "";
+    const mimeType = String(body?.mimeType || "");
+    const dataUrl = String(body?.dataUrl || "");
+    const fileName = String(body?.fileName || "attachment").slice(0, 180);
+    if (!/^image\/(png|jpeg|webp|gif)$/i.test(mimeType) && mimeType !== "application/pdf") return jsonResponse({ error: "Please upload a JPG, PNG, WEBP, GIF image, or PDF." }, 415, request);
+    const match = dataUrl.match(/^data:([^;,]+);base64,([A-Za-z0-9+/=]+)$/);
+    if (!match || match[1] !== mimeType) return jsonResponse({ error: "The selected file could not be read. Please select it again." }, 400, request);
+    const base64 = match[2];
+    if (base64.length > 11_200_000) return jsonResponse({ error: "Please choose a file smaller than 8 MB." }, 413, request);
+    const language = normalizeLanguage(message, body?.language);
+    const prompt = SYSTEM_PROMPT(language) + "\n\nThe user attached a file named: " + fileName + ". Inspect the attachment carefully and answer the user's request. If no specific question was given, summarize the file and offer useful next steps. Do not claim to see details that are not present.";
+    const contents = [{ role: "user", parts: [{ text: message || "Please summarize this file and explain its important details." }, { inlineData: { mimeType, data: base64 } }] }];
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent", {
+      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: JSON.stringify({ systemInstruction: { parts: [{ text: prompt }] }, contents, generationConfig: { maxOutputTokens: 700, temperature: 0.2 } }),
+      signal: AbortSignal.timeout(45000)
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) return jsonResponse({ error: "Gemini could not analyze this file. " + String(data?.error?.message || ("HTTP " + response.status)).slice(0, 180) }, response.status, request);
+    const reply = data?.candidates?.[0]?.content?.parts?.map(part => typeof part.text === "string" ? part.text : "").join("").trim();
+    if (!reply) return jsonResponse({ error: "No text answer was returned for this file. Try another file." }, 502, request);
+    return jsonResponse({ reply, language, fileName }, 200, request);
+  } catch (error) {
+    return jsonResponse({ error: error?.name === "TimeoutError" ? "File analysis took too long. Please try again." : "Could not process the attachment. Please try again." }, error?.name === "TimeoutError" ? 504 : 400, request);
+  }
+}
+
 async function handleCartesiaTTS(request, env) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
@@ -611,6 +643,7 @@ export default {
       return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
+    if (url.pathname === "/api/chat-file") return handleChatFile(request, env);
     if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
