@@ -259,7 +259,7 @@ async function handleChat(request, env) {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
           headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
-          body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages, max_tokens: body?.spoken === true ? 180 : 700, temperature: body?.spoken === true ? 0.2 : 0.3 }),
+          body: JSON.stringify({ model: "openai/gpt-oss-120b", messages, max_tokens: body?.spoken === true ? 180 : 700, temperature: body?.spoken === true ? 0.2 : 0.3 }),
           signal: controller.signal
         });
         const data = await response.json().catch(() => ({}));
