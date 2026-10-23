@@ -353,7 +353,45 @@ async function handleChat(request, env) {
       }
     }
 
-    // FREE-ONLY SAFETY: intentionally do not fall back to OpenAI when Gemini fails.
+    // If the primary Gemini model is unavailable for this API key, retry once with another current stable Flash-Lite model.
+    // Do not retry quota/rate-limit failures, which would only add delay.
+    if (!reply && env.GEMINI_API_KEY && !geminiQuotaReached && /not found|not supported|not available|model.*unavailable|unsupported model|404|400/i.test(String(geminiProblem))) {
+      const fallbackModel = "gemini-3.1-flash-lite";
+      const fallbackController = new AbortController();
+      const fallbackTimer = setTimeout(() => fallbackController.abort(), body?.spoken === true ? 9000 : 12000);
+      try {
+        const fallbackResponse = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/" + fallbackModel + ":generateContent",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              contents: geminiContents,
+              generationConfig: { maxOutputTokens: body?.spoken === true ? 180 : 500, temperature: body?.spoken === true ? 0.2 : 0.3 }
+            }),
+            signal: fallbackController.signal
+          }
+        );
+        const fallbackData = await fallbackResponse.json().catch(() => ({}));
+        if (fallbackResponse.ok) {
+          reply = fallbackData?.candidates?.[0]?.content?.parts
+            ?.map(part => typeof part.text === "string" ? part.text : "")
+            .join("").trim() || "";
+          if (reply) console.log("LUCKY AI answered using fallback Gemini model.");
+          else geminiProblem = "Both Gemini models returned an empty answer";
+        } else {
+          geminiProblem = fallbackData?.error?.message || ("Gemini fallback HTTP " + fallbackResponse.status);
+          geminiQuotaReached = fallbackResponse.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
+        }
+      } catch (fallbackError) {
+        geminiProblem = fallbackError?.name === "AbortError" ? "Gemini fallback timed out" : "Gemini fallback network error";
+      } finally {
+        clearTimeout(fallbackTimer);
+      }
+    }
+
+    // FREE-ONLY SAFETY: intentionally do not fall back to potentially paid providers.
 
     if (!reply) {
       return jsonResponse({
