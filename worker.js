@@ -243,7 +243,7 @@ async function handleChat(request, env) {
       .slice(body?.spoken === true ? -2 : -4)
       .map(x => ({ role: x.role, content: x.content.slice(body?.spoken === true ? -500 : -900) })) : [];
     const systemPrompt = SYSTEM_PROMPT(language) + (body?.spoken === true ? "\n\nVOICE RESPONSE SPEED: This is a spoken conversation. Answer immediately and briefly in 1–3 short sentences, usually under 45 words. Put the direct answer first. Avoid long lists, headings, markdown symbols, and unnecessary introductions. Ask at most one short follow-up question." : "");
-    // Explicit Groq mode: do not silently switch providers when the user has turned Groq on.
+    // Explicit Groq mode: keep Groq selected, retry transient upstream failures once with a smaller supported model.
     if (String(body?.provider || "").toLowerCase() === "groq") {
       if (!env.GROQ_API_KEY) {
         return jsonResponse({ error: "Groq is not configured yet. Add the GROQ_API_KEY secret in Cloudflare Workers, then try again." }, 503, request);
@@ -256,22 +256,54 @@ async function handleChat(request, env) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 22000);
       try {
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
-          body: JSON.stringify({ model: "openai/gpt-oss-120b", messages, max_tokens: body?.spoken === true ? 180 : 700, temperature: body?.spoken === true ? 0.2 : 0.3 }),
-          signal: controller.signal
-        });
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          console.error("LUCKY AI Groq error:", response.status, String(data?.error?.message || "Provider error").slice(0, 180));
-          return jsonResponse({ error: response.status === 401 ? "Groq API key was rejected. Check the GROQ_API_KEY secret." : response.status === 429 ? "Groq rate limit or quota reached. Try again later." : "Groq could not answer this request. Check the Groq API key and model access." }, response.status === 429 ? 429 : 502, request);
+        const models = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
+        let lastStatus = 502;
+        let lastMessage = "Groq returned an upstream error.";
+        for (let attempt = 0; attempt < models.length; attempt++) {
+          const model = models[attempt];
+          let response;
+          try {
+            response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+              method: "POST",
+              headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
+              body: JSON.stringify({ model, messages, max_tokens: body?.spoken === true ? 180 : 700, temperature: body?.spoken === true ? 0.2 : 0.3 }),
+              signal: controller.signal
+            });
+          } catch (fetchError) {
+            if (fetchError?.name === "AbortError") throw fetchError;
+            lastMessage = "Could not connect to Groq.";
+            lastStatus = 502;
+            if (attempt === 0) continue;
+            return jsonResponse({ error: lastMessage + " Please try again.", providerStatus: lastStatus }, 502, request);
+          }
+          const data = await response.json().catch(() => ({}));
+          if (response.ok) {
+            const reply = data?.choices?.[0]?.message?.content?.trim();
+            if (!reply) {
+              lastMessage = "Groq returned an empty answer.";
+              lastStatus = 502;
+              continue;
+            }
+            return jsonResponse({ reply, language, provider: "groq", model }, 200, request);
+          }
+          lastStatus = response.status;
+          lastMessage = String(data?.error?.message || "Groq provider error").slice(0, 240);
+          console.error("LUCKY AI Groq error:", response.status, model, lastMessage);
+          // Credentials, permissions, request validation and quota errors will not be fixed by switching models.
+          if ([400, 401, 403, 404, 413, 429].includes(response.status)) {
+            const error = response.status === 401 ? "Groq API key was rejected. Check the GROQ_API_KEY secret."
+              : response.status === 429 ? "Groq rate limit or quota reached. Try again later."
+              : response.status === 403 ? "Groq model access is restricted. Check model permissions in Groq Console."
+              : "Groq request failed: " + lastMessage;
+            return jsonResponse({ error, providerStatus: response.status, providerMessage: lastMessage }, response.status === 429 ? 429 : response.status, request);
+          }
+          if (response.status < 500 && response.status !== 408) {
+            return jsonResponse({ error: "Groq rejected the request: " + lastMessage, providerStatus: response.status, providerMessage: lastMessage }, response.status, request);
+          }
         }
-        const reply = data?.choices?.[0]?.message?.content?.trim();
-        if (!reply) return jsonResponse({ error: "Groq returned an empty answer. Please try again." }, 502, request);
-        return jsonResponse({ reply, language, provider: "groq" }, 200, request);
+        return jsonResponse({ error: "Groq is still returning a server error after trying a fallback model. Please retry shortly.", providerStatus: lastStatus, providerMessage: lastMessage }, 502, request);
       } catch (error) {
-        return jsonResponse({ error: error?.name === "AbortError" ? "Groq timed out. Please try again." : "Could not connect to Groq. Check your internet connection and API status." }, error?.name === "AbortError" ? 504 : 502, request);
+        return jsonResponse({ error: error?.name === "AbortError" ? "Groq timed out. Please try again." : "Could not connect to Groq. Check your internet connection and API status.", providerStatus: error?.name === "AbortError" ? 504 : 502, providerMessage: String(error?.message || error).slice(0, 180) }, error?.name === "AbortError" ? 504 : 502, request);
       } finally {
         clearTimeout(timer);
       }
