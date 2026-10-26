@@ -41,7 +41,7 @@ function normalizeLanguage(message, requestedLanguage) {
   for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
   return "English";
 }
-const SYSTEM_PROMPT = (language) => `You are LUCKY AI, the virtual customer-enquiry assistant for Elite Services.
+const SYSTEM_PROMPT = (language) => `You are ELITE AI, the virtual customer-enquiry assistant for Elite Services.
 
 LANGUAGE:
 - Reply in ${language === "Auto Detect" ? "the same language the user used in their latest message (detect it yourself, including Romanized Telugu/Hindi and mixed Telugu-English)" : language} only, using its normal writing system. Telugu means natural Telugu script, not transliterated Telugu.
@@ -288,7 +288,7 @@ async function handleChat(request, env) {
           }
           lastStatus = response.status;
           lastMessage = String(data?.error?.message || "Groq provider error").slice(0, 240);
-          console.error("LUCKY AI Groq error:", response.status, model, lastMessage);
+          console.error("ELITE AI Groq error:", response.status, model, lastMessage);
           // Credentials, permissions, request validation and quota errors will not be fixed by switching models.
           if ([400, 401, 403, 404, 413, 429].includes(response.status)) {
             const error = response.status === 401 ? "Groq API key was rejected. Check the GROQ_API_KEY secret."
@@ -316,7 +316,7 @@ async function handleChat(request, env) {
         const grounded = await answerWithGroundedSearch(message, history, language, env);
         if (grounded) return jsonResponse(grounded, 200, request);
       } catch (error) {
-        console.error("LUCKY AI grounded search unavailable; continuing with the configured Gemini free-tier request only:", String(error?.message || error).slice(0, 180));
+        console.error("ELITE AI grounded search unavailable; continuing with the configured Gemini free-tier request only:", String(error?.message || error).slice(0, 180));
       }
     }
 
@@ -330,7 +330,7 @@ async function handleChat(request, env) {
         return jsonResponse(council, 200, request);
       } catch (error) {
         openRouterProblem = String(error?.message || error).slice(0, 220);
-        console.error("LUCKY AI Council unavailable; using configured single-model fallback:", openRouterProblem);
+        console.error("ELITE AI Council unavailable; using configured single-model fallback:", openRouterProblem);
       }
     }
     // FREE-ONLY SAFETY: never call OpenRouter or other potentially paid providers from the default chat path.
@@ -375,11 +375,11 @@ async function handleChat(request, env) {
         } else {
           geminiProblem = data?.error?.message || ("Gemini HTTP " + response.status);
           geminiQuotaReached = response.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
-          console.error("LUCKY AI Gemini error:", response.status, geminiProblem.slice(0, 180));
+          console.error("ELITE AI Gemini error:", response.status, geminiProblem.slice(0, 180));
         }
       } catch (error) {
         geminiProblem = error?.name === "AbortError" ? "Gemini timeout" : "Gemini network error";
-        console.error("LUCKY AI Gemini request failed:", geminiProblem);
+        console.error("ELITE AI Gemini request failed:", geminiProblem);
       } finally {
         clearTimeout(timer);
       }
@@ -410,7 +410,7 @@ async function handleChat(request, env) {
           reply = fallbackData?.candidates?.[0]?.content?.parts
             ?.map(part => typeof part.text === "string" ? part.text : "")
             .join("").trim() || "";
-          if (reply) console.log("LUCKY AI answered using fallback Gemini model.");
+          if (reply) console.log("ELITE AI answered using fallback Gemini model.");
           else geminiProblem = "Both Gemini models returned an empty answer";
         } else {
           geminiProblem = fallbackData?.error?.message || ("Gemini fallback HTTP " + fallbackResponse.status);
@@ -429,17 +429,17 @@ async function handleChat(request, env) {
       return jsonResponse({
         error: geminiQuotaReached
           ? "Gemini free-tier limit may have been reached. No paid-provider fallback was used. Please wait for quota reset or choose Groq manually if it is configured."
-          : "LUCKY AI is temporarily unavailable. No paid-provider fallback was used. Please try again later.",
+          : "ELITE AI is temporarily unavailable. No paid-provider fallback was used. Please try again later.",
         providerMessage: String(geminiProblem).slice(0, 400)
       }, geminiQuotaReached ? 429 : 502, request);
     }
 
     return jsonResponse({ reply, language }, 200, request);
   } catch (error) {
-    console.error("LUCKY AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
+    console.error("ELITE AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
     return jsonResponse({
       error: error?.name === "AbortError"
-        ? "LUCKY AI timed out. Please try again."
+        ? "ELITE AI timed out. Please try again."
         : "Could not process your message. Please try again.",
       requestId: crypto.randomUUID()
     }, error?.name === "AbortError" ? 504 : 500, request);
