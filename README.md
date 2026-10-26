@@ -1,6 +1,6 @@
-# Vishwaseva — Website Prototype
+# Vishvaseva — Website Prototype
 
-Mobile-first single-page website for Vishwaseva.
+Mobile-first single-page website for Vishvaseva.
 
 ## Included
 - Responsive homepage and navigation
