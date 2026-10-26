@@ -1,15 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<title>SSS — Siva Software and Services</title>
+<title>SSS — Siva Software &amp; Services, three-colour logo</title>
 <defs>
- <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1766A5"/><stop offset="1" stop-color="#102846"/></linearGradient>
- <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F7D77B"/><stop offset=".55" stop-color="#D4A017"/><stop offset="1" stop-color="#9B6710"/></linearGradient>
+ <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1689E8"/><stop offset="1" stop-color="#073B82"/></linearGradient>
+ <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#45D62B"/><stop offset="1" stop-color="#087A26"/></linearGradient>
+ <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF3434"/><stop offset="1" stop-color="#B90018"/></linearGradient>
 </defs>
-<circle cx="80" cy="80" r="70" fill="#fff" stroke="#E8EDF2" stroke-width="2"/>
-<circle cx="80" cy="58" r="33" fill="none" stroke="url(#navy)" stroke-width="3"/>
-<ellipse cx="80" cy="58" rx="14" ry="33" fill="none" stroke="#1766A5" stroke-width="1.6"/>
-<path d="M48 58h64M53 44h54M53 72h54" stroke="#1766A5" stroke-width="1.6" fill="none"/>
-<path d="M20 92C44 117 90 121 130 63" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
-<path d="M103 34l31-12-12 25-7-8-12-5z" fill="url(#navy)"/>
-<text x="80" y="100" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="900" text-anchor="middle" fill="url(#navy)" stroke="#fff" stroke-width="1.5" paint-order="stroke">SSS</text>
-<path d="M30 123h100" stroke="url(#gold)" stroke-width="3" stroke-linecap="round"/>
+<circle cx="80" cy="80" r="70" fill="#FFFFFF" stroke="#E7EDF4" stroke-width="2"/>
+<path d="M22 63C22 42 38 30 59 30h19v17H58c-11 0-18 6-18 16s7 16 18 16h12c20 0 31 12 31 28s-14 26-34 26H25v-17h42c10 0 17-4 17-11s-6-10-17-10H56C35 95 22 83 22 63Z" fill="url(#blue)"/>
+<path d="M61 51h39c21 0 34 12 34 30 0 14-8 23-20 27l-13-14c10-2 15-6 15-13 0-8-6-13-17-13H61Z" fill="url(#green)"/>
+<path d="M90 70h17c20 0 32 12 32 29s-13 30-34 30H85v-17h19c10 0 17-5 17-13s-6-12-16-12H90Z" fill="url(#red)"/>
+<circle cx="108" cy="42" r="18" fill="#FFFFFF" stroke="url(#blue)" stroke-width="3"/>
+<path d="M91 42h34M108 24c-8 10-8 26 0 36M108 24c8 10 8 26 0 36" stroke="#1689E8" stroke-width="1.7" fill="none"/>
+<path d="M91 57C105 64 120 61 135 47" stroke="url(#green)" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M126 42l12-4-4 12-3-5-5-3Z" fill="url(#red)"/>
 </svg>
