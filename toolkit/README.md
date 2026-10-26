@@ -10,6 +10,9 @@ A static, dependency-free internal toolkit available at `/toolkit/` after the ex
 - Invoice creation and print-to-PDF
 - General visa checklist (verify official requirements)
 - English/Telugu marketing message templates
+- Flight / hotel / bus enquiry and reservation status tracker
+- Vendor and supplier contact directory
+- Business summary reports with CSV export and print
 - JSON backup and restore
 
 ## Deploy
