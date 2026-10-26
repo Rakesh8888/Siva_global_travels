@@ -46,7 +46,7 @@ body.light .flight-night-image{display:block!important;}
 .faqActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 @media(max-width:520px){.faqItem summary{padding:15px 42px 15px 14px;font-size:14px}.faqAnswer{padding:0 14px 15px}}
 
-/* Roomier LUCKY AI header and clear rectangular voice buttons. */
+/* Roomier ELITE AI header and clear rectangular voice buttons. */
 .aiFab{width:60px;height:60px;right:18px;bottom:18px;font-size:18px}
 .aiPanel{right:14px;bottom:88px;width:min(92vw,350px);max-height:min(74vh,600px);border-radius:17px}
 .aiHeader{padding:15px 16px;min-height:72px;align-items:center}
@@ -100,7 +100,7 @@ body.light .flight-night-image{display:block!important;}
   .aiBody .voiceBtn{width:64px!important;min-width:64px!important;max-width:64px!important}
 }
 
-/* Put language selector in the Lucky AI header, not beside the message area. */
+/* Put language selector in the ELITE AI header, not beside the message area. */
 .aiHeader{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(72px,auto) 28px!important;align-items:center!important;gap:8px!important}
 .aiHeaderTitle{min-width:0}
 .aiHeader #chatLanguage{grid-column:2;grid-row:1;width:76px!important;min-width:76px!important;max-width:76px!important;height:36px!important;margin:0!important;padding:4px!important;font-size:12px!important;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);text-align:center}
@@ -113,7 +113,7 @@ body.light .flight-night-image{display:block!important;}
  .aiHeader #aiClose{width:24px!important}
 }
 
-/* LUCKY AI responsive layout: desktop, tablet and phone. Preserve approved visual design. */
+/* ELITE AI responsive layout: desktop, tablet and phone. Preserve approved visual design. */
 .aiPanel{width:min(440px,calc(100vw - 36px));max-height:calc(100vh - 112px);max-height:calc(100dvh - 112px);overflow-y:auto;overscroll-behavior:contain}
 .aiHeader{display:flex;align-items:center;gap:10px}
 .aiHeaderTitle{flex:1;min-width:0}
@@ -152,7 +152,7 @@ body.light .flight-night-image{display:block!important;}
 }
 
 
-/* Visibility and sizing fix for Lucky AI at default browser zoom */
+/* Visibility and sizing fix for ELITE AI at default browser zoom */
 .aiFab{position:fixed!important;right:max(16px,env(safe-area-inset-right))!important;bottom:max(16px,env(safe-area-inset-bottom))!important;z-index:9999!important;width:68px;height:68px;font-size:20px;display:flex;align-items:center;justify-content:center;visibility:visible;opacity:1;pointer-events:auto}
 .aiPanel{position:fixed!important;right:max(12px,env(safe-area-inset-right))!important;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 82px)!important;width:min(480px,calc(100vw - 24px))!important;max-height:calc(100vh - 108px)!important;max-height:calc(100dvh - 108px)!important;z-index:10000!important}
 .aiPanel.open{display:block!important;visibility:visible;opacity:1}
@@ -166,7 +166,7 @@ body.light .flight-night-image{display:block!important;}
 }
 
 
-/* Final visibility fix: make Lucky AI easy to spot and proportionate at default browser zoom */
+/* Final visibility fix: make ELITE AI easy to spot and proportionate at default browser zoom */
 .aiFab{position:fixed!important;display:flex!important;align-items:center!important;justify-content:center!important;right:clamp(14px,2vw,28px)!important;bottom:clamp(14px,2vh,24px)!important;width:clamp(68px,5.2vw,82px)!important;height:clamp(68px,5.2vw,82px)!important;font-size:clamp(20px,1.5vw,24px)!important;z-index:2147483000!important;visibility:visible!important;opacity:1!important;transform:none!important}
 .aiPanel{position:fixed!important;right:clamp(12px,2vw,28px)!important;bottom:calc(clamp(14px,2vh,24px) + clamp(68px,5.2vw,82px) + 14px)!important;width:min(540px,calc(100vw - 24px))!important;max-height:calc(100vh - 130px)!important;max-height:calc(100dvh - 130px)!important;z-index:2147483001!important;transform:none!important}
 .aiPanel.open{display:block!important;visibility:visible!important;opacity:1!important}
@@ -486,7 +486,7 @@ section{padding:76px 0}
 }
 
 
-/* Final mobile readability fixes; preserve the existing LUCKY AI design */
+/* Final mobile readability fixes; preserve the existing ELITE AI design */
 @media(max-width:600px){
   .nav{position:relative!important;top:auto!important}
   .hero{padding-top:48px!important}
@@ -507,7 +507,7 @@ section{padding:76px 0}
 }
 
 
-/* LUCKY AI — refined ChatGPT-inspired mobile composer */
+/* ELITE AI — refined ChatGPT-inspired mobile composer */
 .aiPanel{width:min(96vw,520px);border:1px solid #294254;border-radius:26px;background:#0d2232;overflow:hidden;box-shadow:0 24px 70px #0007}
 .aiHeader{display:grid;grid-template-columns:minmax(0,1fr) auto 36px;align-items:center;gap:10px;padding:15px 17px;border-bottom:1px solid #294254}
 .aiHeaderTitle{min-width:0}
@@ -625,7 +625,7 @@ body.light .flightShell,body.light .card,body.light .panel,body.light .detail,bo
 body.light .field input,body.light .field select,body.light .field textarea{background:#fff;color:#183047;border-color:#c4d2df}
 body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
 
-/* Compact four-action LUCKY AI composer: quick actions, voice message, live voice, send. */
+/* Compact four-action ELITE AI composer: quick actions, voice message, live voice, send. */
 .aiBody .chatInput.chatComposer{display:flex!important;align-items:center!important;gap:5px!important;flex-wrap:nowrap!important}
 .aiBody .chatComposer #chatPlus,
 .aiBody .chatComposer #voiceMsgBtn,
@@ -649,7 +649,7 @@ body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
  .aiBody .chatComposer #chatText{height:32px!important;padding:6px!important}
 }
 
-/* Professional LUCKY AI finish: premium navy-and-gold accents, cleaner header and accessible controls. */
+/* Professional ELITE AI finish: premium navy-and-gold accents, cleaner header and accessible controls. */
 .aiPanel{
   background:#ffffff!important;
   border:1px solid #d8e2ec!important;
@@ -707,7 +707,7 @@ body.light .secondary{background:#fff;color:#183047;border-color:#c4d2df}
 }
 
 
-/* Screenshot-matched mobile LUCKY AI polish: hide selector in all responsive rules and use a clean pill composer. */
+/* Screenshot-matched mobile ELITE AI polish: hide selector in all responsive rules and use a clean pill composer. */
 .aiHeader #chatLanguage,
 #chatLanguage,
 .aiHeader select[aria-label="Choose chat language"]{display:none!important;visibility:hidden!important;width:0!important;min-width:0!important;max-width:0!important;padding:0!important;border:0!important}
@@ -847,7 +847,7 @@ body{font-size:16px}
 @media(max-width:850px){#contact .contactDetails > .detail.contact-mini:first-child{max-width:100%}}
 
 
-/* Rotating cloud-refresh control for LUCKY AI live voice. */
+/* Rotating cloud-refresh control for ELITE AI live voice. */
 .aiBody .chatComposer #liveVoiceBtn{
   background:transparent!important;
   color:#e47c50!important;
@@ -944,7 +944,7 @@ body{font-size:16px}
  }
 }
 
-/* User-requested LUCKY AI Send button: green arrow, transparent background. */
+/* User-requested ELITE AI Send button: green arrow, transparent background. */
 .aiBody .chatComposer .composerSend,
 body:not(.light) .aiBody .chatComposer .composerSend,
 body.light .aiBody .chatComposer .composerSend{
@@ -975,7 +975,7 @@ body.light .aiBody .chatComposer .composerSend{
   padding:0!important;
 }
 
-/* Slightly enlarge the LUCKY AI header title for better mobile readability. */
+/* Slightly enlarge the ELITE AI header title for better mobile readability. */
 .aiHeaderTitle strong{font-size:20px!important;letter-spacing:.045em!important}
 @media(max-width:380px){.aiHeaderTitle strong{font-size:19px!important}}
 
@@ -998,7 +998,7 @@ body.light .aiBody .chatComposer .composerSend{
   }
 }
 
-/* LUCKY AI reference-match composer and header: navy, gold globe, orange live waveform, green upward send arrow. */
+/* ELITE AI reference-match composer and header: navy, gold globe, orange live waveform, green upward send arrow. */
 .aiPanel .aiHeader{
   display:flex!important;align-items:center!important;justify-content:space-between!important;
   gap:14px!important;padding:18px 20px!important;background:#102b3e!important;
@@ -1087,7 +1087,7 @@ body.light .aiBody .chatComposer .composerSend{
 
 
 
-/* LUCKY AI header refinement: compact sky-blue globe badge, less wasted space. */
+/* ELITE AI header refinement: compact sky-blue globe badge, less wasted space. */
 .aiPanel .aiHeader{gap:10px!important;padding:10px 14px!important;min-height:0!important}
 .aiPanel .aiHeaderTitle{gap:10px!important;flex:1 1 auto!important;min-width:0!important}
 .aiPanel .aiBrandMark{
@@ -1108,7 +1108,7 @@ body.light .aiBody .chatComposer .composerSend{
 }
 
 
-/* LUCKY AI compact header sizing adjustment */
+/* ELITE AI compact header sizing adjustment */
 .aiPanel .aiHeader{padding:7px 10px!important;gap:7px!important;min-height:0!important}
 .aiPanel .aiHeaderTitle{gap:7px!important}
 .aiPanel .aiBrandMark{flex-basis:36px!important;width:36px!important;height:36px!important;border-radius:10px!important}
@@ -1127,7 +1127,7 @@ body.light .aiBody .chatComposer .composerSend{
 }
 
 
-/* Final LUCKY AI header: compact height and sky-blue background. */
+/* Final ELITE AI header: compact height and sky-blue background. */
 .aiPanel .aiHeader{
   background:#87CEEB!important;
   border-bottom:1px solid #66b8d8!important;
@@ -1174,7 +1174,7 @@ body.light .aiBody .chatComposer .composerSend{
 @media(max-width:600px){.legalPolicies{padding:30px 0 40px}.legalCard{padding:13px}.legalCopy{font-size:13px}}
 
 
-/* LUCKY AI compact controls and more readable chat text */
+/* ELITE AI compact controls and more readable chat text */
 .aiPanel .chat{font-size:15px!important;line-height:1.6!important}
 .aiPanel .msg{font-size:15px!important;line-height:1.6!important;padding:10px 12px!important}
 .aiPanel .chatComposer{min-height:60px!important;padding:5px 10px!important;margin-top:10px!important}
@@ -1195,7 +1195,7 @@ body.light .aiBody .chatComposer .composerSend{
  
 }
 
-/* Lucky AI compact layout adjustment: preserve the existing color theme and behavior. */
+/* ELITE AI compact layout adjustment: preserve the existing color theme and behavior. */
 .aiHeader{
   min-height:0!important;
   padding:8px 10px!important;
@@ -1273,7 +1273,7 @@ body.light .aiBody .chatComposer .composerSend{
 }
 
 
-/* Lucky AI conversation area height only: show more customer messages and answers. */
+/* ELITE AI conversation area height only: show more customer messages and answers. */
 .aiBody .chat{height:clamp(240px,42vh,360px)!important;min-height:220px!important;max-height:42vh!important}
 @media(max-width:520px){.aiBody .chat{height:clamp(220px,38vh,320px)!important;min-height:200px!important;max-height:38vh!important}}
 </style>
@@ -1529,25 +1529,25 @@ body { overflow-wrap: anywhere; }
   </div>
 </section>
 <footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> Elite Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span><nav class="legalFooterLinks" aria-label="Legal and policy links"><a href="#terms-of-use">Terms of Use</a><a href="#privacy-policy">Privacy Notice</a><a href="#cancellation-refund-policy">Cancellation & Refunds</a><a href="#travel-visa-disclaimer">Travel & Visa Disclaimer</a><a href="#cruise-career-disclaimer">Career Assistance Disclaimer</a><a href="#complaints-grievance">Complaints & Support</a><a href="#legal-policies">Official Resources</a></nav></div></footer><div class="wrap footerin"><span>© <span id="year"></span> Elite Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span></div></footer>
-<!-- LUCKY AI UI: Language options control removed from the visible interface; language follows the website selector. -->
-<button class="aiFab" id="aiFab" aria-label="Open Shiva assistant">AI</button>
+<!-- ELITE AI UI: Language options control removed from the visible interface; language follows the website selector. -->
+<button class="aiFab" id="aiFab" aria-label="Open ELITE assistant">AI</button>
 <div class="aiPanel" id="aiPanel">
     <div class="aiHeader">
-    <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>SHIVA</strong><span class="aiOnline"><i></i> Online</span></span></div>
+    <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>ELITE</strong><span class="aiOnline"><i></i> Online</span></span></div>
     <input type="hidden" id="chatLanguage" value="auto" aria-hidden="true">
     <button id="aiClose" aria-label="Close assistant">×</button>
   </div>
   <div class="aiBody">
-    <div class="chat" id="chat" aria-live="polite"><div class="msg bot">నమస్కారం! నా పేరు శివ. నేను మీకు ఏ విధంగా సహాయపడగలను?</div></div>
+    <div class="chat" id="chat" aria-live="polite"><div class="msg bot">నమస్కారం! నా పేరు ఎలైట్. నేను మీకు ఏ విధంగా సహాయపడగలను?</div></div>
     <form class="chatInput chatComposer" id="chatForm">
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
-      <input id="chatText" placeholder="Message Shiva" autocomplete="off" aria-label="Message Shiva">
+      <input id="chatText" placeholder="Message ELITE" autocomplete="off" aria-label="Message ELITE">
       <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Record voice message" title="Voice message"><svg class="voiceMessageMicIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="voiceWaveIcon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 20v8M11 13v22M18 7v34M25 15v18M32 11v26M39 19v10M45 22v4" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></button>
       <button type="submit" class="composerSend" aria-label="Send message" title="Send"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4M5.5 10.5 12 4l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </form>
-    <input id="luckyFileInput" type="file" accept="image/*,application/pdf" hidden aria-label="Choose a photo or PDF">
-    <p id="luckyFileName" hidden style="font-size:12px;overflow-wrap:anywhere;margin:4px 0"></p>
+    <input id="ELITEFileInput" type="file" accept="image/*,application/pdf" hidden aria-label="Choose a photo or PDF">
+    <p id="ELITEFileName" hidden style="font-size:12px;overflow-wrap:anywhere;margin:4px 0"></p>
     <p class="voiceNote" id="voiceStatus" aria-live="polite"></p>
   </div>
 </div>
@@ -1561,13 +1561,13 @@ document.querySelectorAll('[data-trip]').forEach(b=>b.addEventListener('click',(
 $('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('light');$('themeBtn').textContent=document.body.classList.contains('light')?'☾':'☼'});$('menuBtn').addEventListener('click',()=>{$('navLinks').classList.toggle('mobileNav');$('navLinks').classList.toggle('show')});document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>$('navLinks').classList.remove('show')));
 const chatLanguageNames={auto:'Auto Detect',en:'English',te:'Telugu',hi:'Hindi',ta:'Tamil',kn:'Kannada',ml:'Malayalam',ur:'Urdu',ar:'Arabic',fr:'French',de:'German',es:'Spanish',pt:'Portuguese',ru:'Russian','zh-CN':'Chinese (Simplified)',ja:'Japanese',ko:'Korean',id:'Indonesian',bn:'Bengali',mr:'Marathi',pa:'Punjabi'};
 function pageSelectedLanguage(){const match=document.cookie.match(/(?:^|;\\s*)googtrans=([^;]+)/);if(!match)return '';try{const parts=decodeURIComponent(match[1]).split('/');return parts.length>2?parts[2]:''}catch{return ''}}
-function syncLuckyLanguageFromWebsite(){const target=pageSelectedLanguage();if(!target)return;const next=Object.keys(chatLanguageNames).find(code=>code.toLowerCase()===target.toLowerCase());if(next&&lang!==next){lang=next;setLuckyWelcomeLanguage()}}
-function setLuckyWelcomeLanguage(){const welcome=$('chat').querySelector('.msg.bot');if(!welcome)return;welcome.textContent=lang==='te'?'నమస్కారం! నా పేరు శివ. నేను మీకు ఏ విధంగా సహాయపడగలను? విమానాలు, వీసాలు, టూర్లు లేదా ఉద్యోగాల గురించి అడగండి.':lang==='en'?'Hello! My name is Shiva. How can I help you with flights, visas, tours or job enquiries?':'Hello! My name is Shiva. You can ask your question in '+(chatLanguageNames[lang]||'your selected language')+'.'}
-syncLuckyLanguageFromWebsite();
-setInterval(syncLuckyLanguageFromWebsite,700);
+function syncELITELanguageFromWebsite(){const target=pageSelectedLanguage();if(!target)return;const next=Object.keys(chatLanguageNames).find(code=>code.toLowerCase()===target.toLowerCase());if(next&&lang!==next){lang=next;setELITEWelcomeLanguage()}}
+function setELITEWelcomeLanguage(){const welcome=$('chat').querySelector('.msg.bot');if(!welcome)return;welcome.textContent=lang==='te'?'నమస్కారం! నా పేరు ఎలైట్. నేను మీకు ఏ విధంగా సహాయపడగలను? విమానాలు, వీసాలు, టూర్లు లేదా ఉద్యోగాల గురించి అడగండి.':lang==='en'?'Hello! My name is ELITE. How can I help you with flights, visas, tours or job enquiries?':'Hello! My name is ELITE. You can ask your question in '+(chatLanguageNames[lang]||'your selected language')+'.'}
+syncELITELanguageFromWebsite();
+setInterval(syncELITELanguageFromWebsite,700);
 function toggleAI(){$('aiPanel').classList.toggle('open')}$('aiFab').addEventListener('click',toggleAI);$('aiClose').addEventListener('click',()=>{stopLiveVoice();$('aiPanel').classList.remove('open')});const canned={'flight booking':'Please share your departure city, destination and travel date. Use the Flight Enquiry form and send details through WhatsApp. Live fares are not connected here.','visa assistance':'Tell us the destination and visa type. We can help prepare a document checklist; visa approval is decided by the relevant authority.','overseas jobs':'Tell us your skill, work experience and preferred country. Verify employer details and written contract before paying any recruitment fee.','cruise jobs':'Tell us your department (painting, housekeeping, F&B, deck or engine) and experience. We can guide you on the questions to ask recruiters.'};function escapeChatHtml(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
-function renderAssistantMessage(node,text){const source=String(text??'').replace(/\n/g,'\n');const lines=source.split(/\r?\n/);let html='',inList=false;const closeList=()=>{if(inList){html+='</ul>';inList=false}};for(const rawLine of lines){const trimmed=rawLine.trim();if(!trimmed){closeList();html+='<div class="chat-md-gap"></div>';continue}const safe=escapeChatHtml(trimmed).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');if(/^#{1,3}\s+/.test(trimmed)){closeList();const level=Math.min(3,(trimmed.match(/^#+/)||['#'])[0].length);html+='<h'+level+' class="chat-md-heading">'+safe.replace(/^#{1,3}\s+/,'')+'</h'+level+'>';continue}if(/^[-•*]\s+/.test(trimmed)){if(!inList){html+='<ul class="chat-md-list">';inList=true}html+='<li>'+safe.replace(/^[-•*]\s+/,'')+'</li>';continue}closeList();html+='<p>'+safe+'</p>'}closeList();node.innerHTML=html;node.classList.add('richReply')}function addMsg(t,who){const d=document.createElement('div');d.className='msg '+who;if(who==='bot')renderAssistantMessage(d,t);else d.textContent=t;$('chat').appendChild(d);$('chat').scrollTop=$('chat').scrollHeight}function reply(q){const l=q.toLowerCase();const key=Object.keys(canned).find(k=>l.includes(k.split(' ')[0])||l.includes(k));return key?canned[key]:'I can guide you about flights, visas, tours, overseas jobs or cruise jobs. Please choose a quick option or contact our team on WhatsApp. This is a demo assistant.'}const chatHistory=[];let liveVoice=false,liveVoiceBusy=false,voiceRecognition=null,recognitionMode='message';const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;const autoVoiceLocales=['te-IN','hi-IN','en-IN'];let autoVoiceLocaleIndex=0;function detectedScriptLanguage(t){if(/[\u0C00-\u0C7F]/.test(t))return'te';if(/[\u0900-\u097F]/.test(t))return'hi';if(/[\u0B80-\u0BFF]/.test(t))return'ta';if(/[\u0C80-\u0CFF]/.test(t))return'kn';if(/[\u0D00-\u0D7F]/.test(t))return'ml';return'auto'}function cleanSpeechText(value){return String(value??'').replace(/\n/g,'\n').replace(/\r/g,'\n').replace(/\*\*(.*?)\*\*/g,'$1').replace(/__(.*?)__/g,'$1').replace(/\*(.*?)\*/g,'$1').replace(/_(.*?)_/g,'$1').replace(/~~(.*?)~~/g,'$1').replace(/^\s{0,3}#{1,6}\s*/gm,'').replace(/^\s*[-•]\s+/gm,'').replace(/^\s*\d+[.)]\s+/gm,'').replace(/https?:\/\/\S+/g,'').replace(/[*_#~`]/g,'').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim()}function setVoiceStatus(t){$('voiceStatus').textContent=t}function browserSpeakReply(t){t=cleanSpeechText(t);if(!t){liveVoiceBusy=false;return}if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){liveVoiceBusy=false;setVoiceStatus(lang==='te'?'ఈ బ్రౌజర్‌లో వాయిస్ ప్లేబ్యాక్ అందుబాటులో లేదు. టెక్స్ట్ చాట్ కొనసాగించవచ్చు.':'Speech playback is not supported in this browser. Text chat is still available.');if(liveVoice)startRecognition('live');return}const synth=window.speechSynthesis;synth.cancel();const u=new SpeechSynthesisUtterance(t);const answerLang=lang==='auto'?detectedScriptLanguage(t):lang;const locale=({en:'en-IN',te:'te-IN',hi:'hi-IN',ta:'ta-IN',kn:'kn-IN',ml:'ml-IN',ur:'ur-IN',ar:'ar-SA',fr:'fr-FR',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',ru:'ru-RU','zh-CN':'zh-CN',ja:'ja-JP',ko:'ko-KR',nl:'nl-NL',tr:'tr-TR',id:'id-ID',th:'th-TH',vi:'vi-VN',bn:'bn-IN',mr:'mr-IN',pa:'pa-IN',fa:'fa-IR'})[answerLang]||'en-IN';u.lang=locale;try{const voices=synth.getVoices?synth.getVoices():[];const exact=voices.find(v=>v.lang&&v.lang.toLowerCase()===locale.toLowerCase());const sameLanguage=voices.find(v=>v.lang&&v.lang.toLowerCase().split('-')[0]===locale.toLowerCase().split('-')[0]);if(exact||sameLanguage)u.voice=exact||sameLanguage;if(answerLang==='te'&&!exact&&!sameLanguage)setVoiceStatus('మీ బ్రౌజర్‌లో ప్రత్యేక తెలుగు వాయిస్ కనిపించలేదు. అందుబాటులో ఉన్న డిఫాల్ట్ వాయిస్‌తో ప్రయత్నిస్తున్నాం.')}catch(e){}u.onstart=()=>{if(answerLang==='te')setVoiceStatus('తెలుగు సమాధానాన్ని వాయిస్‌లో వినిపిస్తున్నాం…')};u.onend=()=>{liveVoiceBusy=false;if(liveVoice)startRecognition('live')};u.onerror=()=>{liveVoiceBusy=false;setVoiceStatus(lang==='te'?'వాయిస్ ప్లే కాలేదు. టెక్స్ట్ సమాధానం అందుబాటులో ఉంది; బ్రౌజర్‌లో తెలుగు వాయిస్‌ను తనిఖీ చేయండి.':'Voice playback failed. The text reply is available; check browser voice support.');if(liveVoice)startRecognition('live')};try{synth.speak(u)}catch(e){liveVoiceBusy=false;setVoiceStatus(lang==='te'?'వాయిస్ ప్లే కాలేదు. టెక్స్ట్ సమాధానం కొనసాగుతుంది.':'Could not start voice playback. Text reply is still available.');if(liveVoice)startRecognition('live')}}async function processChat(q,spoken=false,voiceInput=false){if(!q.trim())return;if(spoken)liveVoiceBusy=true;addMsg(q,'user');const pending=document.createElement('div');pending.className='msg bot';pending.textContent=lang==='te'?'సమాధానం తయారు చేస్తున్నాను…':'Thinking…';$('chat').appendChild(pending);$('chat').scrollTop=$('chat').scrollHeight;try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,language:chatLanguageNames[lang]||'Auto Detect',history:chatHistory.slice(-3),spoken:!!(spoken||voiceInput),provider:'default'})});const data=await response.json().catch(()=>({}));if(!response.ok){const detail=data.providerMessage?(' — '+data.providerMessage):'';throw new Error((data.error||'AI service unavailable')+' (HTTP '+response.status+')'+detail);}const answer=typeof data.reply==='string'&&data.reply.trim()?data.reply.trim():(lang==='te'?'క్షమించండి, సమాధానం తయారు కాలేదు. మళ్లీ ప్రయత్నించండి.':'Sorry, I could not generate a reply. Please try again.');const councilStatus=data.council&&data.council.enabled?(lang==='te'?'\n\n— LLM Council: '+Number(data.council.modelsUsed||0)+' మోడల్ సమాధానాలు, '+Number(data.council.reviewsReceived||0)+' సమీక్షలు పూర్తయ్యాయి.':'\n\n— LLM Council: '+Number(data.council.modelsUsed||0)+' model answers, '+Number(data.council.reviewsReceived||0)+' reviews completed.'):'';const displayedAnswer=answer.replace(/\\n/g,'\n').replace(/\n/g,'\n')+councilStatus.replace(/\\n/g,'\n').replace(/\n/g,'\n');renderAssistantMessage(pending,displayedAnswer);chatHistory.push({role:'user',content:q},{role:'assistant',content:displayedAnswer});if(chatHistory.length>12)chatHistory.splice(0,chatHistory.length-12);if(spoken)browserSpeakReply(answer)}catch(error){if(spoken){liveVoiceBusy=false;if(liveVoice)startRecognition('live')}console.error('LUCKY AI request failed:',error);const detail=error&&error.message?String(error.message):'';pending.textContent=(lang==='te'?'క్షమించండి, శివ సహాయకుడు స్పందించలేదు: ':'Sorry, Shiva assistant failed: ')+(detail?detail.slice(0,260)+' ':'')+(lang==='te'?'దయచేసి మళ్లీ ప్రయత్నించండి లేదా WhatsApp ద్వారా సంప్రదించండి.':'Please try again or contact our team on WhatsApp.')}}function startRecognition(mode){if(!SpeechRecognition){setVoiceStatus('Voice recognition is not supported here. Try Chrome on Android and allow microphone access.');return}if(voiceRecognition){try{voiceRecognition.abort()}catch(e){}}recognitionMode=mode;const rec=new SpeechRecognition();voiceRecognition=rec;let recognitionError='';rec.lang=lang==='auto'?autoVoiceLocales[autoVoiceLocaleIndex%autoVoiceLocales.length]:(({en:'en-IN',te:'te-IN',hi:'hi-IN',ta:'ta-IN',kn:'kn-IN',ml:'ml-IN',ur:'ur-IN',ar:'ar-SA',fr:'fr-FR',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',ru:'ru-RU','zh-CN':'zh-CN',ja:'ja-JP',ko:'ko-KR',nl:'nl-NL',tr:'tr-TR',id:'id-ID',th:'th-TH',vi:'vi-VN',bn:'bn-IN',mr:'mr-IN',pa:'pa-IN',fa:'fa-IR'})[lang]||'en-IN');rec.interimResults=false;rec.continuous=mode==='live';rec.maxAlternatives=3;rec.onstart=()=>setVoiceStatus(mode==='live'?'Listening… Speak naturally. Tap Stop live voice when finished.':'Listening… Speak your message.');rec.onresult=e=>{let transcript='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal){const result=e.results[i];let chosen=result[0].transcript;if(lang==='auto'){for(let j=0;j<result.length;j++){const candidate=result[j].transcript;if(detectedScriptLanguage(candidate)!=='auto'){chosen=candidate;break}}}transcript+=chosen+' '}}transcript=transcript.trim();if(!transcript)return;if(lang==='auto'){const script=detectedScriptLanguage(transcript);const localeIndex={'te':0,'hi':1,'en':2}[script];if(localeIndex!==undefined)autoVoiceLocaleIndex=localeIndex}if(mode==='message'){$('chatText').value=transcript;processChat(transcript,false);$('chatText').value='';setVoiceStatus('Voice message converted to text and sent to Shiva.')}else{try{rec.stop()}catch(e){}processChat(transcript,true)}};rec.onerror=e=>{recognitionError=e.error||'';if(e.error==='not-allowed'||e.error==='service-not-allowed'){liveVoice=false;$('liveVoiceBtn').classList.remove('active');$('liveVoiceBtn').setAttribute('aria-label','Start live voice');$('liveVoiceBtn').setAttribute('aria-pressed','false');setVoiceStatus('Microphone permission denied. Allow microphone access in browser settings.')}else if(e.error==='no-speech'&&lang==='auto'&&liveVoice){autoVoiceLocaleIndex=(autoVoiceLocaleIndex+1)%autoVoiceLocales.length;setVoiceStatus('ఆడియో వినిపించలేదు. తెలుగు / हिन्दी / English మళ్లీ ప్రయత్నిస్తున్నాను…')}else if(e.error!=='aborted'&&e.error!=='no-speech'){setVoiceStatus('Voice error: '+e.error+'. Check microphone permission and try again.')}};rec.onend=()=>{if(mode==='message')$('voiceMsgBtn').classList.remove('active');if(liveVoice&&mode==='live'&&!liveVoiceBusy&&!window.speechSynthesis.speaking){setTimeout(()=>{if(liveVoice)startRecognition('live')},recognitionError==='no-speech'?350:250)}};try{rec.start()}catch(e){setVoiceStatus('Could not start microphone. Close other voice sessions and try again.')}}function stopLiveVoice(){liveVoice=false;liveVoiceBusy=false;if(voiceRecognition){try{voiceRecognition.onend=null;voiceRecognition.stop()}catch(e){}voiceRecognition=null}if('speechSynthesis'in window)window.speechSynthesis.cancel();$('liveVoiceBtn').classList.remove('active');$('liveVoiceBtn').setAttribute('aria-label','Start live voice');$('liveVoiceBtn').setAttribute('title','Start live voice');$('liveVoiceBtn').setAttribute('aria-pressed','false');setVoiceStatus('Live voice conversation stopped.')}const luckyFileInput=$('luckyFileInput');const luckyFileName=$('luckyFileName');let luckySelectedFile=null;$('chatPlus').setAttribute('aria-label','Attach a photo or PDF');$('chatPlus').title='Attach a photo or PDF';$('chatPlus').addEventListener('click',()=>luckyFileInput.click());luckyFileInput.addEventListener('change',()=>{luckySelectedFile=luckyFileInput.files&&luckyFileInput.files[0]||null;if(luckyFileName){luckyFileName.textContent=luckySelectedFile?'Attached: '+luckySelectedFile.name:'';luckyFileName.hidden=!luckySelectedFile}});$('voiceMsgBtn').addEventListener('click',()=>{if(!SpeechRecognition){setVoiceStatus('Voice recognition is not supported here. Try Chrome on Android and allow microphone access.');return}if(voiceRecognition&&recognitionMode==='message'){try{voiceRecognition.stop()}catch(e){}return}$('voiceMsgBtn').classList.add('active');startRecognition('message')});$('liveVoiceBtn').addEventListener('click',()=>{if(liveVoice){stopLiveVoice();return}liveVoice=true;$('liveVoiceBtn').classList.add('active');$('liveVoiceBtn').setAttribute('aria-label','Stop live voice');$('liveVoiceBtn').setAttribute('aria-pressed','true');$('aiPanel').classList.add('open');startRecognition('live')});document.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>processChat(b.dataset.q,liveVoice)));async function processChatAttachment(question,file){if(!file)return;const pendingText=question||('Please analyze this '+(file.type==='application/pdf'?'PDF document':'image')+' and explain its contents.');addMsg((question?question+'\n':'')+'📎 '+file.name,'user');const pending=document.createElement('div');pending.className='msg bot';pending.textContent=lang==='te'?'ఫైల్‌ను పరిశీలిస్తున్నాను…':'Analyzing attachment…';$('chat').appendChild(pending);$('chat').scrollTop=$('chat').scrollHeight;try{if(file.size>8*1024*1024)throw new Error(lang==='te'?'ఫైల్ 8 MB కంటే చిన్నదిగా ఉండాలి.':'Please choose a file smaller than 8 MB.');const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(new Error('Could not read this file.'));reader.readAsDataURL(file)});const response=await fetch('/api/chat-file',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:pendingText,language:chatLanguageNames[lang]||'Auto Detect',fileName:file.name,mimeType:file.type,dataUrl})});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Attachment analysis failed.');renderAssistantMessage(pending,data.reply||'No answer was returned.')}catch(error){pending.textContent=(lang==='te'?'ఫైల్‌ను పరిశీలించలేకపోయాను: ':'Could not analyze the file: ')+(error.message||'Please try again.')}finally{luckySelectedFile=null;luckyFileInput.value='';luckyFileName.textContent='';luckyFileName.hidden=true}}
-$('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatText').value.trim();if(luckySelectedFile){processChatAttachment(q,luckySelectedFile);$('chatText').value='';return}if(!q)return;processChat(q,liveVoice);$('chatText').value=''});$('year').textContent=new Date().getFullYear();
+function renderAssistantMessage(node,text){const source=String(text??'').replace(/\n/g,'\n');const lines=source.split(/\r?\n/);let html='',inList=false;const closeList=()=>{if(inList){html+='</ul>';inList=false}};for(const rawLine of lines){const trimmed=rawLine.trim();if(!trimmed){closeList();html+='<div class="chat-md-gap"></div>';continue}const safe=escapeChatHtml(trimmed).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');if(/^#{1,3}\s+/.test(trimmed)){closeList();const level=Math.min(3,(trimmed.match(/^#+/)||['#'])[0].length);html+='<h'+level+' class="chat-md-heading">'+safe.replace(/^#{1,3}\s+/,'')+'</h'+level+'>';continue}if(/^[-•*]\s+/.test(trimmed)){if(!inList){html+='<ul class="chat-md-list">';inList=true}html+='<li>'+safe.replace(/^[-•*]\s+/,'')+'</li>';continue}closeList();html+='<p>'+safe+'</p>'}closeList();node.innerHTML=html;node.classList.add('richReply')}function addMsg(t,who){const d=document.createElement('div');d.className='msg '+who;if(who==='bot')renderAssistantMessage(d,t);else d.textContent=t;$('chat').appendChild(d);$('chat').scrollTop=$('chat').scrollHeight}function reply(q){const l=q.toLowerCase();const key=Object.keys(canned).find(k=>l.includes(k.split(' ')[0])||l.includes(k));return key?canned[key]:'I can guide you about flights, visas, tours, overseas jobs or cruise jobs. Please choose a quick option or contact our team on WhatsApp. This is a demo assistant.'}const chatHistory=[];let liveVoice=false,liveVoiceBusy=false,voiceRecognition=null,recognitionMode='message';const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;const autoVoiceLocales=['te-IN','hi-IN','en-IN'];let autoVoiceLocaleIndex=0;function detectedScriptLanguage(t){if(/[\u0C00-\u0C7F]/.test(t))return'te';if(/[\u0900-\u097F]/.test(t))return'hi';if(/[\u0B80-\u0BFF]/.test(t))return'ta';if(/[\u0C80-\u0CFF]/.test(t))return'kn';if(/[\u0D00-\u0D7F]/.test(t))return'ml';return'auto'}function cleanSpeechText(value){return String(value??'').replace(/\n/g,'\n').replace(/\r/g,'\n').replace(/\*\*(.*?)\*\*/g,'$1').replace(/__(.*?)__/g,'$1').replace(/\*(.*?)\*/g,'$1').replace(/_(.*?)_/g,'$1').replace(/~~(.*?)~~/g,'$1').replace(/^\s{0,3}#{1,6}\s*/gm,'').replace(/^\s*[-•]\s+/gm,'').replace(/^\s*\d+[.)]\s+/gm,'').replace(/https?:\/\/\S+/g,'').replace(/[*_#~`]/g,'').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim()}function setVoiceStatus(t){$('voiceStatus').textContent=t}function browserSpeakReply(t){t=cleanSpeechText(t);if(!t){liveVoiceBusy=false;return}if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){liveVoiceBusy=false;setVoiceStatus(lang==='te'?'ఈ బ్రౌజర్‌లో వాయిస్ ప్లేబ్యాక్ అందుబాటులో లేదు. టెక్స్ట్ చాట్ కొనసాగించవచ్చు.':'Speech playback is not supported in this browser. Text chat is still available.');if(liveVoice)startRecognition('live');return}const synth=window.speechSynthesis;synth.cancel();const u=new SpeechSynthesisUtterance(t);const answerLang=lang==='auto'?detectedScriptLanguage(t):lang;const locale=({en:'en-IN',te:'te-IN',hi:'hi-IN',ta:'ta-IN',kn:'kn-IN',ml:'ml-IN',ur:'ur-IN',ar:'ar-SA',fr:'fr-FR',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',ru:'ru-RU','zh-CN':'zh-CN',ja:'ja-JP',ko:'ko-KR',nl:'nl-NL',tr:'tr-TR',id:'id-ID',th:'th-TH',vi:'vi-VN',bn:'bn-IN',mr:'mr-IN',pa:'pa-IN',fa:'fa-IR'})[answerLang]||'en-IN';u.lang=locale;try{const voices=synth.getVoices?synth.getVoices():[];const exact=voices.find(v=>v.lang&&v.lang.toLowerCase()===locale.toLowerCase());const sameLanguage=voices.find(v=>v.lang&&v.lang.toLowerCase().split('-')[0]===locale.toLowerCase().split('-')[0]);if(exact||sameLanguage)u.voice=exact||sameLanguage;if(answerLang==='te'&&!exact&&!sameLanguage)setVoiceStatus('మీ బ్రౌజర్‌లో ప్రత్యేక తెలుగు వాయిస్ కనిపించలేదు. అందుబాటులో ఉన్న డిఫాల్ట్ వాయిస్‌తో ప్రయత్నిస్తున్నాం.')}catch(e){}u.onstart=()=>{if(answerLang==='te')setVoiceStatus('తెలుగు సమాధానాన్ని వాయిస్‌లో వినిపిస్తున్నాం…')};u.onend=()=>{liveVoiceBusy=false;if(liveVoice)startRecognition('live')};u.onerror=()=>{liveVoiceBusy=false;setVoiceStatus(lang==='te'?'వాయిస్ ప్లే కాలేదు. టెక్స్ట్ సమాధానం అందుబాటులో ఉంది; బ్రౌజర్‌లో తెలుగు వాయిస్‌ను తనిఖీ చేయండి.':'Voice playback failed. The text reply is available; check browser voice support.');if(liveVoice)startRecognition('live')};try{synth.speak(u)}catch(e){liveVoiceBusy=false;setVoiceStatus(lang==='te'?'వాయిస్ ప్లే కాలేదు. టెక్స్ట్ సమాధానం కొనసాగుతుంది.':'Could not start voice playback. Text reply is still available.');if(liveVoice)startRecognition('live')}}async function processChat(q,spoken=false,voiceInput=false){if(!q.trim())return;if(spoken)liveVoiceBusy=true;addMsg(q,'user');const pending=document.createElement('div');pending.className='msg bot';pending.textContent=lang==='te'?'సమాధానం తయారు చేస్తున్నాను…':'Thinking…';$('chat').appendChild(pending);$('chat').scrollTop=$('chat').scrollHeight;try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,language:chatLanguageNames[lang]||'Auto Detect',history:chatHistory.slice(-3),spoken:!!(spoken||voiceInput),provider:'default'})});const data=await response.json().catch(()=>({}));if(!response.ok){const detail=data.providerMessage?(' — '+data.providerMessage):'';throw new Error((data.error||'AI service unavailable')+' (HTTP '+response.status+')'+detail);}const answer=typeof data.reply==='string'&&data.reply.trim()?data.reply.trim():(lang==='te'?'క్షమించండి, సమాధానం తయారు కాలేదు. మళ్లీ ప్రయత్నించండి.':'Sorry, I could not generate a reply. Please try again.');const councilStatus=data.council&&data.council.enabled?(lang==='te'?'\n\n— LLM Council: '+Number(data.council.modelsUsed||0)+' మోడల్ సమాధానాలు, '+Number(data.council.reviewsReceived||0)+' సమీక్షలు పూర్తయ్యాయి.':'\n\n— LLM Council: '+Number(data.council.modelsUsed||0)+' model answers, '+Number(data.council.reviewsReceived||0)+' reviews completed.'):'';const displayedAnswer=answer.replace(/\\n/g,'\n').replace(/\n/g,'\n')+councilStatus.replace(/\\n/g,'\n').replace(/\n/g,'\n');renderAssistantMessage(pending,displayedAnswer);chatHistory.push({role:'user',content:q},{role:'assistant',content:displayedAnswer});if(chatHistory.length>12)chatHistory.splice(0,chatHistory.length-12);if(spoken)browserSpeakReply(answer)}catch(error){if(spoken){liveVoiceBusy=false;if(liveVoice)startRecognition('live')}console.error('ELITE AI request failed:',error);const detail=error&&error.message?String(error.message):'';pending.textContent=(lang==='te'?'క్షమించండి, శివ సహాయకుడు స్పందించలేదు: ':'Sorry, ELITE assistant failed: ')+(detail?detail.slice(0,260)+' ':'')+(lang==='te'?'దయచేసి మళ్లీ ప్రయత్నించండి లేదా WhatsApp ద్వారా సంప్రదించండి.':'Please try again or contact our team on WhatsApp.')}}function startRecognition(mode){if(!SpeechRecognition){setVoiceStatus('Voice recognition is not supported here. Try Chrome on Android and allow microphone access.');return}if(voiceRecognition){try{voiceRecognition.abort()}catch(e){}}recognitionMode=mode;const rec=new SpeechRecognition();voiceRecognition=rec;let recognitionError='';rec.lang=lang==='auto'?autoVoiceLocales[autoVoiceLocaleIndex%autoVoiceLocales.length]:(({en:'en-IN',te:'te-IN',hi:'hi-IN',ta:'ta-IN',kn:'kn-IN',ml:'ml-IN',ur:'ur-IN',ar:'ar-SA',fr:'fr-FR',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',ru:'ru-RU','zh-CN':'zh-CN',ja:'ja-JP',ko:'ko-KR',nl:'nl-NL',tr:'tr-TR',id:'id-ID',th:'th-TH',vi:'vi-VN',bn:'bn-IN',mr:'mr-IN',pa:'pa-IN',fa:'fa-IR'})[lang]||'en-IN');rec.interimResults=false;rec.continuous=mode==='live';rec.maxAlternatives=3;rec.onstart=()=>setVoiceStatus(mode==='live'?'Listening… Speak naturally. Tap Stop live voice when finished.':'Listening… Speak your message.');rec.onresult=e=>{let transcript='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal){const result=e.results[i];let chosen=result[0].transcript;if(lang==='auto'){for(let j=0;j<result.length;j++){const candidate=result[j].transcript;if(detectedScriptLanguage(candidate)!=='auto'){chosen=candidate;break}}}transcript+=chosen+' '}}transcript=transcript.trim();if(!transcript)return;if(lang==='auto'){const script=detectedScriptLanguage(transcript);const localeIndex={'te':0,'hi':1,'en':2}[script];if(localeIndex!==undefined)autoVoiceLocaleIndex=localeIndex}if(mode==='message'){$('chatText').value=transcript;processChat(transcript,false);$('chatText').value='';setVoiceStatus('Voice message converted to text and sent to ELITE.')}else{try{rec.stop()}catch(e){}processChat(transcript,true)}};rec.onerror=e=>{recognitionError=e.error||'';if(e.error==='not-allowed'||e.error==='service-not-allowed'){liveVoice=false;$('liveVoiceBtn').classList.remove('active');$('liveVoiceBtn').setAttribute('aria-label','Start live voice');$('liveVoiceBtn').setAttribute('aria-pressed','false');setVoiceStatus('Microphone permission denied. Allow microphone access in browser settings.')}else if(e.error==='no-speech'&&lang==='auto'&&liveVoice){autoVoiceLocaleIndex=(autoVoiceLocaleIndex+1)%autoVoiceLocales.length;setVoiceStatus('ఆడియో వినిపించలేదు. తెలుగు / हिन्दी / English మళ్లీ ప్రయత్నిస్తున్నాను…')}else if(e.error!=='aborted'&&e.error!=='no-speech'){setVoiceStatus('Voice error: '+e.error+'. Check microphone permission and try again.')}};rec.onend=()=>{if(mode==='message')$('voiceMsgBtn').classList.remove('active');if(liveVoice&&mode==='live'&&!liveVoiceBusy&&!window.speechSynthesis.speaking){setTimeout(()=>{if(liveVoice)startRecognition('live')},recognitionError==='no-speech'?350:250)}};try{rec.start()}catch(e){setVoiceStatus('Could not start microphone. Close other voice sessions and try again.')}}function stopLiveVoice(){liveVoice=false;liveVoiceBusy=false;if(voiceRecognition){try{voiceRecognition.onend=null;voiceRecognition.stop()}catch(e){}voiceRecognition=null}if('speechSynthesis'in window)window.speechSynthesis.cancel();$('liveVoiceBtn').classList.remove('active');$('liveVoiceBtn').setAttribute('aria-label','Start live voice');$('liveVoiceBtn').setAttribute('title','Start live voice');$('liveVoiceBtn').setAttribute('aria-pressed','false');setVoiceStatus('Live voice conversation stopped.')}const ELITEFileInput=$('ELITEFileInput');const ELITEFileName=$('ELITEFileName');let ELITESelectedFile=null;$('chatPlus').setAttribute('aria-label','Attach a photo or PDF');$('chatPlus').title='Attach a photo or PDF';$('chatPlus').addEventListener('click',()=>ELITEFileInput.click());ELITEFileInput.addEventListener('change',()=>{ELITESelectedFile=ELITEFileInput.files&&ELITEFileInput.files[0]||null;if(ELITEFileName){ELITEFileName.textContent=ELITESelectedFile?'Attached: '+ELITESelectedFile.name:'';ELITEFileName.hidden=!ELITESelectedFile}});$('voiceMsgBtn').addEventListener('click',()=>{if(!SpeechRecognition){setVoiceStatus('Voice recognition is not supported here. Try Chrome on Android and allow microphone access.');return}if(voiceRecognition&&recognitionMode==='message'){try{voiceRecognition.stop()}catch(e){}return}$('voiceMsgBtn').classList.add('active');startRecognition('message')});$('liveVoiceBtn').addEventListener('click',()=>{if(liveVoice){stopLiveVoice();return}liveVoice=true;$('liveVoiceBtn').classList.add('active');$('liveVoiceBtn').setAttribute('aria-label','Stop live voice');$('liveVoiceBtn').setAttribute('aria-pressed','true');$('aiPanel').classList.add('open');startRecognition('live')});document.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>processChat(b.dataset.q,liveVoice)));async function processChatAttachment(question,file){if(!file)return;const pendingText=question||('Please analyze this '+(file.type==='application/pdf'?'PDF document':'image')+' and explain its contents.');addMsg((question?question+'\n':'')+'📎 '+file.name,'user');const pending=document.createElement('div');pending.className='msg bot';pending.textContent=lang==='te'?'ఫైల్‌ను పరిశీలిస్తున్నాను…':'Analyzing attachment…';$('chat').appendChild(pending);$('chat').scrollTop=$('chat').scrollHeight;try{if(file.size>8*1024*1024)throw new Error(lang==='te'?'ఫైల్ 8 MB కంటే చిన్నదిగా ఉండాలి.':'Please choose a file smaller than 8 MB.');const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(new Error('Could not read this file.'));reader.readAsDataURL(file)});const response=await fetch('/api/chat-file',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:pendingText,language:chatLanguageNames[lang]||'Auto Detect',fileName:file.name,mimeType:file.type,dataUrl})});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Attachment analysis failed.');renderAssistantMessage(pending,data.reply||'No answer was returned.')}catch(error){pending.textContent=(lang==='te'?'ఫైల్‌ను పరిశీలించలేకపోయాను: ':'Could not analyze the file: ')+(error.message||'Please try again.')}finally{ELITESelectedFile=null;ELITEFileInput.value='';ELITEFileName.textContent='';ELITEFileName.hidden=true}}
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatText').value.trim();if(ELITESelectedFile){processChatAttachment(q,ELITESelectedFile);$('chatText').value='';return}if(!q)return;processChat(q,liveVoice);$('chatText').value=''});$('year').textContent=new Date().getFullYear();
 </script><div class="gtranslate_wrapper"></div>
 <script>window.gtranslateSettings={default_language:"en",languages:["en","te","hi","ta","kn","ml","ur","ar","fr","de","es","pt","ru","zh-CN","ja","ko","id","bn","mr","pa"],wrapper_selector:".gtranslate_wrapper",switcher_horizontal_position:"inline",switcher_vertical_position:"top",float_switcher_open_direction:"bottom",alt_flags:{en:"usa"}};</script><script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 <script>
@@ -1594,8 +1594,8 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 </script>
 
 
-<style id="lucky-ai-compact-header-fix">
-/* Compact LUCKY AI header: remove the globe badge and give the chat more room. */
+<style id="ELITE-ai-compact-header-fix">
+/* Compact ELITE AI header: remove the globe badge and give the chat more room. */
 .aiPanel .aiBrandMark{display:none!important;width:0!important;height:0!important;flex:0 0 0!important;margin:0!important;padding:0!important}
 .aiPanel .aiHeader{padding:5px 9px!important;gap:5px!important;min-height:0!important}
 .aiPanel .aiHeaderTitle{gap:0!important;min-width:0!important}
