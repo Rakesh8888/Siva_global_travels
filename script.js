@@ -184,9 +184,9 @@ function getVoiceLocale(){
 }
 function setSpeakingUi(speaking){
   if(aiSpeak){aiSpeak.classList.toggle("active",speaking);aiSpeak.textContent=speaking?"⏹️":"🔊";}
-  if(aiVoiceStatus && speaking) aiVoiceStatus.textContent="LUCKY is speaking…";
+  if(aiVoiceStatus && speaking) aiVoiceStatus.textContent="ELITE is speaking…";
 }
-function speakLucky(text){
+function speakELITE(text){
   if(!text || !("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   const lang=getVoiceLocale();
@@ -230,14 +230,14 @@ async function askAi(message,options={}){
     if(!res.ok){ const err=new Error(data.error||"AI request failed"); err.providerMessage=data.providerMessage; err.providerCode=data.providerCode; err.providerStatus=data.providerStatus; throw err; }
     const reply=(data.reply||"Please continue with WhatsApp and our team will assist you.").trim();
     addAiMessage(reply);aiHistory.push({role:"assistant",content:reply});
-    if(options.voice) speakLucky(reply);
+    if(options.voice) speakELITE(reply);
   }catch(e){
     loading.remove();
-    let msg="LUCKY could not connect to the AI service. Please try again or use WhatsApp.";
-    if(e?.name==="AbortError") msg="LUCKY AI timed out. Please try again.";
-    else if(e?.message){ const detail=e?.providerMessage||e?.providerCode||e?.providerStatus; msg="LUCKY AI error: "+e.message+(detail?" — "+detail:""); }
+    let msg="ELITE could not connect to the AI service. Please try again or use WhatsApp.";
+    if(e?.name==="AbortError") msg="ELITE AI timed out. Please try again.";
+    else if(e?.message){ const detail=e?.providerMessage||e?.providerCode||e?.providerStatus; msg="ELITE AI error: "+e.message+(detail?" — "+detail:""); }
     addAiMessage(msg);
-    if(options.voice) speakLucky(msg);
+    if(options.voice) speakELITE(msg);
   }finally{
     if(sendButton){sendButton.disabled=false;sendButton.removeAttribute("aria-busy");}
   }
@@ -246,7 +246,7 @@ if("speechSynthesis" in window && aiSpeak){
   aiSpeak.addEventListener("click",()=>{
     const msgs=aiMessages?.querySelectorAll(".ai-msg-bot");const last=msgs?.[msgs.length-1];if(!last)return;
     if(aiSpeaking){speechSynthesis.cancel();aiSpeaking=false;setSpeakingUi(false);return;}
-    speakLucky(last.textContent);
+    speakELITE(last.textContent);
   });
 }
 const aiVoiceMode=null;
@@ -258,13 +258,13 @@ function setVoiceUi(listening){
   if(aiVoiceMic){aiVoiceMic.classList.toggle("active",listening);}
   if(aiVoiceStatus)aiVoiceStatus.textContent=listening?"Listening… speak now":"Tap the microphone to speak";
 }
-function stopLuckyRecognition(){
+function stopELITERecognition(){
   if(aiRecognition&&aiRecognition._running){try{aiRecognition.stop()}catch(_){}}
   setVoiceUi(false);
 }
-function startLuckyRecognition(){
+function startELITERecognition(){
   if(!aiRecognition)return;
-  if(aiRecognition._running){stopLuckyRecognition();return;}
+  if(aiRecognition._running){stopELITERecognition();return;}
   if(aiVoiceMode)aiVoiceMode.hidden=false;
   aiRecognition.lang=voiceLangMap[aiLanguage?.value]||"en-IN";
   aiRecognition.continuous=false;
@@ -277,8 +277,8 @@ if(aiMic && ("SpeechRecognition" in window || "webkitSpeechRecognition" in windo
   const R=window.SpeechRecognition||window.webkitSpeechRecognition;
   aiRecognition=new R();
   window.aiRecognition=aiRecognition;
-  aiMic.addEventListener("click",startLuckyRecognition);
-  aiVoiceMic?.addEventListener("click",startLuckyRecognition);
+  aiMic.addEventListener("click",startELITERecognition);
+  aiVoiceMic?.addEventListener("click",startELITERecognition);
   aiRecognition.onresult=e=>{
     const v=e.results?.[0]?.[0]?.transcript?.trim();
     if(v){
@@ -856,7 +856,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 document.addEventListener("DOMContentLoaded",()=>{const hero=document.querySelector(".hero-3d"),earth=document.querySelector(".earth-scene");if(hero&&earth&&matchMedia("(pointer:fine)").matches){hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;earth.style.transform="translateY(-50%) translate3d("+(x*18).toFixed(1)+"px,"+(y*12).toFixed(1)+"px,0) rotateX("+(-y*2).toFixed(2)+"deg) rotateY("+(x*3).toFixed(2)+"deg)"});hero.addEventListener("pointerleave",()=>{earth.style.transform="translateY(-50%) translate3d(0,0,0)"})}const targets=document.querySelectorAll(".services,.destination-showcase,.jobs-showcase,.trust-enquiry,.about-section,.faq-section,.payment-section,.app-download,.contact");targets.forEach(el=>el.classList.add("reveal-3d"));if("IntersectionObserver"in window){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");io.unobserve(entry.target)}}),{threshold:.12});targets.forEach(el=>io.observe(el))}else targets.forEach(el=>el.classList.add("is-visible"))});
 
 
-/* SIVA FINAL REQUIREMENTS — flight search + LUCKY reliability */
+/* SIVA FINAL REQUIREMENTS — flight search + ELITE reliability */
 (function(){
   const cityDB={
     "hyderabad, india":{lat:17.385,lon:78.4867,label:"Hyderabad, India"},
@@ -914,12 +914,12 @@ document.addEventListener("DOMContentLoaded",()=>{const hero=document.querySelec
   });
 })();
 
-/* LUCKY voice: separate microphone recognition from AI API errors and give useful diagnostics. */
+/* ELITE voice: separate microphone recognition from AI API errors and give useful diagnostics. */
 (function(){
   const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
   const mic=document.querySelector("#aiMic"),voiceMic=document.querySelector("#aiVoiceMic"),status=document.querySelector("#aiVoiceStatus");
   if(!SpeechRecognition||(!mic&&!voiceMic)) return;
-  const originalErrorHandler=(window.__sivaLuckyRecognitionErrorHandler||null);
+  const originalErrorHandler=(window.__sivaELITERecognitionErrorHandler||null);
   function messageFor(error){
     const code=error&&error.error;
     if(code==="not-allowed"||code==="service-not-allowed") return "Microphone permission is blocked. Allow microphone access for this site and try again.";
