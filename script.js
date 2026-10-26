@@ -6,7 +6,7 @@ const CONTACT_CONFIG = {
     facebook: ""
 };
 
-function buildWhatsAppUrl(message = "Hello Siva Global Travels, I would like to make an enquiry.") {
+function buildWhatsAppUrl(message = "Hello Elite Services, I would like to make an enquiry.") {
     const number = CONTACT_CONFIG.whatsappNumber.replace(/\D/g, "");
     return number
         ? "https://wa.me/" + number + "?text=" + encodeURIComponent(message)
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const note = document.querySelector("#formNote");
 
             const text = [
-                "Hello Siva Global Travels,",
+                "Hello Elite Services,",
                 "",
                 cv ? `CV / Resume selected: ${cv.name}` : "CV / Resume: Not attached yet.",
                 "",
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             window.open(buildWhatsAppUrl(text), "_blank", "noopener");
             note.textContent = CONTACT_CONFIG.whatsappNumber
-                ? "WhatsApp opened for Siva Global Travels."
+                ? "WhatsApp opened for Elite Services."
                 : "WhatsApp opened. The business number will be connected when the official number is added.";
             if (window.innerWidth < 700) {
                 note.scrollIntoView({behavior:"smooth", block:"nearest"});
@@ -972,7 +972,7 @@ document.addEventListener("DOMContentLoaded", () => {
       consentInput?.focus();
       return;
     }
-    const message = "Hello Siva Global Travels, I would like to subscribe to travel newsletters and service updates. My email address is: " + email + ". I consent to receive these updates.";
+    const message = "Hello Elite Services, I would like to subscribe to travel newsletters and service updates. My email address is: " + email + ". I consent to receive these updates.";
     const url = "https://wa.me/9182641172?text=" + encodeURIComponent(message);
     status.textContent = "Opening WhatsApp so you can send and confirm your subscription request. Your email is not stored on this website.";
     status.className = "newsletter-status is-success";
