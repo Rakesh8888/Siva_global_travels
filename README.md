@@ -1,6 +1,6 @@
-# Elite Services — Website Prototype
+# Vishwaseva — Website Prototype
 
-Mobile-first single-page website for Elite Services.
+Mobile-first single-page website for Vishwaseva.
 
 ## Included
 - Responsive homepage and navigation
