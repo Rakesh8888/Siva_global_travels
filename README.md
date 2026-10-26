@@ -1,6 +1,6 @@
-# Siva Global Travels — Website Prototype
+# Elite Services — Website Prototype
 
-Mobile-first single-page website for Siva Global Travels.
+Mobile-first single-page website for Elite Services.
 
 ## Included
 - Responsive homepage and navigation
