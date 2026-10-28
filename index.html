@@ -1894,7 +1894,7 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
     var mm=String(now.getMonth()+1).padStart(2,'0');
     var yyyy=now.getFullYear();
     var day=['SUN','MON','TUE','WED','THU','FRI','SAT'][now.getDay()];
-    el.textContent=dd+'/'+mm+'/'+yyyy+'('+day+')';
+    el.textContent='↑ '+dd+'/'+mm+'/'+yyyy+'('+day+')'+' ↓';
   }
   updateHeaderDate();
   setInterval(updateHeaderDate,60000);
