@@ -1962,5 +1962,48 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 })();
 </script>
 
+
+<style id="elite-arrow-plain-final">
+.aiFabArrow{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;width:auto!important;height:auto!important;padding:0!important;color:#8B4513!important;font:900 42px/1 Arial,sans-serif!important}
+#aiFab.aiFab{border-radius:50%!important;background:#7CFC00!important;color:#ff4500!important}
+</style>
+<script id="elite-arrow-mobile-scroll-fix">
+(function(){
+ function install(){
+  var arrow=document.querySelector('.aiFabArrow');
+  var faq=document.getElementById('faq');
+  if(!arrow||!faq||window.__eliteArrowScrollFix)return;
+  window.__eliteArrowScrollFix=true;
+  function maxY(){return Math.max(0,Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0)-window.innerHeight);}
+  function bottom(){return window.scrollY>=maxY()-10;}
+  function label(){var up=bottom();arrow.textContent=up?'↑':'↓';arrow.setAttribute('aria-label',up?'Back to top':'Scroll to FAQ');arrow.setAttribute('title',up?'Back to top':'Scroll to FAQ');}
+  function goTop(){window.scrollTo({top:0,behavior:'smooth'});}
+  function goBottom(){
+   var tries=0;
+   function step(){
+    var target=maxY();
+    if(window.scrollY>=target-8||tries++>24){label();return;}
+    window.scrollTo({top:target,behavior:tries<2?'smooth':'auto'});
+    window.setTimeout(step,180);
+   }
+   step();
+  }
+  function handle(e){
+   var target=e.target;
+   if(!target||!(target.closest&&target.closest('.aiFabArrow')))return;
+   e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+   if(bottom())goTop();else goBottom();
+  }
+  /* Capture at window level so older arrow listeners cannot interrupt the scroll. */
+  window.addEventListener('click',handle,true);
+  window.addEventListener('touchend',handle,{capture:true,passive:false});
+  window.addEventListener('scroll',label,{passive:true});
+  window.addEventListener('resize',label);
+  label();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+})();
+</script>
+
 </body>
 </html>
