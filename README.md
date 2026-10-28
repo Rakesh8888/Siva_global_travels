@@ -1,6 +1,6 @@
-# Vishvaseva — Website Prototype
+# Elite Multi Services — Website Prototype
 
-Mobile-first single-page website for Vishvaseva.
+Mobile-first single-page website for Elite Multi Services.
 
 ## Included
 - Responsive homepage and navigation
