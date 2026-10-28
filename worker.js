@@ -100,11 +100,16 @@ CRUISE SHIP JOB GUIDANCE AND LIMITED ASSISTANCE
 
 function corsHeaders(request) {
   const requestOrigin = new URL(request.url).origin;
-  const origin = request.headers.get("Origin");
-  // The frontend calls this API on the same site. Do not reflect arbitrary third-party origins.
+  const origin = request.headers.get("Origin") || "";
+  // Allow the Cloudflare-hosted site itself and this repository's GitHub Pages preview.
+  // Never reflect arbitrary third-party origins.
+  const allowedOrigins = new Set([
+    requestOrigin,
+    "https://rakesh8888.github.io"
+  ]);
   return {
-    "Access-Control-Allow-Origin": origin === requestOrigin ? requestOrigin : requestOrigin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Origin": allowedOrigins.has(origin) ? origin : requestOrigin,
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin"
   };
