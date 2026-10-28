@@ -237,7 +237,7 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.GROQ_API_KEY) {
+  if (!env.GEMINI_API_KEY && !env.GROQ_API_KEY && !env.AI) {
     return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
   }
 
@@ -436,18 +436,77 @@ async function handleChat(request, env) {
       }
     }
 
-    // FREE-ONLY SAFETY: intentionally do not fall back to potentially paid providers.
+    // Free-tier fallback 1: Cloudflare Workers AI. Requires an AI binding named "AI" in Worker settings.
+    // Uses a model available on Cloudflare's free allocation; if unavailable, continue to Groq.
+    let workersAiProblem = "Cloudflare Workers AI binding is not configured";
+    if (!reply && env.AI && typeof env.AI.run === "function") {
+      try {
+        const aiMessages = [
+          { role: "system", content: systemPrompt },
+          ...history.map(x => ({ role: x.role, content: x.content })),
+          { role: "user", content: message }
+        ];
+        const aiResult = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
+          messages: aiMessages,
+          max_tokens: body?.spoken === true ? 180 : 500,
+          temperature: body?.spoken === true ? 0.2 : 0.3
+        });
+        reply = String(aiResult?.response || aiResult?.choices?.[0]?.message?.content || "").trim();
+        if (reply) console.log("ELITE MULTI SERVICES AI answered using Cloudflare Workers AI.");
+        else workersAiProblem = "Cloudflare Workers AI returned an empty answer";
+      } catch (error) {
+        workersAiProblem = String(error?.message || error).slice(0, 240);
+        console.error("ELITE MULTI SERVICES AI Workers AI fallback failed:", workersAiProblem);
+      }
+    }
+
+    // Free-tier fallback 2: Groq. Requires GROQ_API_KEY; model names can change in provider catalog.
+    let groqProblem = "Groq API key is not configured";
+    if (!reply && env.GROQ_API_KEY) {
+      const groqController = new AbortController();
+      const groqTimer = setTimeout(() => groqController.abort(), body?.spoken === true ? 9000 : 14000);
+      try {
+        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "openai/gpt-oss-20b",
+            messages: [
+              { role: "system", content: systemPrompt },
+              ...history.map(x => ({ role: x.role, content: x.content })),
+              { role: "user", content: message }
+            ],
+            max_tokens: body?.spoken === true ? 180 : 500,
+            temperature: body?.spoken === true ? 0.2 : 0.3
+          }),
+          signal: groqController.signal
+        });
+        const groqData = await groqResponse.json().catch(() => ({}));
+        if (groqResponse.ok) {
+          reply = String(groqData?.choices?.[0]?.message?.content || "").trim();
+          if (reply) console.log("ELITE MULTI SERVICES AI answered using automatic Groq fallback.");
+          else groqProblem = "Groq returned an empty answer";
+        } else {
+          groqProblem = "Groq HTTP " + groqResponse.status + ": " + String(groqData?.error?.message || "provider error").slice(0, 180);
+          console.error("ELITE MULTI SERVICES AI automatic Groq fallback failed:", groqProblem);
+        }
+      } catch (error) {
+        groqProblem = error?.name === "AbortError" ? "Groq fallback timed out" : String(error?.message || error).slice(0, 200);
+      } finally {
+        clearTimeout(groqTimer);
+      }
+    }
 
     if (!reply) {
       return jsonResponse({
         error: geminiQuotaReached
-          ? "Gemini free-tier limit may have been reached. No paid-provider fallback was used. Please wait for quota reset or choose Groq manually if it is configured."
-          : "ELITE MULTI SERVICES AI is temporarily unavailable. No paid-provider fallback was used. Please try again later.",
-        providerMessage: String(geminiProblem).slice(0, 400)
+          ? "Gemini free-tier limit may have been reached. The free fallbacks were also unavailable. Please try again after the limits reset."
+          : "ELITE MULTI SERVICES AI is temporarily unavailable. Please try again later.",
+        providerMessage: [String(geminiProblem), "Workers AI: " + workersAiProblem, "Groq: " + groqProblem].join(" | ").slice(0, 600)
       }, geminiQuotaReached ? 429 : 502, request);
     }
 
-    return jsonResponse({ reply, language }, 200, request);
+    return jsonResponse({ reply, language, provider: reply ? (geminiProblem === "Gemini unavailable" ? "gemini" : "fallback") : "unknown" }, 200, request);
   } catch (error) {
     console.error("ELITE MULTI SERVICES AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
     return jsonResponse({
@@ -653,7 +712,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.AI || env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
     if (url.pathname === "/api/chat-file") return handleChatFile(request, env);
