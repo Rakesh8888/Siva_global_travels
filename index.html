@@ -2005,5 +2005,12 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 })();
 </script>
 
+
+<!-- Final mobile fix: force the AI launcher to remain a true circle at every viewport/zoom. -->
+<style id="elite-ai-circle-final-fix">
+html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important;max-width:58px!important;max-height:58px!important;aspect-ratio:1/1!important;box-sizing:border-box!important;padding:0!important;margin:0!important;border-radius:50%!important;border:0!important;background:#7CFC00!important;color:#ff4500!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;flex:0 0 58px!important;transform:translateY(-50%)!important}
+@media(max-width:520px){html body button#aiFab.aiFab{width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;max-width:56px!important;max-height:56px!important;flex-basis:56px!important;right:14px!important;left:auto!important;top:50%!important;bottom:auto!important}}
+</style>
+
 </body>
 </html>
