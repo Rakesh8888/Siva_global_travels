@@ -1800,10 +1800,10 @@ body { overflow-wrap: anywhere; }
 </section>
 <footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> Elite Multi Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span><nav class="legalFooterLinks" aria-label="Legal and policy links"><a href="#terms-of-use">Terms of Use</a><a href="#privacy-policy">Privacy Notice</a><a href="#cancellation-refund-policy">Cancellation & Refunds</a><a href="#travel-visa-disclaimer">Travel & Visa Disclaimer</a><a href="#cruise-career-disclaimer">Career Assistance Disclaimer</a><a href="#complaints-grievance">Complaints & Support</a><a href="#legal-policies">Official Resources</a></nav></div></footer><div class="wrap footerin"><span>© <span id="year"></span> Elite Multi Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span></div></footer>
 <!-- ELITE MULTI SERVICES AI UI: Language options control removed from the visible interface; language follows the website selector. -->
-<span class="aiFabArrow" aria-hidden="true">↓</span> <button class="aiFab" id="aiFab" aria-label="Open ELITE assistant">AI</button>
+<span class="aiFabArrow" aria-hidden="true">↓</span> <button class="aiFab" id="aiFab" aria-label="Open Elite chatbot" title="Open Elite chatbot">Elite</button>
 <div class="aiPanel" id="aiPanel">
     <div class="aiHeader">
-    <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>ELITE MULTI SERVICES</strong><span class="aiOnline"><i></i> Online</span></span></div>
+    <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>Elite</strong><span class="aiOnline"><i></i> Online</span></span></div>
     <input type="hidden" id="chatLanguage" value="auto" aria-hidden="true">
     <button id="aiClose" aria-label="Close assistant">×</button>
   </div>
@@ -1811,7 +1811,7 @@ body { overflow-wrap: anywhere; }
     <div class="chat" id="chat" aria-live="polite"><div class="msg bot">నమస్కారం! నా పేరు ఎలైట్. నేను మీకు ఏ విధంగా సహాయపడగలను?</div></div>
     <form class="chatInput chatComposer" id="chatForm">
       <button type="button" class="composerIcon" id="chatPlus" aria-label="Show quick actions" title="Quick actions">＋</button>
-      <input id="chatText" placeholder="Message ELITE" autocomplete="off" aria-label="Message ELITE">
+      <input id="chatText" placeholder="Message Elite" autocomplete="off" aria-label="Message Elite">
       <button type="button" class="composerIcon composerMic" id="voiceMsgBtn" aria-label="Record voice message" title="Voice message"><svg class="voiceMessageMicIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button type="button" class="composerLive" id="liveVoiceBtn" aria-label="Start live voice" aria-pressed="false" title="Live voice"><svg class="voiceWaveIcon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 20v8M11 13v22M18 7v34M25 15v18M32 11v26M39 19v10M45 22v4" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></button>
       <button type="submit" class="composerSend" aria-label="Send message" title="Send"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4M5.5 10.5 12 4l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -1912,9 +1912,9 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
   var arrow=document.querySelector('.aiFabArrow'),faq=document.getElementById('faq'),bot=document.getElementById('aiFab'),panel=document.getElementById('aiPanel');
   if(!arrow||!faq||arrow.dataset.eliteFinalBound==='1')return;
   arrow.dataset.eliteFinalBound='1';arrow.setAttribute('role','button');arrow.setAttribute('tabindex','0');arrow.setAttribute('aria-hidden','false');
-  function atFaqBottom(){var r=faq.getBoundingClientRect();return r.bottom<=window.innerHeight+40;}
+  function atFaqBottom(){var doc=document.documentElement;var body=document.body;var maxScroll=Math.max(doc.scrollHeight,body?body.scrollHeight:0)-window.innerHeight;return window.scrollY>=Math.max(0,maxScroll-24);}
   function update(){var up=atFaqBottom();arrow.textContent=up?'↑':'↓';arrow.setAttribute('aria-label',up?'Back to page top':'Scroll to FAQ');arrow.setAttribute('title',up?'Back to page top':'Scroll to FAQ');}
-  function activate(e){e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();if(atFaqBottom())window.scrollTo({top:0,behavior:'smooth'});else faq.scrollIntoView({behavior:'smooth',block:'end'});}
+  function activate(e){e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();if(atFaqBottom())window.scrollTo({top:0,behavior:'smooth'});else window.scrollTo({top:Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0),behavior:'smooth'});}
   arrow.addEventListener('click',activate,true);arrow.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){activate(e);}},true);
   window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);
   if(bot){bot.style.backgroundColor='#7CFC00';bot.style.right='18px';bot.style.left='auto';bot.style.top='50%';bot.style.bottom='auto';bot.addEventListener('click',function(){if(panel)panel.classList.add('open');});}
@@ -1922,5 +1922,12 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
-</script></body>
+</script>
+<style id="elite-final-user-fix">
+/* Final verified overrides: separate bottom-scroll arrow and centered parrot-green Elite launcher. */
+#aiFab.aiFab{position:fixed!important;right:16px!important;left:auto!important;top:50%!important;bottom:auto!important;transform:translateY(-50%)!important;width:62px!important;height:62px!important;border-radius:50%!important;background:#7CFC00!important;background-color:#7CFC00!important;color:#17330a!important;border:2px solid #4f9d00!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:14px!important;font-weight:800!important;box-shadow:0 5px 18px #0005!important}
+.aiFabArrow{position:fixed!important;right:18px!important;left:auto!important;top:auto!important;bottom:18px!important;width:46px!important;height:46px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid #8B4513!important;border-radius:50%!important;background:#fff!important;color:#8B4513!important;font:900 38px/1 Arial,sans-serif!important;z-index:2147483001!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;animation:none!important}
+@media(max-width:520px){#aiFab.aiFab{right:14px!important;width:58px!important;height:58px!important}.aiFabArrow{right:14px!important;bottom:18px!important;width:44px!important;height:44px!important}}
+</style>
+</body>
 </html>
