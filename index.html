@@ -1900,5 +1900,56 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
   setInterval(updateHeaderDate,60000);
 })();
 </script>
-<style id="ai-fab-arrow-style">.aiFab{position:fixed!important;right:12px!important;bottom:12px!important;width:52px!important;height:52px!important;font-size:16px!important;z-index:2147483000!important}.aiFabArrow{position:fixed!important;right:20px!important;bottom:66px!important;top:auto!important;left:auto!important;z-index:2147483001!important;width:34px!important;height:34px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-family:Arial,sans-serif!important;font-size:36px!important;line-height:1!important;font-weight:900!important;color:#8B4513!important;-webkit-text-stroke:1px #8B4513;text-shadow:0 2px 6px #0008;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important;animation:aiArrowNudge 1s ease-in-out infinite}@keyframes aiArrowNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}@media(max-width:520px){.aiFab{right:10px!important;bottom:10px!important;width:50px!important;height:50px!important}.aiFabArrow{right:18px!important;bottom:62px!important;top:auto!important;width:34px!important;height:34px!important;font-size:36px!important}}body:has(.aiPanel.open) .aiFabArrow,body:has(.aiPanel.open) .aiFab{display:none!important}</style><script id="ai-arrow-click-fix">(function(){function bindArrow(){var arrow=document.querySelector(".aiFabArrow");var bot=document.getElementById("aiFab");if(!arrow||!bot)return;arrow.setAttribute("role","button");arrow.setAttribute("tabindex","0");arrow.setAttribute("aria-label","Open AI assistant");arrow.style.pointerEvents="auto";arrow.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();bot.click();});arrow.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();bot.click();}});}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",bindArrow);}else{bindArrow();}})();</script></body>
+<style id="ai-fab-arrow-style">
+.aiFab{position:fixed!important;right:12px!important;bottom:12px!important;width:52px!important;height:52px!important;font-size:16px!important;z-index:2147483000!important}
+.aiFabArrow{position:fixed!important;right:20px!important;bottom:66px!important;top:auto!important;left:auto!important;z-index:2147483001!important;width:40px!important;height:40px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;border-radius:50%!important;background:var(--panel)!important;font-family:Arial,sans-serif!important;font-size:36px!important;line-height:1!important;font-weight:900!important;color:#8B4513!important;-webkit-text-stroke:1px #8B4513!important;text-shadow:0 2px 6px #0005;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important;animation:aiArrowNudge 1s ease-in-out infinite}
+@keyframes aiArrowNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+@media(max-width:520px){.aiFab{right:10px!important;bottom:10px!important;width:50px!important;height:50px!important}.aiFabArrow{right:15px!important;bottom:62px!important;width:40px!important;height:40px!important;font-size:36px!important}}
+body:has(.aiPanel.open) .aiFabArrow{display:none!important}
+</style>
+<script id="faq-top-arrow-fix">
+(function(){
+ function init(){
+  var arrow=document.querySelector('.aiFabArrow');
+  var faq=document.getElementById('faq');
+  var bot=document.getElementById('aiFab');
+  if(!arrow||!faq||arrow.dataset.faqTopBound==='1')return;
+  arrow.dataset.faqTopBound='1';
+  arrow.textContent='↓';
+  arrow.setAttribute('role','button');
+  arrow.setAttribute('tabindex','0');
+  arrow.setAttribute('aria-label','Go to FAQ');
+  arrow.setAttribute('title','FAQ / Back to top');
+  function isFaqVisible(){
+   var r=faq.getBoundingClientRect();
+   return r.top < window.innerHeight*0.55 && r.bottom > window.innerHeight*0.2;
+  }
+  function update(){
+   var up=isFaqVisible();
+   arrow.textContent=up?'↑':'↓';
+   arrow.setAttribute('aria-label',up?'Back to top':'Go to FAQ');
+   arrow.setAttribute('title',up?'Back to top':'Go to FAQ');
+  }
+  function activate(e){
+   e.preventDefault();
+   e.stopPropagation();
+   if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+   if(isFaqVisible()){
+    window.scrollTo({top:0,behavior:'smooth'});
+   }else{
+    faq.scrollIntoView({behavior:'smooth',block:'start'});
+   }
+  }
+  arrow.addEventListener('click',activate,true);
+  arrow.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){activate(e);}},true);
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  if(bot){bot.addEventListener('click',function(){arrow.style.display='none';});}
+  var close=document.getElementById('aiClose');
+  if(close)close.addEventListener('click',function(){arrow.style.display='';update();});
+  update();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script></body>
 </html>
