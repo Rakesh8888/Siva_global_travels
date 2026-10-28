@@ -1894,11 +1894,11 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
     var mm=String(now.getMonth()+1).padStart(2,'0');
     var yyyy=now.getFullYear();
     var day=['SUN','MON','TUE','WED','THU','FRI','SAT'][now.getDay()];
-    el.textContent='↑ '+dd+'/'+mm+'/'+yyyy+'('+day+')'+' ↓';
+    el.textContent=dd+'/'+mm+'/'+yyyy+'('+day+')';
   }
   updateHeaderDate();
   setInterval(updateHeaderDate,60000);
 })();
 </script>
-<style id="ai-fab-arrow-style">.aiFabArrow{position:fixed;right:29px;bottom:78px;z-index:9999;width:40px;height:72px;display:flex;align-items:flex-start;justify-content:center;font-family:Arial,sans-serif;font-size:58px;line-height:1;font-weight:900;color:var(--orange,#ff8a00);-webkit-text-stroke:1px currentColor;text-shadow:0 2px 6px #0008;pointer-events:none;animation:aiArrowNudge 1s ease-in-out infinite}@keyframes aiArrowNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}@media(max-width:520px){.aiFabArrow{right:25px;bottom:76px;width:44px;height:76px;font-size:62px}}</style></body>
+<style id="ai-fab-arrow-style">.aiFab{right:12px!important;bottom:12px!important;width:52px!important;height:52px!important;font-size:16px!important;z-index:10000!important}.aiFabArrow{position:fixed;right:22px;bottom:61px;z-index:10001;width:34px;height:86px;display:flex;align-items:flex-start;justify-content:center;font-family:Arial,sans-serif;font-size:56px;line-height:1;font-weight:900;color:#b66b00;-webkit-text-stroke:1px currentColor;text-shadow:0 2px 6px #0008;pointer-events:none;animation:aiArrowNudge 1s ease-in-out infinite}@keyframes aiArrowNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}@media(max-width:520px){.aiFab{right:10px!important;bottom:10px!important;width:50px!important;height:50px!important}.aiFabArrow{right:18px;bottom:58px;width:36px;height:86px;font-size:60px}}</style></body>
 </html>
