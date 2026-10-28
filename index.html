@@ -1800,7 +1800,7 @@ body { overflow-wrap: anywhere; }
 </section>
 <footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> Elite Multi Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span><nav class="legalFooterLinks" aria-label="Legal and policy links"><a href="#terms-of-use">Terms of Use</a><a href="#privacy-policy">Privacy Notice</a><a href="#cancellation-refund-policy">Cancellation & Refunds</a><a href="#travel-visa-disclaimer">Travel & Visa Disclaimer</a><a href="#cruise-career-disclaimer">Career Assistance Disclaimer</a><a href="#complaints-grievance">Complaints & Support</a><a href="#legal-policies">Official Resources</a></nav></div></footer><div class="wrap footerin"><span>© <span id="year"></span> Elite Multi Services. All rights reserved.</span><span>Flight offers require verification before booking. AI assistance is provided for general guidance.</span></div></footer>
 <!-- ELITE MULTI SERVICES AI UI: Language options control removed from the visible interface; language follows the website selector. -->
-<button class="aiFab" id="aiFab" aria-label="Open ELITE assistant">AI</button>
+<span class="aiFabArrow" aria-hidden="true">↓</span> <button class="aiFab" id="aiFab" aria-label="Open ELITE assistant">AI</button>
 <div class="aiPanel" id="aiPanel">
     <div class="aiHeader">
     <div class="aiHeaderTitle"><span class="aiBrandMark" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 24h30M24 9c5 5 7 10 7 15s-2 10-7 15c-5-5-7-10-7-15s2-10 7-15" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="aiBrandText"><strong>ELITE MULTI SERVICES</strong><span class="aiOnline"><i></i> Online</span></span></div>
@@ -1900,5 +1900,5 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
   setInterval(updateHeaderDate,60000);
 })();
 </script>
-</body>
+<style id="ai-fab-arrow-style">.aiFabArrow{position:fixed;right:37px;bottom:84px;z-index:51;width:22px;height:28px;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;font-weight:900;color:var(--orange);text-shadow:0 2px 5px #0005;pointer-events:none;animation:aiArrowNudge 1.2s ease-in-out infinite}@keyframes aiArrowNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}@media(max-width:520px){.aiFabArrow{right:36px;bottom:82px}}</style></body>
 </html>
