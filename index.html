@@ -1395,6 +1395,77 @@ body:not(.light) .aiFab {
   color: #28251d !important;
 }
 
+
+/* Robust final theme fix: readable cards in both themes */
+body.light .panel,
+body.light .card,
+body.light .detail,
+body.light .flightShell {
+  background: #ffffff !important;
+  color: #17212b !important;
+  border-color: #cbd5df !important;
+}
+body.light .panel p,
+body.light .panel li,
+body.light .panel h1,
+body.light .panel h2,
+body.light .panel h3,
+body.light .panel b,
+body.light .panel strong,
+body.light .card p,
+body.light .card li,
+body.light .card h1,
+body.light .card h2,
+body.light .card h3,
+body.light .card b,
+body.light .card strong,
+body.light .detail p,
+body.light .detail span,
+body.light .checklist,
+body.light .flightShell p {
+  color: #263544 !important;
+}
+body:not(.light) .panel,
+body:not(.light) .card,
+body:not(.light) .detail,
+body:not(.light) .flightShell {
+  background: #302e27 !important;
+  color: #ffffff !important;
+  border-color: #6a6250 !important;
+}
+body:not(.light) .panel p,
+body:not(.light) .panel li,
+body:not(.light) .panel h1,
+body:not(.light) .panel h2,
+body:not(.light) .panel h3,
+body:not(.light) .panel b,
+body:not(.light) .panel strong,
+body:not(.light) .card p,
+body:not(.light) .card li,
+body:not(.light) .card h1,
+body:not(.light) .card h2,
+body:not(.light) .card h3,
+body:not(.light) .card b,
+body:not(.light) .card strong,
+body:not(.light) .detail p,
+body:not(.light) .detail span,
+body:not(.light) .checklist,
+body:not(.light) .flightShell p {
+  color: #ffffff !important;
+}
+body.light .panel .eyebrow,
+body.light .card .eyebrow,
+body.light .panel .textlink,
+body.light .card .textlink { color: #075d91 !important; }
+body:not(.light) .panel .eyebrow,
+body:not(.light) .card .eyebrow,
+body:not(.light) .panel .textlink,
+body:not(.light) .card .textlink { color: #ffe08a !important; }
+body.light .btn.primary,
+body.light .aiFab { color: #17212b !important; }
+body:not(.light) .btn.primary,
+body:not(.light) .aiFab { color: #28251d !important; }
+
 </style>
 <script type="application/ld+json">
 {
