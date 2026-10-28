@@ -34,11 +34,11 @@ function normalizeLanguage(message, requestedLanguage) {
     [/[가-힯]/, "Korean"]
   ];
   if (requested === "auto" || requested === "auto detect" || requested === "") {
-    for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
+    for (const [pattern, name] of scriptRules) if (new RegExp(pattern).test(text)) return name;
     return "Auto Detect";
   }
   if (languageAliases[requested]) return languageAliases[requested];
-  for (const [pattern, name] of scriptRules) if (pattern.test(text)) return name;
+  for (const [pattern, name] of scriptRules) if (new RegExp(pattern).test(text)) return name;
   return "English";
 }
 const SYSTEM_PROMPT = (language) => `You are ELITE MULTI SERVICES AI, the virtual customer-enquiry assistant for Elite Multi Services.
@@ -336,6 +336,7 @@ async function handleChat(request, env) {
     // Council runs multiple model and review calls, which makes the website chat noticeably slower.
     // Keep the council helper available for future explicit API use, but never invoke it from /api/chat.
     const councilEnabled = false;
+    let openRouterProblem = "OpenRouter council is disabled";
     if (env.OPENROUTER_API_KEY && councilEnabled) {
       try {
         const council = await runLlmCouncil(message, history, language, env);
