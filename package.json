@@ -1,5 +1,5 @@
 {
-  "name": "siva-global-travels",
+  "name": "elite-multi-services",
   "private": true,
   "scripts": {
     "dev": "wrangler dev",
