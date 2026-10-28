@@ -399,7 +399,7 @@ async function handleChat(request, env) {
 
     // If the primary Gemini model is unavailable for this API key, retry once with another current stable Flash-Lite model.
     // Do not retry quota/rate-limit failures, which would only add delay.
-    if (!reply && env.GEMINI_API_KEY && !geminiQuotaReached && /not found|not supported|not available|model.*unavailable|unsupported model|404|400/i.test(String(geminiProblem))) {
+    if (!reply && env.GEMINI_API_KEY && !geminiQuotaReached && /not found|not supported|not available|model.*unavailable|unsupported model|404|400|timeout|timed out/i.test(String(geminiProblem))) {
       const fallbackModel = "gemini-3.1-flash-lite";
       const fallbackController = new AbortController();
       const fallbackTimer = setTimeout(() => fallbackController.abort(), body?.spoken === true ? 9000 : 12000);
