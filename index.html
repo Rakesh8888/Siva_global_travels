@@ -1929,5 +1929,38 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 .aiFabArrow{position:fixed!important;right:18px!important;left:auto!important;top:auto!important;bottom:18px!important;width:46px!important;height:46px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid #8B4513!important;border-radius:50%!important;background:#fff!important;color:#8B4513!important;font:900 38px/1 Arial,sans-serif!important;z-index:2147483001!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;animation:none!important}
 @media(max-width:520px){#aiFab.aiFab{right:14px!important;width:58px!important;height:58px!important}.aiFabArrow{right:14px!important;bottom:18px!important;width:44px!important;height:44px!important}}
 </style>
+
+<style id="elite-user-requested-arrow-ai-style">
+/* Requested: plain brown arrow, no circle; separate parrot-green round AI launcher. */
+.aiFabArrow{
+  width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;
+  padding:0!important;border:0!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important;
+  color:#8B4513!important;font:900 42px/1 Arial,sans-serif!important;
+  text-shadow:none!important;-webkit-text-stroke:0!important;
+}
+#aiFab.aiFab{
+  width:58px!important;height:58px!important;padding:0!important;
+  border:0!important;border-radius:50%!important;
+  background:#7CFC00!important;color:#ff4500!important;
+  font-size:19px!important;font-weight:900!important;
+  box-shadow:0 4px 14px #0004!important;
+}
+@media(max-width:520px){
+ .aiFabArrow{font-size:42px!important}
+ #aiFab.aiFab{width:56px!important;height:56px!important}
+}
+</style>
+<script id="elite-user-requested-ai-label">
+(function(){
+ function setAiLabel(){
+   var bot=document.getElementById('aiFab');
+   if(bot){bot.textContent='AI';bot.setAttribute('aria-label','Open Elite AI chatbot');bot.setAttribute('title','Open Elite AI chatbot');}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setAiLabel);
+ else setAiLabel();
+})();
+</script>
+
 </body>
 </html>
