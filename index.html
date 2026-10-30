@@ -2144,8 +2144,11 @@ html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-widt
    const rect=el.getBoundingClientRect();
    const left=clamp(start.left+dx,4,Math.max(4,window.innerWidth-rect.width-4));
    const top=clamp(start.top+dy,4,Math.max(4,window.innerHeight-rect.height-4));
-   el.style.left=left+'px';el.style.top=top+'px';el.style.right='auto';el.style.bottom='auto';
-   el.style.transform='none';
+   el.style.setProperty('left',left+'px','important');
+   el.style.setProperty('top',top+'px','important');
+   el.style.setProperty('right','auto','important');
+   el.style.setProperty('bottom','auto','important');
+   el.style.setProperty('transform','none','important');
   }
   function drag(el,handle,isFab){
    let active=null;
@@ -2173,7 +2176,7 @@ html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-widt
   }
   drag(fab,fab,true);
   drag(panel,header,false);
-  fab.addEventListener('click',function(e){if(suppressClick){e.preventDefault();e.stopImmediatePropagation();}});
+  fab.addEventListener('click',function(e){if(suppressClick){e.preventDefault();e.stopImmediatePropagation();}},true);
   window.addEventListener('resize',function(){
    [fab,panel].forEach(el=>{
     if(!el.style.left||!el.style.top)return;
