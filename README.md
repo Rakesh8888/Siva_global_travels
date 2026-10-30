@@ -1,4 +1,4 @@
-# Elite Multi Services — Website Prototype
+# Siva Multi Services — Website Prototype
 
 Mobile-first single-page website for Elite Multi Services.
 
