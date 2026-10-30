@@ -2190,5 +2190,88 @@ html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-widt
 })();
 </script>
 
+
+<!-- SIVA AI drag and larger chat window final override -->
+<style id="siva-ai-drag-size-fix">
+  #aiFab{touch-action:none!important;cursor:grab!important}
+  #aiPanel{
+    width:min(600px,calc(100vw - 28px))!important;
+    height:min(720px,82dvh)!important;
+    max-height:calc(100dvh - 32px)!important;
+    display:none;
+    overflow:hidden!important;
+    z-index:2147483002!important;
+  }
+  #aiPanel.open{display:flex!important;flex-direction:column!important}
+  #aiPanel .aiHeader{flex:0 0 auto!important;touch-action:none!important;cursor:grab!important;user-select:none!important;-webkit-user-select:none!important}
+  #aiPanel .aiBody{display:flex!important;flex:1 1 auto!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important}
+  #aiPanel .chat{flex:1 1 auto!important;height:auto!important;min-height:160px!important;max-height:none!important;overflow-y:auto!important}
+  #aiPanel.siva-panel-dragging .aiHeader,#aiFab.siva-dragging{cursor:grabbing!important}
+  @media(max-width:600px){
+    #aiPanel{width:calc(100vw - 16px)!important;height:min(82dvh,760px)!important;max-height:calc(100dvh - 20px)!important}
+  }
+</style>
+<script id="siva-ai-drag-size-fix-script">
+(function(){
+ const install=()=>{
+  const fab=document.getElementById('aiFab');
+  const panel=document.getElementById('aiPanel');
+  const header=panel&&panel.querySelector('.aiHeader');
+  if(!fab||!panel||!header||fab.dataset.dragFixInstalled)return;
+  fab.dataset.dragFixInstalled='1';
+  let suppressFabClick=false;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(v,max));
+  function place(el,left,top){
+   const rect=el.getBoundingClientRect();
+   const x=clamp(left,6,Math.max(6,innerWidth-rect.width-6));
+   const y=clamp(top,6,Math.max(6,innerHeight-rect.height-6));
+   el.style.setProperty('position','fixed','important');
+   el.style.setProperty('inset','auto','important');
+   el.style.setProperty('left',x+'px','important');
+   el.style.setProperty('top',y+'px','important');
+   el.style.setProperty('right','auto','important');
+   el.style.setProperty('bottom','auto','important');
+   el.style.setProperty('transform','none','important');
+  }
+  function attach(el,handle,isFab){
+   let pointer=null, start=null, moved=false;
+   handle.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    if(!isFab&&e.target.closest('button,select,input,a'))return;
+    const r=el.getBoundingClientRect();
+    pointer=e.pointerId;start={x:e.clientX,y:e.clientY,left:r.left,top:r.top};moved=false;
+    try{handle.setPointerCapture(pointer)}catch(_){}
+   });
+   handle.addEventListener('pointermove',e=>{
+    if(pointer!==e.pointerId||!start)return;
+    const dx=e.clientX-start.x,dy=e.clientY-start.y;
+    if(Math.abs(dx)>5||Math.abs(dy)>5)moved=true;
+    if(moved){e.preventDefault();place(el,start.left+dx,start.top+dy);el.classList.add(isFab?'siva-dragging':'siva-panel-dragging');}
+   });
+   const finish=e=>{
+    if(pointer!==e.pointerId)return;
+    if(moved&&isFab){suppressFabClick=true;setTimeout(()=>{suppressFabClick=false},350)}
+    pointer=null;start=null;el.classList.remove('siva-dragging','siva-panel-dragging');
+   };
+   handle.addEventListener('pointerup',finish);
+   handle.addEventListener('pointercancel',finish);
+  }
+  attach(fab,fab,true);
+  attach(panel,header,false);
+  fab.addEventListener('click',e=>{
+   if(suppressFabClick){e.preventDefault();e.stopImmediatePropagation();suppressFabClick=false}
+  },true);
+  window.addEventListener('resize',()=>{
+   [fab,panel].forEach(el=>{
+    if(el.style.getPropertyValue('left')&&el.style.getPropertyValue('top')){
+     const r=el.getBoundingClientRect();place(el,r.left,r.top);
+    }
+   });
+  });
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
+})();
+</script>
+
 </body>
 </html>
