@@ -2009,6 +2009,27 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 
 
 
+
+<!-- Remove the orange circular background around the SIVA live-voice waveform -->
+<style id="siva-live-voice-no-orange-circle">
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn,
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn:hover,
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn:focus,
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn:focus-visible,
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn:active,
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn.active{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.aiPanel#aiPanel .chatComposer #liveVoiceBtn .voiceWaveIcon{
+  color:#e47c50!important;
+}
+</style>
 <!-- Remove the green focus square around the SIVA send arrow -->
 <style id="siva-send-button-no-square">
 .aiPanel#aiPanel .chatComposer .composerSend,
