@@ -2122,5 +2122,70 @@ html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-widt
 @media(max-width:520px){html body button#aiFab.aiFab{width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;max-width:56px!important;max-height:56px!important;flex-basis:56px!important;right:14px!important;left:auto!important;top:50%!important;bottom:auto!important}}
 </style>
 
+
+<!-- Drag-and-move controls for the SIVA AI launcher and chat window -->
+<style id="siva-ai-drag-styles">
+#aiFab{touch-action:none;cursor:grab}
+#aiFab.siva-dragging{cursor:grabbing}
+#aiPanel .aiHeader{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+#aiPanel.siva-panel-dragging .aiHeader{cursor:grabbing}
+</style>
+<script id="siva-ai-drag-system">
+(function(){
+ function install(){
+  const fab=document.getElementById('aiFab');
+  const panel=document.getElementById('aiPanel');
+  const header=panel&&panel.querySelector('.aiHeader');
+  if(!fab||!panel||!header||fab.dataset.dragReady)return;
+  fab.dataset.dragReady='1';panel.dataset.dragReady='1';
+  let moved=false, suppressClick=false;
+  function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+  function moveElement(el,dx,dy,start){
+   const rect=el.getBoundingClientRect();
+   const left=clamp(start.left+dx,4,Math.max(4,window.innerWidth-rect.width-4));
+   const top=clamp(start.top+dy,4,Math.max(4,window.innerHeight-rect.height-4));
+   el.style.left=left+'px';el.style.top=top+'px';el.style.right='auto';el.style.bottom='auto';
+   el.style.transform='none';
+  }
+  function drag(el,handle,isFab){
+   let active=null;
+   handle.addEventListener('pointerdown',function(e){
+    if(e.button!==undefined&&e.button!==0)return;
+    if(!isFab && e.target.closest('button,select,input,a'))return;
+    const r=el.getBoundingClientRect();
+    active={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top};
+    moved=false;
+    try{handle.setPointerCapture(e.pointerId);}catch(_){}
+   });
+   handle.addEventListener('pointermove',function(e){
+    if(!active||active.id!==e.pointerId)return;
+    const dx=e.clientX-active.x,dy=e.clientY-active.y;
+    if(Math.abs(dx)>4||Math.abs(dy)>4)moved=true;
+    if(moved){e.preventDefault();moveElement(el,dx,dy,active);el.classList.add('siva-dragging');if(!isFab)el.classList.add('siva-panel-dragging');}
+   });
+   function end(e){
+    if(!active||active.id!==e.pointerId)return;
+    if(moved){suppressClick=true;setTimeout(()=>{suppressClick=false;},250);}
+    active=null;el.classList.remove('siva-dragging','siva-panel-dragging');
+   }
+   handle.addEventListener('pointerup',end);
+   handle.addEventListener('pointercancel',end);
+  }
+  drag(fab,fab,true);
+  drag(panel,header,false);
+  fab.addEventListener('click',function(e){if(suppressClick){e.preventDefault();e.stopImmediatePropagation();}});
+  window.addEventListener('resize',function(){
+   [fab,panel].forEach(el=>{
+    if(!el.style.left||!el.style.top)return;
+    const r=el.getBoundingClientRect();
+    el.style.left=clamp(r.left,4,Math.max(4,innerWidth-r.width-4))+'px';
+    el.style.top=clamp(r.top,4,Math.max(4,innerHeight-r.height-4))+'px';
+   });
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+})();
+</script>
+
 </body>
 </html>
