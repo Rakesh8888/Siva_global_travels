@@ -124,70 +124,6 @@ function jsonResponse(data, status, request) {
 }
 
 
-async function callOpenRouter(env, model, messages, maxTokens = 500) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 22000);
-  try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + env.OPENROUTER_API_KEY,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://elite-multi-services.sivaramtotti.workers.dev",
-        "X-Title": "SIVA Multi Services LLM Council"
-      },
-      body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: 0.2 }),
-      signal: controller.signal
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error("OpenRouter request failed (" + response.status + "): " + String(data?.error?.message || data?.message || "Unknown provider error").slice(0, 220));
-    const text = data?.choices?.[0]?.message?.content;
-    if (typeof text !== "string" || !text.trim()) throw new Error("Model returned an empty response");
-    return text.trim();
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-function normalizeCouncilModel(value) {
-  const raw = String(value || "").trim().replace(/^models\//i, "");
-  const aliases = {
-    "gemini-2.5-flash": "google/gemini-2.5-flash",
-    "gemini-3.8-flash": "google/gemini-2.5-flash",
-    "google/gemini-3.8-flash": "google/gemini-2.5-flash",
-    "gpt-4o-mini": "openai/gpt-4o-mini",
-    "deepseek-chat": "deepseek/deepseek-chat"
-  };
-  return aliases[raw.toLowerCase()] || raw;
-}
-
-async function runLlmCouncil(message, history, language, env) {
-  const defaults = ["google/gemini-2.5-flash", "openai/gpt-4o-mini", "deepseek/deepseek-chat"];
-  const models = String(env.COUNCIL_MODELS || defaults.join(",")).split(",").map(normalizeCouncilModel).filter(Boolean).slice(0, 3);
-  if (models.length < 2) throw new Error("Council requires at least two models");
-  const system = SYSTEM_PROMPT(language) + "\\n\\nYou are one member of a multi-model council. Give a careful, useful answer. Do not invent current facts, prices, vacancies, or guarantees.";
-  const context = history.map(x => ({ role: x.role, content: x.content })).slice(-4);
-  const first = await Promise.allSettled(models.map(model =>
-    callOpenRouter(env, model, [{ role: "system", content: system }, ...context, { role: "user", content: message }], 450)
-  ));
-  const answers = first.map((r, i) => ({ label: "Response " + String.fromCharCode(65+i), model: models[i], text: r.status === "fulfilled" ? r.value : "" })).filter(x => x.text);
-  if (answers.length < 2) throw new Error("Not enough council models responded");
-  const anonymized = answers.map(a => a.label + ":\\n" + a.text).join("\\n\\n---\\n\\n");
-  const reviews = await Promise.allSettled(models.map(model =>
-    callOpenRouter(env, model, [
-      { role: "system", content: "You are an impartial reviewer. Review the anonymized answers for correctness, usefulness, missing caveats, and unsupported claims. Rank them best to worst and briefly explain. Do not assume any answer is correct merely because it sounds confident. Respond in " + (language === "Auto Detect" ? "the same language as the user’s latest message; detect Telugu, Hindi, or English even when written in Latin letters" : language) + "." },
-      { role: "user", content: "Question:\\n" + message + "\\n\\nAnonymous answers:\\n" + anonymized }
-    ], 300)
-  ));
-  const reviewText = reviews.map((r, i) => r.status === "fulfilled" ? ("Reviewer " + (i+1) + ":\\n" + r.value) : "").filter(Boolean).join("\\n\\n");
-  const final = await callOpenRouter(env, models[0], [
-    { role: "system", content: SYSTEM_PROMPT(language) + "\\n\\nYou are the Council Chairman. Synthesize the strongest parts of the candidate answers and peer reviews into one clear answer. Resolve contradictions cautiously, do not invent facts, and state uncertainty where needed. Never mention internal model names." },
-    { role: "user", content: "User question:\\n" + message + "\\n\\nCandidate answers:\\n" + anonymized + "\\n\\nPeer reviews:\\n" + (reviewText || "Peer review unavailable") + "\\n\\nWrite the final answer in " + (language === "Auto Detect" ? "the same language as the user’s latest message; detect Telugu, Hindi, or English even when written in Latin letters" : language) + "." }
-  ], 650);
-  return { reply: final, council: { enabled: true, modelsUsed: answers.length, reviewsReceived: reviews.filter(x => x.status === "fulfilled").length } };
-}
-
-
 function needsCurrentResearch(message) {
   return /\b(latest|today|current|currently|now|recent|news|price|prices|fare|fares|flight status|weather|visa rules|visa requirement|job vacancy|vacancies|available jobs|deadline|official update|exchange rate)\b/i.test(message)
     || /ఇప్పటి|ప్రస్తుత|ఈరోజు|తాజా|ధరలు|విమాన ధర|వీసా నియమాలు|ఉద్యోగ ఖాళీ|నేటి వార్తలు/.test(message);
@@ -238,8 +174,8 @@ async function handleChat(request, env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405, request);
   }
-  if (!env.GEMINI_API_KEY && !env.GROQ_API_KEY && !env.AI) {
-    return jsonResponse({ error: "AI service is not configured yet." }, 503, request);
+  if (!env.GEMINI_API_KEY) {
+    return jsonResponse({ error: "Gemini AI is not configured. Add GEMINI_API_KEY as a Cloudflare Worker secret." }, 503, request);
   }
 
   try {
@@ -255,100 +191,9 @@ async function handleChat(request, env) {
       .filter(x => x && (x.role === "user" || x.role === "assistant") && typeof x.content === "string")
       .slice(body?.spoken === true ? -2 : -4)
       .map(x => ({ role: x.role, content: x.content.slice(body?.spoken === true ? -500 : -900) })) : [];
-    const systemPrompt = SYSTEM_PROMPT(language) + (body?.spoken === true ? "\n\nVOICE RESPONSE SPEED: This is a spoken conversation. Answer immediately and briefly in 1–3 short sentences, usually under 45 words. Put the direct answer first. Avoid long lists, headings, markdown symbols, and unnecessary introductions. Ask at most one short follow-up question." : "");
-    // Explicit Groq mode: keep Groq selected, retry transient upstream failures once with a smaller supported model.
-    if (String(body?.provider || "").toLowerCase() === "groq") {
-      if (!env.GROQ_API_KEY) {
-        return jsonResponse({ error: "Groq is not configured yet. Add the GROQ_API_KEY secret in Cloudflare Workers, then try again." }, 503, request);
-      }
-      const messages = [
-        { role: "system", content: systemPrompt },
-        ...history.map(x => ({ role: x.role, content: x.content })),
-        { role: "user", content: message }
-      ];
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 22000);
-      try {
-        const models = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
-        let lastStatus = 502;
-        let lastMessage = "Groq returned an upstream error.";
-        for (let attempt = 0; attempt < models.length; attempt++) {
-          const model = models[attempt];
-          let response;
-          try {
-            response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-              method: "POST",
-              headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
-              body: JSON.stringify({ model, messages, max_tokens: body?.spoken === true ? 180 : 700, temperature: body?.spoken === true ? 0.2 : 0.3 }),
-              signal: controller.signal
-            });
-          } catch (fetchError) {
-            if (fetchError?.name === "AbortError") throw fetchError;
-            lastMessage = "Could not connect to Groq.";
-            lastStatus = 502;
-            if (attempt === 0) continue;
-            return jsonResponse({ error: lastMessage + " Please try again.", providerStatus: lastStatus }, 502, request);
-          }
-          const data = await response.json().catch(() => ({}));
-          if (response.ok) {
-            const reply = data?.choices?.[0]?.message?.content?.trim();
-            if (!reply) {
-              lastMessage = "Groq returned an empty answer.";
-              lastStatus = 502;
-              continue;
-            }
-            return jsonResponse({ reply, language, provider: "groq", model }, 200, request);
-          }
-          lastStatus = response.status;
-          lastMessage = String(data?.error?.message || "Groq provider error").slice(0, 240);
-          console.error("SIVA MULTI SERVICES AI Groq error:", response.status, model, lastMessage);
-          // Credentials, permissions, request validation and quota errors will not be fixed by switching models.
-          if ([400, 401, 403, 404, 413, 429].includes(response.status)) {
-            const error = response.status === 401 ? "Groq API key was rejected. Check the GROQ_API_KEY secret."
-              : response.status === 429 ? "Groq rate limit or quota reached. Try again later."
-              : response.status === 403 ? "Groq model access is restricted. Check model permissions in Groq Console."
-              : "Groq request failed: " + lastMessage;
-            return jsonResponse({ error, providerStatus: response.status, providerMessage: lastMessage }, response.status === 429 ? 429 : response.status, request);
-          }
-          if (response.status < 500 && response.status !== 408) {
-            return jsonResponse({ error: "Groq rejected the request: " + lastMessage, providerStatus: response.status, providerMessage: lastMessage }, response.status, request);
-          }
-        }
-        return jsonResponse({ error: "Groq is still returning a server error after trying a fallback model. Please retry shortly.", providerStatus: lastStatus, providerMessage: lastMessage }, 502, request);
-      } catch (error) {
-        return jsonResponse({ error: error?.name === "AbortError" ? "Groq timed out. Please try again." : "Could not connect to Groq. Check your internet connection and API status.", providerStatus: error?.name === "AbortError" ? 504 : 502, providerMessage: String(error?.message || error).slice(0, 180) }, error?.name === "AbortError" ? 504 : 502, request);
-      } finally {
-        clearTimeout(timer);
-      }
-    }
-    let reply = "";
-
-    // For questions that depend on changing facts, prefer grounded Google Search results.
-    if (needsCurrentResearch(message) && env.GEMINI_API_KEY) {
-      try {
-        const grounded = await answerWithGroundedSearch(message, history, language, env);
-        if (grounded) return jsonResponse(grounded, 200, request);
-      } catch (error) {
-        console.error("SIVA MULTI SERVICES AI grounded search unavailable; continuing with the configured Gemini free-tier request only:", String(error?.message || error).slice(0, 180));
-      }
-    }
-
-    // Fast chat mode: bypass the multi-model Tree/LLM Council for interactive replies.
-    // Council runs multiple model and review calls, which makes the website chat noticeably slower.
-    // Keep the council helper available for future explicit API use, but never invoke it from /api/chat.
-    const councilEnabled = false;
-    let openRouterProblem = "OpenRouter council is disabled";
-    if (env.OPENROUTER_API_KEY && councilEnabled) {
-      try {
-        const council = await runLlmCouncil(message, history, language, env);
-        return jsonResponse(council, 200, request);
-      } catch (error) {
-        openRouterProblem = String(error?.message || error).slice(0, 220);
-        console.error("SIVA MULTI SERVICES AI Council unavailable; using configured single-model fallback:", openRouterProblem);
-      }
-    }
-    // FREE-ONLY SAFETY: never call OpenRouter or other potentially paid providers from the default chat path.
-    // If Gemini free quota is exhausted, return an error instead of switching to a paid provider.
+    const systemPrompt = SYSTEM_PROMPT(language) + (body?.spoken === true
+      ? "\n\nVOICE RESPONSE SPEED: This is a spoken conversation. Answer immediately and briefly in 1–3 short sentences, usually under 45 words. Put the direct answer first. Avoid long lists, headings, markdown symbols, and unnecessary introductions. Ask at most one short follow-up question."
+      : "");
     const geminiContents = [
       ...history.map(x => ({
         role: x.role === "assistant" ? "model" : "user",
@@ -356,16 +201,27 @@ async function handleChat(request, env) {
       })),
       { role: "user", parts: [{ text: message }] }
     ];
-    let geminiProblem = "Gemini unavailable";
-    let geminiQuotaReached = false;
 
-    // Try Gemini first. If it errors, times out, or returns an empty answer, try OpenAI.
-    if (env.GEMINI_API_KEY) {
+    // Gemini with Google Search grounding for questions about changing information.
+    if (needsCurrentResearch(message)) {
+      try {
+        const grounded = await answerWithGroundedSearch(message, history, language, env);
+        if (grounded) return jsonResponse({ ...grounded, provider: "gemini" }, 200, request);
+      } catch (error) {
+        console.error("Gemini grounded search unavailable:", String(error?.message || error).slice(0, 180));
+      }
+    }
+
+    let geminiProblem = "Gemini request could not be completed";
+    let geminiQuotaReached = false;
+    const models = [GEMINI_MODEL, "gemini-3.1-flash-lite"];
+    for (let index = 0; index < models.length; index++) {
+      const model = models[index];
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 18000);
+      const timer = setTimeout(() => controller.abort(), body?.spoken === true ? 12000 : 20000);
       try {
         const response = await fetch(
-          "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent",
+          "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
           {
             method: "POST",
             headers: {
@@ -375,150 +231,53 @@ async function handleChat(request, env) {
             body: JSON.stringify({
               systemInstruction: { parts: [{ text: systemPrompt }] },
               contents: geminiContents,
-              generationConfig: { maxOutputTokens: body?.spoken === true ? 180 : 500, temperature: body?.spoken === true ? 0.2 : 0.3 }
+              generationConfig: {
+                maxOutputTokens: body?.spoken === true ? 180 : 600,
+                temperature: body?.spoken === true ? 0.2 : 0.3
+              }
             }),
             signal: controller.signal
           }
         );
         const data = await response.json().catch(() => ({}));
         if (response.ok) {
-          reply = data?.candidates?.[0]?.content?.parts
+          const reply = data?.candidates?.[0]?.content?.parts
             ?.map(part => typeof part.text === "string" ? part.text : "")
-            .join("").trim() || "";
-          if (!reply) geminiProblem = "Gemini returned an empty answer";
+            .join("").trim();
+          if (reply) {
+            return jsonResponse({ reply, language, provider: "gemini", model }, 200, request);
+          }
+          geminiProblem = "Gemini returned an empty answer";
         } else {
           geminiProblem = data?.error?.message || ("Gemini HTTP " + response.status);
           geminiQuotaReached = response.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
-          console.error("SIVA MULTI SERVICES AI Gemini error:", response.status, geminiProblem.slice(0, 180));
+          console.error("Gemini AI error:", response.status, geminiProblem.slice(0, 180));
+          if (geminiQuotaReached || [400, 401, 403].includes(response.status)) break;
         }
       } catch (error) {
-        geminiProblem = error?.name === "AbortError" ? "Gemini timeout" : "Gemini network error";
-        console.error("SIVA MULTI SERVICES AI Gemini request failed:", geminiProblem);
+        geminiProblem = error?.name === "AbortError" ? "Gemini request timed out" : "Gemini network error";
       } finally {
         clearTimeout(timer);
       }
+      if (index === 0 && geminiQuotaReached) break;
     }
 
-    // If the primary Gemini model is unavailable for this API key, retry once with another current stable Flash-Lite model.
-    // Do not retry quota/rate-limit failures, which would only add delay.
-    if (!reply && env.GEMINI_API_KEY && !geminiQuotaReached && /not found|not supported|not available|model.*unavailable|unsupported model|high demand|overloaded|temporarily unavailable|service unavailable|503|502|404|400|timeout|timed out|network error|empty answer/i.test(String(geminiProblem))) {
-      const fallbackModel = "gemini-3.1-flash-lite";
-      const fallbackController = new AbortController();
-      const fallbackTimer = setTimeout(() => fallbackController.abort(), body?.spoken === true ? 9000 : 12000);
-      try {
-        const fallbackResponse = await fetch(
-          "https://generativelanguage.googleapis.com/v1beta/models/" + fallbackModel + ":generateContent",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-            body: JSON.stringify({
-              systemInstruction: { parts: [{ text: systemPrompt }] },
-              contents: geminiContents,
-              generationConfig: { maxOutputTokens: body?.spoken === true ? 180 : 500, temperature: body?.spoken === true ? 0.2 : 0.3 }
-            }),
-            signal: fallbackController.signal
-          }
-        );
-        const fallbackData = await fallbackResponse.json().catch(() => ({}));
-        if (fallbackResponse.ok) {
-          reply = fallbackData?.candidates?.[0]?.content?.parts
-            ?.map(part => typeof part.text === "string" ? part.text : "")
-            .join("").trim() || "";
-          if (reply) console.log("SIVA MULTI SERVICES AI answered using fallback Gemini model.");
-          else geminiProblem = "Both Gemini models returned an empty answer";
-        } else {
-          geminiProblem = fallbackData?.error?.message || ("Gemini fallback HTTP " + fallbackResponse.status);
-          geminiQuotaReached = fallbackResponse.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
-        }
-      } catch (fallbackError) {
-        geminiProblem = fallbackError?.name === "AbortError" ? "Gemini fallback timed out" : "Gemini fallback network error";
-      } finally {
-        clearTimeout(fallbackTimer);
-      }
-    }
-
-    // Free-tier fallback 1: Cloudflare Workers AI. Requires an AI binding named "AI" in Worker settings.
-    // Uses a model available on Cloudflare's free allocation; if unavailable, continue to Groq.
-    let workersAiProblem = "Cloudflare Workers AI binding is not configured";
-    if (!reply && env.AI && typeof env.AI.run === "function") {
-      try {
-        const aiMessages = [
-          { role: "system", content: systemPrompt },
-          ...history.map(x => ({ role: x.role, content: x.content })),
-          { role: "user", content: message }
-        ];
-        const aiResult = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
-          messages: aiMessages,
-          max_tokens: body?.spoken === true ? 180 : 500,
-          temperature: body?.spoken === true ? 0.2 : 0.3
-        });
-        reply = String(aiResult?.response || aiResult?.choices?.[0]?.message?.content || "").trim();
-        if (reply) console.log("SIVA MULTI SERVICES AI answered using Cloudflare Workers AI.");
-        else workersAiProblem = "Cloudflare Workers AI returned an empty answer";
-      } catch (error) {
-        workersAiProblem = String(error?.message || error).slice(0, 240);
-        console.error("SIVA MULTI SERVICES AI Workers AI fallback failed:", workersAiProblem);
-      }
-    }
-
-    // Free-tier fallback 2: Groq. Requires GROQ_API_KEY; model names can change in provider catalog.
-    let groqProblem = "Groq API key is not configured";
-    if (!reply && env.GROQ_API_KEY) {
-      const groqController = new AbortController();
-      const groqTimer = setTimeout(() => groqController.abort(), body?.spoken === true ? 9000 : 14000);
-      try {
-        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + env.GROQ_API_KEY, "Content-Type": "application/json" },
-          body: JSON.stringify({
-            model: "openai/gpt-oss-20b",
-            messages: [
-              { role: "system", content: systemPrompt },
-              ...history.map(x => ({ role: x.role, content: x.content })),
-              { role: "user", content: message }
-            ],
-            max_tokens: body?.spoken === true ? 180 : 500,
-            temperature: body?.spoken === true ? 0.2 : 0.3
-          }),
-          signal: groqController.signal
-        });
-        const groqData = await groqResponse.json().catch(() => ({}));
-        if (groqResponse.ok) {
-          reply = String(groqData?.choices?.[0]?.message?.content || "").trim();
-          if (reply) console.log("SIVA MULTI SERVICES AI answered using automatic Groq fallback.");
-          else groqProblem = "Groq returned an empty answer";
-        } else {
-          groqProblem = "Groq HTTP " + groqResponse.status + ": " + String(groqData?.error?.message || "provider error").slice(0, 180);
-          console.error("SIVA MULTI SERVICES AI automatic Groq fallback failed:", groqProblem);
-        }
-      } catch (error) {
-        groqProblem = error?.name === "AbortError" ? "Groq fallback timed out" : String(error?.message || error).slice(0, 200);
-      } finally {
-        clearTimeout(groqTimer);
-      }
-    }
-
-    if (!reply) {
-      return jsonResponse({
-        error: geminiQuotaReached
-          ? "Gemini free-tier limit may have been reached. The free fallbacks were also unavailable. Please try again after the limits reset."
-          : "SIVA MULTI SERVICES AI is temporarily unavailable. Please try again later.",
-        providerMessage: [String(geminiProblem), "Workers AI: " + workersAiProblem, "Groq: " + groqProblem].join(" | ").slice(0, 600)
-      }, geminiQuotaReached ? 429 : 502, request);
-    }
-
-    return jsonResponse({ reply, language, provider: reply ? (geminiProblem === "Gemini unavailable" ? "gemini" : "fallback") : "unknown" }, 200, request);
+    return jsonResponse({
+      error: geminiQuotaReached
+        ? "Gemini API quota or rate limit has been reached. Please try again after the limit resets."
+        : "Gemini AI is temporarily unavailable. Please try again later.",
+      provider: "gemini",
+      providerMessage: String(geminiProblem).slice(0, 300)
+    }, geminiQuotaReached ? 429 : 502, request);
   } catch (error) {
-    console.error("SIVA MULTI SERVICES AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
+    console.error("SIVA Gemini AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
     return jsonResponse({
       error: error?.name === "AbortError"
-        ? "SIVA MULTI SERVICES AI timed out. Please try again."
-        : "Could not process your message. Please try again.",
-      requestId: crypto.randomUUID()
+        ? "Gemini AI timed out. Please try again."
+        : "Gemini AI could not process this request. Please try again."
     }, error?.name === "AbortError" ? 504 : 500, request);
   }
 }
-
 
 async function handleChatFile(request, env) {
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
@@ -552,48 +311,6 @@ async function handleChatFile(request, env) {
   }
 }
 
-async function handleCartesiaTTS(request, env) {
-  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
-  if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
-  if (!env.CARTESIA_API_KEY || !env.CARTESIA_VOICE_ID) {
-    return jsonResponse({ error: "Cartesia voice is not configured. Add CARTESIA_API_KEY and CARTESIA_VOICE_ID as Cloudflare Worker secrets/variables." }, 503, request);
-  }
-  try {
-    const body = await request.json();
-    const transcript = String(body.transcript || "").trim();
-    if (!transcript) return jsonResponse({ error: "Transcript is required" }, 400, request);
-    if (transcript.length > 1800) return jsonResponse({ error: "Please shorten the voice reply to 1,800 characters or less." }, 413, request);
-    const allowedLanguages = new Set(["en", "te", "hi", "ta", "kn", "ml", "ur", "ar", "fr", "de", "it", "es", "pt", "ru", "zh-CN", "ja", "ko", "nl", "tr", "id", "th", "vi", "bn", "mr", "pa", "fa"]);
-    const requestedLanguage = String(body.language || "en").trim();
-    const language = allowedLanguages.has(requestedLanguage) ? requestedLanguage : "en";
-    const upstream = await fetch("https://api.cartesia.ai/tts/bytes", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + env.CARTESIA_API_KEY,
-        "Cartesia-Version": "2026-08-14",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model_id: "sonic-3.6",
-        transcript,
-        voice: env.CARTESIA_VOICE_ID,
-        output_format: { container: "mp3", encoding: "mp3", sample_rate: 44100 },
-        language,
-        normalization: "auto"
-      })
-    });
-    if (!upstream.ok) {
-      const detail = await upstream.text().catch(() => "");
-      return jsonResponse({ error: upstream.status === 402 || upstream.status === 429 ? "Cartesia free credits or rate limit may have been reached." : "Cartesia speech generation failed.", providerStatus: upstream.status, providerMessage: detail.slice(0, 300) }, upstream.status === 429 ? 429 : 502, request);
-    }
-    const headers = new Headers(corsHeaders(request));
-    headers.set("Content-Type", upstream.headers.get("Content-Type") || "audio/mpeg");
-    headers.set("Cache-Control", "no-store");
-    return new Response(upstream.body, { status: 200, headers });
-  } catch (error) {
-    return jsonResponse({ error: "Unable to generate Cartesia speech.", detail: String(error && error.message || "").slice(0, 180) }, 500, request);
-  }
-}
 
 async function handleDuffelFlightSearch(request, env) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -713,11 +430,10 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.AI || env.GEMINI_API_KEY || env.OPENAI_API_KEY || env.OPENROUTER_API_KEY || env.GROQ_API_KEY), groqConfigured: Boolean(env.GROQ_API_KEY), councilConfigured: false, cartesiaTTSConfigured: Boolean(env.CARTESIA_API_KEY && env.CARTESIA_VOICE_ID), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY), aiProvider: "gemini", duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
     if (url.pathname === "/api/chat-file") return handleChatFile(request, env);
-    if (url.pathname === "/api/tts") return handleCartesiaTTS(request, env);
     if (url.pathname === "/api/chat") {
       return handleChat(request, env);
     }
