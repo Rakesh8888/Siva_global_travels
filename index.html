@@ -1657,6 +1657,24 @@ body { overflow-wrap: anywhere; }
 .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
 @media(max-width:768px){.nav-dropdown{display:block;width:100%}.nav-dropdown-menu{position:static;min-width:0;box-shadow:none;margin:4px 0 8px;border-radius:8px}.nav-dropdown-menu a{white-space:normal}}
 </style>
+
+<style id="siva-remove-livevoice-orange-ring-final">
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn.active,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn:hover,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn:focus,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn:focus-visible,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn:active{
+ background:transparent!important;background-color:transparent!important;
+ border:0!important;border-radius:0!important;outline:0!important;
+ box-shadow:none!important;
+}
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn::before,
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn::after{display:none!important;content:none!important}
+html body .aiPanel#aiPanel .chatComposer #liveVoiceBtn .voiceWaveIcon{
+ background:transparent!important;color:#e47c50!important;box-shadow:none!important;
+}
+</style>
 </head>
 <body class="light">
 <div class="topbar"><div class="wrap"><span>📍 Badvel, Andhra Pradesh, India</span><span id="headerDate" aria-label="Current date">28/10/2026(WED)</span></div></div>
