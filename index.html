@@ -2007,6 +2007,51 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 </script>
 
 
+
+<!-- Larger SIVA AI popup on desktop and mobile -->
+<style id="siva-ai-popup-size-update">
+.aiPanel#aiPanel{
+  width:min(620px,calc(100vw - 40px))!important;
+  max-height:min(82dvh,820px)!important;
+  display:none;
+  overflow:hidden!important;
+}
+.aiPanel#aiPanel.open{
+  display:flex!important;
+  flex-direction:column!important;
+}
+.aiPanel#aiPanel .aiBody{
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+.aiPanel#aiPanel .chat{
+  flex:1 1 auto!important;
+  height:auto!important;
+  min-height:260px!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+}
+@media(max-width:600px){
+  .aiPanel#aiPanel{
+    left:4px!important;
+    right:4px!important;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 70px)!important;
+    width:calc(100vw - 8px)!important;
+    max-width:none!important;
+    max-height:calc(100dvh - 84px)!important;
+    border-radius:22px!important;
+  }
+  .aiPanel#aiPanel .aiBody{padding:12px!important}
+  .aiPanel#aiPanel .chat{min-height:42dvh!important}
+}
+@media(min-width:601px){
+  .aiPanel#aiPanel{right:24px!important;bottom:96px!important}
+}
+</style>
+
 <!-- Final mobile fix: force the AI launcher to remain a true circle at every viewport/zoom. -->
 <style id="elite-ai-circle-final-fix">
 html body button#aiFab.aiFab{width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important;max-width:58px!important;max-height:58px!important;aspect-ratio:1/1!important;box-sizing:border-box!important;padding:0!important;margin:0!important;border-radius:50%!important;border:0!important;background:#7CFC00!important;color:#ff4500!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;flex:0 0 58px!important;transform:translateY(-50%)!important}
