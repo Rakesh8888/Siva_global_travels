@@ -2008,6 +2008,20 @@ $('chatForm').addEventListener('submit',e=>{e.preventDefault();const q=$('chatTe
 
 
 
+
+<!-- Remove the green focus square around the SIVA send arrow -->
+<style id="siva-send-button-no-square">
+.aiPanel#aiPanel .chatComposer .composerSend,
+.aiPanel#aiPanel .chatComposer .composerSend:hover,
+.aiPanel#aiPanel .chatComposer .composerSend:focus,
+.aiPanel#aiPanel .chatComposer .composerSend:focus-visible,
+.aiPanel#aiPanel .chatComposer .composerSend:active{
+  outline:none!important;
+  box-shadow:none!important;
+  border:0!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+</style>
 <!-- Larger SIVA AI popup on desktop and mobile -->
 <style id="siva-ai-popup-size-update">
 .aiPanel#aiPanel{
