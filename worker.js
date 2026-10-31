@@ -106,6 +106,7 @@ function corsHeaders(request) {
   const allowedOrigins = new Set([
     requestOrigin,
     "https://siva-global-travels-3d.vercel.app",
+    "https://sivaglobaltravels.vercel.app",
     "https://rakesh8888.github.io"
   ]);
   return {
