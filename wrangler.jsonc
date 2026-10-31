@@ -1,7 +1,7 @@
 {
   // Cloudflare Worker + static website deployment configuration
   "$schema": "https://json.schemastore.org/wrangler.json",
-  "name": "elite-multi-services",
+  "name": "siva-multi-services",
   "main": "./worker.js",
   "compatibility_date": "2026-10-06",
   "assets": {
