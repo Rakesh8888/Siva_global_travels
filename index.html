@@ -1887,12 +1887,12 @@ async function extractSIVAVideoFrames(file){
  try{
   await waitFor('loadedmetadata');
   if(!Number.isFinite(video.duration)||video.duration<=0)throw new Error('Could not read the video duration.');
-  const canvas=document.createElement('canvas'),maxWidth=960,scale=Math.min(1,maxWidth/(video.videoWidth||960));
+  const canvas=document.createElement('canvas'),maxWidth=640,scale=Math.min(1,maxWidth/(video.videoWidth||640));
   canvas.width=Math.max(1,Math.round((video.videoWidth||960)*scale));canvas.height=Math.max(1,Math.round((video.videoHeight||540)*scale));
   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Video frame processing is not supported on this phone.');
-  const times=[Math.min(video.duration*.12,1),video.duration*.5,Math.max(0,video.duration*.88)];
+  const times=[Math.max(0,Math.min(video.duration*.5,Math.max(0,video.duration-.1)))];
   const frames=[];
-  for(const time of [...new Set(times.map(t=>Math.max(0,Math.min(t,Math.max(0,video.duration-.1)))))]){video.currentTime=time;await waitFor('seeked');ctx.drawImage(video,0,0,canvas.width,canvas.height);frames.push(canvas.toDataURL('image/jpeg',.68))}
+  for(const time of [...new Set(times.map(t=>Math.max(0,Math.min(t,Math.max(0,video.duration-.1)))))]){video.currentTime=time;await waitFor('seeked');ctx.drawImage(video,0,0,canvas.width,canvas.height);frames.push(canvas.toDataURL('image/jpeg',.5))}
   return frames;
  }finally{video.pause();video.removeAttribute('src');video.load();URL.revokeObjectURL(objectUrl)}
 }
