@@ -324,33 +324,82 @@ async function handleChat(request, env) {
 
 async function handleChatFile(request, env) {
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
-  if (!env.GEMINI_API_KEY) return jsonResponse({ error: "File analysis needs GEMINI_API_KEY configured in Cloudflare." }, 503, request);
   try {
     const body = await request.json();
     const message = typeof body?.message === "string" ? body.message.trim() : "";
     const mimeType = String(body?.mimeType || "");
-    const dataUrl = String(body?.dataUrl || "");
     const fileName = String(body?.fileName || "attachment").slice(0, 180);
-    if (!/^image\/(png|jpeg|webp|gif)$/i.test(mimeType) && mimeType !== "application/pdf") return jsonResponse({ error: "Please upload a JPG, PNG, WEBP, GIF image, or PDF." }, 415, request);
-    const match = dataUrl.match(/^data:([^;,]+);base64,([A-Za-z0-9+/=]+)$/);
-    if (!match || match[1] !== mimeType) return jsonResponse({ error: "The selected file could not be read. Please select it again." }, 400, request);
-    const base64 = match[2];
-    if (base64.length > 11_200_000) return jsonResponse({ error: "Please choose a file smaller than 8 MB." }, 413, request);
     const language = normalizeLanguage(message, body?.language);
-    const prompt = SYSTEM_PROMPT(language) + "\n\nThe user attached a file named: " + fileName + ". Inspect the attachment carefully and answer the user's request. If no specific question was given, summarize the file and offer useful next steps. Do not claim to see details that are not present.";
-    const contents = [{ role: "user", parts: [{ text: message || "Please summarize this file and explain its important details." }, { inlineData: { mimeType, data: base64 } }] }];
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent", {
-      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-      body: JSON.stringify({ systemInstruction: { parts: [{ text: prompt }] }, contents, generationConfig: { maxOutputTokens: 700, temperature: 0.2 } }),
-      signal: AbortSignal.timeout(45000)
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) return jsonResponse({ error: "Gemini could not analyze this file. " + String(data?.error?.message || ("HTTP " + response.status)).slice(0, 180) }, response.status, request);
-    const reply = data?.candidates?.[0]?.content?.parts?.map(part => typeof part.text === "string" ? part.text : "").join("").trim();
-    if (!reply) return jsonResponse({ error: "No text answer was returned for this file. Try another file." }, 502, request);
-    return jsonResponse({ reply, language, fileName }, 200, request);
+
+    // Images and video keyframes use Groq Vision. Video files are converted to
+    // up to three JPEG frames in the browser; the original video is never uploaded.
+    if (Array.isArray(body?.frames) && body.frames.length >= 1 && body.frames.length <= 3 && env.GROQ_API_KEY) {
+      const frames = body.frames.map((dataUrl) => {
+        const value = String(dataUrl || "");
+        const match = value.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/i);
+        if (!match) throw new Error("One of the image frames is invalid. Please select the file again.");
+        return { mimeType: match[1].toLowerCase(), base64: match[2] };
+      });
+      const totalBase64 = frames.reduce((sum, frame) => sum + frame.base64.length, 0);
+      if (totalBase64 > 10_500_000) return jsonResponse({ error: "The selected photo or video is too large after processing. Please choose a smaller file." }, 413, request);
+      const visualPrompt = SYSTEM_PROMPT(language) + "\n\nYou are analyzing " + (body?.isVideo ? "selected key frames from a video" : "an image") + " named: " + fileName + ". Carefully read visible text and identify job title, employer/company, work location, salary/pay, qualifications, experience, contact/application instructions, dates, and any website or email shown. Separate clearly visible facts from uncertain or missing details. Never invent a vacancy, salary, employer, or application link. If the user asks where to apply, give only an official link you genuinely know; otherwise say that the official link still needs verification. Explain in the requested language. These are selected video frames, not the complete video; do not claim to have heard its audio or watched every moment.";
+      const content = [
+        { type: "text", text: (message || "Please analyze this attachment and extract its important details.") + "\n\n" + visualPrompt }
+      ];
+      for (const frame of frames) {
+        content.push({ type: "image_url", image_url: { url: "data:" + frame.mimeType + ";base64," + frame.base64 } });
+      }
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 45000);
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + env.GROQ_API_KEY },
+          body: JSON.stringify({
+            model: "qwen/qwen3.8-27b",
+            messages: [{ role: "user", content }],
+            max_completion_tokens: 900,
+            temperature: 0.2
+          }),
+          signal: controller.signal
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          console.error("Groq vision error:", response.status, String(data?.error?.message || "").slice(0, 220));
+          const status = response.status === 429 ? 429 : (response.status >= 500 ? 502 : response.status);
+          return jsonResponse({ error: response.status === 429 ? "Free AI usage limit reached for now. Please try again later." : "The free vision AI could not analyze this file. " + String(data?.error?.message || ("HTTP " + response.status)).slice(0, 160) }, status, request);
+        }
+        const reply = data?.choices?.[0]?.message?.content?.trim();
+        if (!reply) return jsonResponse({ error: "No answer was returned for this file. Please try again." }, 502, request);
+        return jsonResponse({ reply, language, fileName, provider: "groq-vision", model: "qwen/qwen3.8-27b", analyzedFrames: frames.length, isVideo: body?.isVideo === true }, 200, request);
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    // Keep the existing Gemini PDF route for customers who have that secret configured.
+    if (mimeType === "application/pdf") {
+      if (!env.GEMINI_API_KEY) return jsonResponse({ error: "PDF analysis is not available on the free vision setup yet. Please upload a photo or screenshot instead." }, 415, request);
+      const dataUrl = String(body?.dataUrl || "");
+      const match = dataUrl.match(/^data:application\/pdf;base64,([A-Za-z0-9+/=]+)$/);
+      if (!match || match[1] !== "application/pdf") return jsonResponse({ error: "The selected PDF could not be read. Please select it again." }, 400, request);
+      if (match[1].length > 11_200_000) return jsonResponse({ error: "Please choose a PDF smaller than 8 MB." }, 413, request);
+      const prompt = SYSTEM_PROMPT(language) + "\n\nThe user attached a PDF named: " + fileName + ". Inspect it carefully and answer the user's request. Do not claim to see details that are not present.";
+      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent", {
+        method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+        body: JSON.stringify({ systemInstruction: { parts: [{ text: prompt }] }, contents: [{ role: "user", parts: [{ text: message || "Please summarize this PDF." }, { inlineData: { mimeType: "application/pdf", data: match[1] } }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.2 } }),
+        signal: AbortSignal.timeout(45000)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) return jsonResponse({ error: "PDF analysis failed. " + String(data?.error?.message || ("HTTP " + response.status)).slice(0, 160) }, response.status, request);
+      const reply = data?.candidates?.[0]?.content?.parts?.map(part => typeof part.text === "string" ? part.text : "").join("").trim();
+      if (!reply) return jsonResponse({ error: "No text answer was returned for this PDF." }, 502, request);
+      return jsonResponse({ reply, language, fileName, provider: "gemini" }, 200, request);
+    }
+    return jsonResponse({ error: "Please upload a JPG, PNG, WEBP image, MP4, WEBM, or MOV video. Video is analyzed using up to three visual frames; audio is not transcribed." }, 415, request);
   } catch (error) {
-    return jsonResponse({ error: error?.name === "TimeoutError" ? "File analysis took too long. Please try again." : "Could not process the attachment. Please try again." }, error?.name === "TimeoutError" ? 504 : 400, request);
+    console.error("Attachment analysis error:", String(error?.message || error).slice(0, 200));
+    return jsonResponse({ error: error?.name === "AbortError" ? "File analysis took too long. Please try again." : (error?.message || "Could not process the attachment. Please try again.") }, error?.name === "AbortError" ? 504 : 400, request);
   }
 }
 
