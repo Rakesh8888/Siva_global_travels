@@ -214,6 +214,7 @@ async function handleChat(request, env) {
     }
 
     let geminiProblem = "Gemini request could not be completed";
+    let geminiStatus = 0;
     let geminiQuotaReached = false;
     const models = [GEMINI_MODEL, "gemini-3.1-flash-lite"];
     for (let index = 0; index < models.length; index++) {
@@ -250,6 +251,7 @@ async function handleChat(request, env) {
           }
           geminiProblem = "Gemini returned an empty answer";
         } else {
+          geminiStatus = response.status;
           geminiProblem = data?.error?.message || ("Gemini HTTP " + response.status);
           geminiQuotaReached = response.status === 429 || /quota|resource exhausted|rate.?limit|billing/i.test(geminiProblem);
           console.error("Gemini AI error:", response.status, geminiProblem.slice(0, 180));
@@ -263,12 +265,52 @@ async function handleChat(request, env) {
       if (index === 0 && geminiQuotaReached) break;
     }
 
+    // If Gemini is blocked in the caller's region, use the configured Groq key as a backup.
+    // This keeps text, voice-message, and live-voice replies working without changing the website.
+    const regionBlocked = geminiStatus === 403 || /user location is not supported|location.*not supported|region.*not supported/i.test(geminiProblem);
+    if (regionBlocked && env.GROQ_API_KEY) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), body?.spoken === true ? 12000 : 20000);
+      try {
+        const groqMessages = [
+          { role: "system", content: systemPrompt },
+          ...history.map(x => ({ role: x.role === "assistant" ? "assistant" : "user", content: x.content })),
+          { role: "user", content: message }
+        ];
+        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + env.GROQ_API_KEY
+          },
+          body: JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            messages: groqMessages,
+            max_tokens: body?.spoken === true ? 180 : 600,
+            temperature: body?.spoken === true ? 0.2 : 0.3
+          }),
+          signal: controller.signal
+        });
+        const groqData = await groqResponse.json().catch(() => ({}));
+        if (groqResponse.ok) {
+          const reply = groqData?.choices?.[0]?.message?.content?.trim();
+          if (reply) return jsonResponse({ reply, language, provider: "groq", model: "llama-3.3-70b-versatile", fallback: true }, 200, request);
+        }
+        console.error("Groq fallback error:", groqResponse.status, String(groqData?.error?.message || "").slice(0, 180));
+      } catch (error) {
+        console.error("Groq fallback request failed:", String(error?.message || error).slice(0, 180));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
     return jsonResponse({
       error: geminiQuotaReached
         ? "Gemini API quota or rate limit has been reached. Please try again after the limit resets."
-        : "Gemini AI is temporarily unavailable. Please try again later.",
+        : "AI service is temporarily unavailable. Please try again later.",
       provider: "gemini",
-      providerMessage: String(geminiProblem).slice(0, 300)
+      providerMessage: String(geminiProblem).slice(0, 300),
+      fallbackConfigured: Boolean(env.GROQ_API_KEY)
     }, geminiQuotaReached ? 429 : 502, request);
   } catch (error) {
     console.error("SIVA Gemini AI request error:", String(error?.stack || error?.message || error?.name || "Unknown error").slice(0, 700));
@@ -431,7 +473,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
 
     if (url.pathname === "/api/health") {
-      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY), aiProvider: "gemini", duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
+      return jsonResponse({ ok: true, aiConfigured: Boolean(env.GEMINI_API_KEY || env.GROQ_API_KEY), aiProvider: env.GEMINI_API_KEY ? "gemini-with-groq-fallback" : (env.GROQ_API_KEY ? "groq" : "none"), groqFallbackConfigured: Boolean(env.GROQ_API_KEY), duffelConfigured: Boolean(env.DUFFEL_ACCESS_TOKEN) }, 200, request);
     }
 
     if (url.pathname === "/api/chat-file") return handleChatFile(request, env);
