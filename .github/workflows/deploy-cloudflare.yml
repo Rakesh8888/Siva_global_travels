@@ -6,8 +6,13 @@ on:
       - main
     paths:
       - "worker.js"
-      - "index.html"
+      - "**/*.html"
+      - "**/*.js"
+      - "**/*.css"
+      - "**/*.svg"
       - "assets/**"
+      - "toolkit/**"
+      - "package.json"
       - "wrangler.jsonc"
       - ".assetsignore"
       - ".github/workflows/deploy-cloudflare.yml"
