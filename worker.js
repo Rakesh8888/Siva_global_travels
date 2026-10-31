@@ -382,7 +382,7 @@ async function handleChatFile(request, env) {
       if (!env.GEMINI_API_KEY) return jsonResponse({ error: "PDF analysis is not available on the free vision setup yet. Please upload a photo or screenshot instead." }, 415, request);
       const dataUrl = String(body?.dataUrl || "");
       const match = dataUrl.match(/^data:application\/pdf;base64,([A-Za-z0-9+/=]+)$/);
-      if (!match || match[1] !== "application/pdf") return jsonResponse({ error: "The selected PDF could not be read. Please select it again." }, 400, request);
+      if (!match) return jsonResponse({ error: "The selected PDF could not be read. Please select it again." }, 400, request);
       if (match[1].length > 11_200_000) return jsonResponse({ error: "Please choose a PDF smaller than 8 MB." }, 413, request);
       const prompt = SYSTEM_PROMPT(language) + "\n\nThe user attached a PDF named: " + fileName + ". Inspect it carefully and answer the user's request. Do not claim to see details that are not present.";
       const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent", {
