@@ -145,7 +145,7 @@ async function answerWithGroundedSearch(message, history, language, env) {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT(language) + "\\n\\nFor current-information questions, use Google Search grounding. State dates clearly, distinguish official sources from other sources, and do not invent a price, vacancy, visa rule, or availability. If search results do not confirm something, say so." }] },
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT(language) + "\n\nFor current-information questions, use Google Search grounding. State dates clearly, distinguish official sources from other sources, and do not invent a price, vacancy, visa rule, or availability. If search results do not confirm something, say so." }] },
           contents,
           tools: [{ google_search: {} }],
           generationConfig: { maxOutputTokens: 700, temperature: 0.2 }
@@ -377,10 +377,10 @@ async function handleChatFile(request, env) {
       }
       const visualPrompt = "Reply only in " + language + ". You are analyzing " + (body?.isVideo ? "one representative frame from a video" : "an image") + " named: " + fileName + ". Read visible text and report job title, company, location, salary, qualifications, experience, application instructions, dates, website and email if visible. Separate visible facts from uncertain or missing details. Never invent vacancies, salaries, employers or links. Give an official application link only when certain; otherwise say it must be verified. For video, combine the supplied audio transcript with the visible frame. If the transcript is empty or audio transcription failed, say so honestly; never pretend to have heard speech.";
       const userText = (message || "Please analyze this attachment and extract its important details.") +
-        (transcript ? "\\n\\nVIDEO AUDIO TRANSCRIPT:\\n" + transcript : "") +
-        (audioNote ? "\\n\\n" + audioNote : "");
+        (transcript ? "\n\nVIDEO AUDIO TRANSCRIPT:\n" + transcript : "") +
+        (audioNote ? "\n\n" + audioNote : "");
       const content = [
-        { type: "text", text: userText + "\\n\\n" + visualPrompt }
+        { type: "text", text: userText + "\n\n" + visualPrompt }
       ];
       for (const frame of frames) {
         content.push({ type: "image_url", image_url: { url: "data:" + frame.mimeType + ";base64," + frame.base64 } });
