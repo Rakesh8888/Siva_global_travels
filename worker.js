@@ -331,8 +331,8 @@ async function handleChatFile(request, env) {
     const fileName = String(body?.fileName || "attachment").slice(0, 180);
     const language = normalizeLanguage(message, body?.language);
 
-    // Images and video keyframes use Groq Vision. Video files are converted to
-    // up to three JPEG frames in the browser; the original video is never uploaded.
+    // Videos: transcribe the original MP4/WEBM/MOV audio with Groq Whisper,
+    // then combine its transcript with one compressed video frame for visual analysis.
     if (Array.isArray(body?.frames) && body.frames.length === 1 && env.GROQ_API_KEY) {
       const frames = body.frames.map((dataUrl) => {
         const value = String(dataUrl || "");
@@ -342,9 +342,45 @@ async function handleChatFile(request, env) {
       });
       const totalBase64 = frames.reduce((sum, frame) => sum + frame.base64.length, 0);
       if (totalBase64 > 10_500_000) return jsonResponse({ error: "The selected photo or video is too large after processing. Please choose a smaller file." }, 413, request);
-      const visualPrompt = "Reply only in " + language + ". You are analyzing " + (body?.isVideo ? "one representative frame extracted from a video" : "an image") + " named: " + fileName + ". Read visible text and report job title, company, location, salary, qualifications, experience, application instructions, dates, website and email if visible. Separate visible facts from uncertain or missing details. Never invent vacancies, salaries, employers or links. Give an official application link only when certain; otherwise say it must be verified. For a video, explain that only one frame was analyzed and its audio was not transcribed.";
+
+      let transcript = "";
+      let audioNote = "";
+      if (body?.isVideo === true && typeof body?.videoDataUrl === "string") {
+        const videoMatch = body.videoDataUrl.match(/^data:(video\/(?:mp4|webm|quicktime));base64,([A-Za-z0-9+/=]+)$/i);
+        if (!videoMatch) return jsonResponse({ error: "The video audio could not be read. Please upload an MP4 or WEBM video." }, 400, request);
+        if (videoMatch[2].length > 26_500_000) return jsonResponse({ error: "Please choose a video smaller than 20 MB so its audio can be transcribed." }, 413, request);
+        try {
+          const binary = atob(videoMatch[2]);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          const audioForm = new FormData();
+          audioForm.append("file", new Blob([bytes], { type: videoMatch[1].toLowerCase() }), fileName);
+          audioForm.append("model", "whisper-large-v3-turbo");
+          audioForm.append("response_format", "json");
+          const audioResponse = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+            method: "POST",
+            headers: { "Authorization": "Bearer " + env.GROQ_API_KEY },
+            body: audioForm,
+            signal: AbortSignal.timeout(45000)
+          });
+          const audioData = await audioResponse.json().catch(() => ({}));
+          if (audioResponse.ok && typeof audioData?.text === "string") {
+            transcript = audioData.text.trim().slice(0, 12000);
+          } else {
+            audioNote = "Audio transcription could not be completed (" + String(audioData?.error?.message || ("HTTP " + audioResponse.status)).slice(0, 120) + "). Analyze the visible frame and clearly tell the user the audio could not be understood.";
+            console.error("Groq audio transcription error:", audioResponse.status, String(audioData?.error?.message || "").slice(0, 180));
+          }
+        } catch (audioError) {
+          audioNote = "Audio transcription failed. Analyze the visible frame and clearly tell the user the audio could not be understood.";
+          console.error("Groq audio transcription request failed:", String(audioError?.message || audioError).slice(0, 180));
+        }
+      }
+      const visualPrompt = "Reply only in " + language + ". You are analyzing " + (body?.isVideo ? "one representative frame from a video" : "an image") + " named: " + fileName + ". Read visible text and report job title, company, location, salary, qualifications, experience, application instructions, dates, website and email if visible. Separate visible facts from uncertain or missing details. Never invent vacancies, salaries, employers or links. Give an official application link only when certain; otherwise say it must be verified. For video, combine the supplied audio transcript with the visible frame. If the transcript is empty or audio transcription failed, say so honestly; never pretend to have heard speech.";
+      const userText = (message || "Please analyze this attachment and extract its important details.") +
+        (transcript ? "\\n\\nVIDEO AUDIO TRANSCRIPT:\\n" + transcript : "") +
+        (audioNote ? "\\n\\n" + audioNote : "");
       const content = [
-        { type: "text", text: (message || "Please analyze this attachment and extract its important details.") + "\n\n" + visualPrompt }
+        { type: "text", text: userText + "\\n\\n" + visualPrompt }
       ];
       for (const frame of frames) {
         content.push({ type: "image_url", image_url: { url: "data:" + frame.mimeType + ";base64," + frame.base64 } });
@@ -371,7 +407,7 @@ async function handleChatFile(request, env) {
         }
         const reply = data?.choices?.[0]?.message?.content?.trim();
         if (!reply) return jsonResponse({ error: "No answer was returned for this file. Please try again." }, 502, request);
-        return jsonResponse({ reply, language, fileName, provider: "groq-vision", model: "qwen/qwen3.8-27b", analyzedFrames: frames.length, isVideo: body?.isVideo === true }, 200, request);
+        return jsonResponse({ reply, language, fileName, provider: "groq-vision", model: "qwen/qwen3.8-27b", transcriptionModel: body?.isVideo === true ? "whisper-large-v3-turbo" : null, audioTranscribed: Boolean(transcript), analyzedFrames: frames.length, isVideo: body?.isVideo === true }, 200, request);
       } finally {
         clearTimeout(timer);
       }
@@ -396,7 +432,7 @@ async function handleChatFile(request, env) {
       if (!reply) return jsonResponse({ error: "No text answer was returned for this PDF." }, 502, request);
       return jsonResponse({ reply, language, fileName, provider: "gemini" }, 200, request);
     }
-    return jsonResponse({ error: "Please upload a JPG, PNG, WEBP image, MP4, WEBM, or MOV video. Video is analyzed using up to three visual frames; audio is not transcribed." }, 415, request);
+    return jsonResponse({ error: "Please upload a JPG, PNG, WEBP image, MP4, WEBM, or MOV video. Video audio is transcribed when possible and combined with one representative visual frame." }, 415, request);
   } catch (error) {
     console.error("Attachment analysis error:", String(error?.message || error).slice(0, 200));
     return jsonResponse({ error: error?.name === "AbortError" ? "File analysis took too long. Please try again." : (error?.message || "Could not process the attachment. Please try again.") }, error?.name === "AbortError" ? 504 : 400, request);
