@@ -169,6 +169,8 @@ async function answerWithGroundedSearch(message, history, language, env) {
 }
 
 async function handleChat(request, env) {
+  const contentLength = Number(request.headers.get("Content-Length") || 0);
+  if (contentLength > 64 * 1024) return jsonResponse({ error: "Chat request is too large. Please shorten your message and try again." }, 413, request);
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
   }
@@ -323,6 +325,9 @@ async function handleChat(request, env) {
 }
 
 async function handleChatFile(request, env) {
+  const contentLength = Number(request.headers.get("Content-Length") || 0);
+  // Allow the supported 20 MB video upload plus base64/frame overhead, while rejecting oversized bodies.
+  if (contentLength > 30 * 1024 * 1024) return jsonResponse({ error: "Upload is too large. Please choose a video smaller than 20 MB or a PDF smaller than 8 MB." }, 413, request);
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
   try {
     const body = await request.json();
@@ -441,6 +446,8 @@ async function handleChatFile(request, env) {
 
 
 async function handleDuffelFlightSearch(request, env) {
+  const contentLength = Number(request.headers.get("Content-Length") || 0);
+  if (contentLength > 32 * 1024) return jsonResponse({ error: "Flight search request is too large." }, 413, request);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405, request);
   if (!env.DUFFEL_ACCESS_TOKEN) {
