@@ -6,7 +6,7 @@ const CONTACT_CONFIG = {
     facebook: ""
 };
 
-function buildWhatsAppUrl(message = "Hello Elite Multi Services, I would like to make an enquiry.") {
+function buildWhatsAppUrl(message = "Hello Siva Multi Services, I would like to make an enquiry.") {
     const number = CONTACT_CONFIG.whatsappNumber.replace(/\D/g, "");
     return number
         ? "https://wa.me/" + number + "?text=" + encodeURIComponent(message)
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const note = document.querySelector("#formNote");
 
             const text = [
-                "Hello Elite Multi Services,",
+                "Hello Siva Multi Services,",
                 "",
                 cv ? `CV / Resume selected: ${cv.name}` : "CV / Resume: Not attached yet.",
                 "",
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             window.open(buildWhatsAppUrl(text), "_blank", "noopener");
             note.textContent = CONTACT_CONFIG.whatsappNumber
-                ? "WhatsApp opened for Elite Multi Services."
+                ? "WhatsApp opened for Siva Multi Services."
                 : "WhatsApp opened. The business number will be connected when the official number is added.";
             if (window.innerWidth < 700) {
                 note.scrollIntoView({behavior:"smooth", block:"nearest"});
@@ -184,7 +184,7 @@ function getVoiceLocale(){
 }
 function setSpeakingUi(speaking){
   if(aiSpeak){aiSpeak.classList.toggle("active",speaking);aiSpeak.textContent=speaking?"⏹️":"🔊";}
-  if(aiVoiceStatus && speaking) aiVoiceStatus.textContent="ELITE MULTI SERVICES is speaking…";
+  if(aiVoiceStatus && speaking) aiVoiceStatus.textContent="SIVA MULTI SERVICES is speaking…";
 }
 function speakELITE(text){
   if(!text || !("speechSynthesis" in window)) return;
@@ -233,9 +233,9 @@ async function askAi(message,options={}){
     if(options.voice) speakELITE(reply);
   }catch(e){
     loading.remove();
-    let msg="ELITE MULTI SERVICES could not connect to the AI service. Please try again or use WhatsApp.";
-    if(e?.name==="AbortError") msg="ELITE MULTI SERVICES AI timed out. Please try again.";
-    else if(e?.message){ const detail=e?.providerMessage||e?.providerCode||e?.providerStatus; msg="ELITE MULTI SERVICES AI error: "+e.message+(detail?" — "+detail:""); }
+    let msg="SIVA MULTI SERVICES could not connect to the AI service. Please try again or use WhatsApp.";
+    if(e?.name==="AbortError") msg="SIVA MULTI SERVICES AI timed out. Please try again.";
+    else if(e?.message){ const detail=e?.providerMessage||e?.providerCode||e?.providerStatus; msg="SIVA MULTI SERVICES AI error: "+e.message+(detail?" — "+detail:""); }
     addAiMessage(msg);
     if(options.voice) speakELITE(msg);
   }finally{
@@ -972,7 +972,7 @@ document.addEventListener("DOMContentLoaded", () => {
       consentInput?.focus();
       return;
     }
-    const message = "Hello Elite Multi Services, I would like to subscribe to travel newsletters and service updates. My email address is: " + email + ". I consent to receive these updates.";
+    const message = "Hello Siva Multi Services, I would like to subscribe to travel newsletters and service updates. My email address is: " + email + ". I consent to receive these updates.";
     const url = "https://wa.me/9182641172?text=" + encodeURIComponent(message);
     status.textContent = "Opening WhatsApp so you can send and confirm your subscription request. Your email is not stored on this website.";
     status.className = "newsletter-status is-success";
