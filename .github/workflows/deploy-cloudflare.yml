@@ -1,4 +1,4 @@
-name: Deploy Siva Global Travels to Cloudflare Workers
+name: Deploy Siva Multi Services to Cloudflare Workers
 
 on:
   push:
