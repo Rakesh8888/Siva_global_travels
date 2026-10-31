@@ -333,7 +333,7 @@ async function handleChatFile(request, env) {
 
     // Images and video keyframes use Groq Vision. Video files are converted to
     // up to three JPEG frames in the browser; the original video is never uploaded.
-    if (Array.isArray(body?.frames) && body.frames.length >= 1 && body.frames.length <= 3 && env.GROQ_API_KEY) {
+    if (Array.isArray(body?.frames) && body.frames.length === 1 && env.GROQ_API_KEY) {
       const frames = body.frames.map((dataUrl) => {
         const value = String(dataUrl || "");
         const match = value.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/i);
@@ -342,7 +342,7 @@ async function handleChatFile(request, env) {
       });
       const totalBase64 = frames.reduce((sum, frame) => sum + frame.base64.length, 0);
       if (totalBase64 > 10_500_000) return jsonResponse({ error: "The selected photo or video is too large after processing. Please choose a smaller file." }, 413, request);
-      const visualPrompt = SYSTEM_PROMPT(language) + "\n\nYou are analyzing " + (body?.isVideo ? "selected key frames from a video" : "an image") + " named: " + fileName + ". Carefully read visible text and identify job title, employer/company, work location, salary/pay, qualifications, experience, contact/application instructions, dates, and any website or email shown. Separate clearly visible facts from uncertain or missing details. Never invent a vacancy, salary, employer, or application link. If the user asks where to apply, give only an official link you genuinely know; otherwise say that the official link still needs verification. Explain in the requested language. These are selected video frames, not the complete video; do not claim to have heard its audio or watched every moment.";
+      const visualPrompt = "Reply only in " + language + ". You are analyzing " + (body?.isVideo ? "one representative frame extracted from a video" : "an image") + " named: " + fileName + ". Read visible text and report job title, company, location, salary, qualifications, experience, application instructions, dates, website and email if visible. Separate visible facts from uncertain or missing details. Never invent vacancies, salaries, employers or links. Give an official application link only when certain; otherwise say it must be verified. For a video, explain that only one frame was analyzed and its audio was not transcribed.";
       const content = [
         { type: "text", text: (message || "Please analyze this attachment and extract its important details.") + "\n\n" + visualPrompt }
       ];
@@ -357,8 +357,8 @@ async function handleChatFile(request, env) {
           headers: { "Content-Type": "application/json", "Authorization": "Bearer " + env.GROQ_API_KEY },
           body: JSON.stringify({
             model: "qwen/qwen3.8-27b",
-            messages: [{ role: "user", content }],
-            max_completion_tokens: 900,
+            messages: [{ role: "system", content: visualPrompt }, { role: "user", content: [{ type: "text", text: message || "Analyze this image and extract its important details." }, ...content.slice(1)] }],
+            max_completion_tokens: 600,
             temperature: 0.2
           }),
           signal: controller.signal
