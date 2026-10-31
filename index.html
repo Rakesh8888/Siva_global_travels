@@ -2388,5 +2388,58 @@ html body{perspective:none!important}
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<style id="paid-calling-match-office-map">
+/* Match Paid Calling card width and compact height to the Office Location map card. */
+#contact .contactDetails > .detail.contact-mini:first-child{
+  width:100%!important;
+  max-width:none!important;
+  min-height:190px!important;
+  box-sizing:border-box!important;
+  padding:12px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child>b{
+  font-size:15px!important;
+  margin-bottom:3px!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child>span{
+  font-size:12px!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child>.note{
+  font-size:11px!important;
+  line-height:1.3!important;
+  margin:4px 0!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child div:has(>#paidPaymentQR){
+  max-width:82px!important;
+  margin:5px auto!important;
+  padding:3px!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child #paidPaymentQR{
+  width:100%!important;
+  max-width:76px!important;
+  height:auto!important;
+}
+#contact .contactDetails > .detail.contact-mini:first-child .paid-call-btn{
+  align-self:flex-start!important;
+  padding:7px 10px!important;
+  font-size:10px!important;
+  min-height:28px!important;
+  margin-top:4px!important;
+}
+@media(max-width:520px){
+  #contact .contactDetails > .detail.contact-mini:first-child{
+    width:100%!important;
+    max-width:none!important;
+    min-height:190px!important;
+    padding:12px!important;
+  }
+}
+</style>
+
 </body>
 </html>
